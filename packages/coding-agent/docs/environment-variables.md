@@ -96,4 +96,4 @@ These variables are read by Phi itself:
 | `VISUAL`, `EDITOR` | External editor fallback when `externalEditor` is unset |
 | `HTTP_PROXY`, `HTTPS_PROXY` | Proxy outbound HTTP requests |
 
-Provider credentials such as `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and cloud-provider configuration are listed in [Providers](providers.md#environment-variables-or-auth-file).
+Provider credentials such as `ANTHROPIC_APHI_KEY`, `OPENAI_APHI_KEY`, and cloud-provider configuration are listed in [Providers](providers.md#environment-variables-or-auth-file).

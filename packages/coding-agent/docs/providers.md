@@ -1,6 +1,6 @@
 # Providers
 
-Pi supports subscription-based providers via OAuth and API key providers via environment variables or auth file. Built-in catalogs ship with pi; configured providers may refresh newer catalogs and cache them in `~/.pi/agent/models-store.json` for offline use.
+Phi supports subscription-based providers via OAuth and API key providers via environment variables or auth file. Built-in catalogs ship with phi; configured providers may refresh newer catalogs and cache them in `~/.phi/agent/models-store.json` for offline use.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ Use `/login` in interactive mode, then select a provider:
 - OpenRouter (OAuth-minted API key billed from OpenRouter credits)
 - Radius
 
-Use `/logout` to clear credentials. Tokens are stored in `~/.pi/agent/auth.json` and auto-refresh when expired. OpenRouter instead mints a user-controlled API key that does not expire automatically.
+Use `/logout` to clear credentials. Tokens are stored in `~/.phi/agent/auth.json` and auto-refresh when expired. OpenRouter instead mints a user-controlled API key that does not expire automatically.
 
 ### OpenAI Codex
 
@@ -42,18 +42,18 @@ Anthropic subscription auth is active for Claude Pro/Max accounts. Third-party h
 ### xAI (Grok/X subscription)
 
 - Run `/login xai`, then select **Use a subscription**
-- `XAI_API_KEY` remains available through **Use an API key**
+- `XAI_APHI_KEY` remains available through **Use an API key**
 
 ### OpenRouter
 
 - Run `/login openrouter`, then select **Sign in with OpenRouter** to open the OpenRouter PKCE authorization flow
 - The authorization creates a user-controlled OpenRouter API key billed from your OpenRouter credits
 - On remote/headless machines (e.g. over SSH) the browser cannot reach the loopback callback; paste the final redirect URL (or the authorization code) into the login prompt instead
-- `OPENROUTER_API_KEY` remains available through **Use an API key**
+- `OPENROUTER_APHI_KEY` remains available through **Use an API key**
 
 ### Radius
 
-Radius is a dynamic `pi-messages` gateway. `/login radius` stores OAuth tokens in `auth.json`; the gateway catalog is refreshed independently and cached in `models-store.json`. Custom Radius gateways can be declared in `models.json` with `"oauth": "radius"` and a gateway `baseUrl`.
+Radius is a dynamic `phi-messages` gateway. `/login radius` stores OAuth tokens in `auth.json`; the gateway catalog is refreshed independently and cached in `models-store.json`. Custom Radius gateways can be declared in `models.json` with `"oauth": "radius"` and a gateway `baseUrl`.
 
 ## API Keys
 
@@ -62,53 +62,53 @@ Radius is a dynamic `pi-messages` gateway. `/login radius` stores OAuth tokens i
 Use `/login` in interactive mode and select a provider to store an API key in `auth.json`, or set credentials via environment variable:
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...
-pi
+export ANTHROPIC_APHI_KEY=sk-ant-...
+phi
 ```
 
 | Provider | Environment Variable | `auth.json` key |
 |----------|----------------------|------------------|
-| Anthropic | `ANTHROPIC_API_KEY` | `anthropic` |
-| Ant Ling | `ANT_LING_API_KEY` | `ant-ling` |
-| Azure OpenAI Responses | `AZURE_OPENAI_API_KEY` | `azure-openai-responses` |
-| OpenAI | `OPENAI_API_KEY` | `openai` |
-| DeepSeek | `DEEPSEEK_API_KEY` | `deepseek` |
-| NVIDIA NIM | `NVIDIA_API_KEY` | `nvidia` |
-| Google Gemini | `GEMINI_API_KEY` | `google` |
+| Anthropic | `ANTHROPIC_APHI_KEY` | `anthropic` |
+| Ant Ling | `ANT_LING_APHI_KEY` | `ant-ling` |
+| Azure OpenAI Responses | `AZURE_OPENAI_APHI_KEY` | `azure-openai-responses` |
+| OpenAI | `OPENAI_APHI_KEY` | `openai` |
+| DeepSeek | `DEEPSEEK_APHI_KEY` | `deepseek` |
+| NVIDIA NIM | `NVIDIA_APHI_KEY` | `nvidia` |
+| Google Gemini | `GEMINI_APHI_KEY` | `google` |
 | Amazon Bedrock | `AWS_BEARER_TOKEN_BEDROCK` | `amazon-bedrock` |
-| Mistral | `MISTRAL_API_KEY` | `mistral` |
-| Groq | `GROQ_API_KEY` | `groq` |
-| Cerebras | `CEREBRAS_API_KEY` | `cerebras` |
-| Cloudflare AI Gateway | `CLOUDFLARE_API_KEY` (+ `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_GATEWAY_ID`) | `cloudflare-ai-gateway` |
-| Cloudflare Workers AI | `CLOUDFLARE_API_KEY` (+ `CLOUDFLARE_ACCOUNT_ID`) | `cloudflare-workers-ai` |
-| xAI | `XAI_API_KEY` | `xai` |
-| OpenRouter | `OPENROUTER_API_KEY` | `openrouter` |
-| Vercel AI Gateway | `AI_GATEWAY_API_KEY` | `vercel-ai-gateway` |
-| ZAI Coding Plan (Global) | `ZAI_API_KEY` | `zai` |
-| ZAI Coding Plan (China) | `ZAI_CODING_CN_API_KEY` | `zai-coding-cn` |
-| OpenCode Zen | `OPENCODE_API_KEY` | `opencode` |
-| OpenCode Go | `OPENCODE_API_KEY` | `opencode-go` |
-| Radius | `RADIUS_API_KEY` | `radius` |
+| Mistral | `MISTRAL_APHI_KEY` | `mistral` |
+| Groq | `GROQ_APHI_KEY` | `groq` |
+| Cerebras | `CEREBRAS_APHI_KEY` | `cerebras` |
+| Cloudflare AI Gateway | `CLOUDFLARE_APHI_KEY` (+ `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_GATEWAY_ID`) | `cloudflare-ai-gateway` |
+| Cloudflare Workers AI | `CLOUDFLARE_APHI_KEY` (+ `CLOUDFLARE_ACCOUNT_ID`) | `cloudflare-workers-ai` |
+| xAI | `XAI_APHI_KEY` | `xai` |
+| OpenRouter | `OPENROUTER_APHI_KEY` | `openrouter` |
+| Vercel AI Gateway | `AI_GATEWAY_APHI_KEY` | `vercel-ai-gateway` |
+| ZAI Coding Plan (Global) | `ZAI_APHI_KEY` | `zai` |
+| ZAI Coding Plan (China) | `ZAI_CODING_CN_APHI_KEY` | `zai-coding-cn` |
+| OpenCode Zen | `OPENCODE_APHI_KEY` | `opencode` |
+| OpenCode Go | `OPENCODE_APHI_KEY` | `opencode-go` |
+| Radius | `RADIUS_APHI_KEY` | `radius` |
 | Hugging Face | `HF_TOKEN` | `huggingface` |
-| Fireworks | `FIREWORKS_API_KEY` | `fireworks` |
-| Together AI | `TOGETHER_API_KEY` | `together` |
-| Baseten | `BASETEN_API_KEY` | `baseten` |
-| Kimi For Coding | `KIMI_API_KEY` | `kimi-coding` |
-| MiniMax | `MINIMAX_API_KEY` | `minimax` |
-| MiniMax (China) | `MINIMAX_CN_API_KEY` | `minimax-cn` |
-| Qwen Token Plan (existing catalog) | `QWEN_TOKEN_PLAN_API_KEY` | `qwen-token-plan` |
-| Qwen Token Plan (Individual) | `QWEN_TOKEN_PLAN_API_KEY` | `qwen-token-plan-individual` |
-| Qwen Token Plan (China) | `QWEN_TOKEN_PLAN_CN_API_KEY` | `qwen-token-plan-cn` |
-| Xiaomi MiMo | `XIAOMI_API_KEY` | `xiaomi` |
-| Xiaomi MiMo Token Plan (China) | `XIAOMI_TOKEN_PLAN_CN_API_KEY` | `xiaomi-token-plan-cn` |
-| Xiaomi MiMo Token Plan (Amsterdam) | `XIAOMI_TOKEN_PLAN_AMS_API_KEY` | `xiaomi-token-plan-ams` |
-| Xiaomi MiMo Token Plan (Singapore) | `XIAOMI_TOKEN_PLAN_SGP_API_KEY` | `xiaomi-token-plan-sgp` |
+| Fireworks | `FIREWORKS_APHI_KEY` | `fireworks` |
+| Together AI | `TOGETHER_APHI_KEY` | `together` |
+| Baseten | `BASETEN_APHI_KEY` | `baseten` |
+| Kimi For Coding | `KIMI_APHI_KEY` | `kimi-coding` |
+| MiniMax | `MINIMAX_APHI_KEY` | `minimax` |
+| MiniMax (China) | `MINIMAX_CN_APHI_KEY` | `minimax-cn` |
+| Qwen Token Plan (existing catalog) | `QWEN_TOKEN_PLAN_APHI_KEY` | `qwen-token-plan` |
+| Qwen Token Plan (Individual) | `QWEN_TOKEN_PLAN_APHI_KEY` | `qwen-token-plan-individual` |
+| Qwen Token Plan (China) | `QWEN_TOKEN_PLAN_CN_APHI_KEY` | `qwen-token-plan-cn` |
+| Xiaomi MiMo | `XIAOMI_APHI_KEY` | `xiaomi` |
+| Xiaomi MiMo Token Plan (China) | `XIAOMI_TOKEN_PLAN_CN_APHI_KEY` | `xiaomi-token-plan-cn` |
+| Xiaomi MiMo Token Plan (Amsterdam) | `XIAOMI_TOKEN_PLAN_AMS_APHI_KEY` | `xiaomi-token-plan-ams` |
+| Xiaomi MiMo Token Plan (Singapore) | `XIAOMI_TOKEN_PLAN_SGP_APHI_KEY` | `xiaomi-token-plan-sgp` |
 
-Reference for environment variables and `auth.json` keys: [`const envMap`](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/env-api-keys.ts) in [`packages/ai/src/env-api-keys.ts`](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/env-api-keys.ts).
+Reference for environment variables and `auth.json` keys: [`const envMap`](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/env-api-keys.ts) in [`packages/ai/src/env-api-keys.ts`](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/env-api-keys.ts).
 
 #### Auth File
 
-Store credentials in `~/.pi/agent/auth.json`:
+Store credentials in `~/.phi/agent/auth.json`:
 
 ```json
 {
@@ -131,22 +131,22 @@ Store credentials in `~/.pi/agent/auth.json`:
 }
 ```
 
-`qwen-token-plan-individual` uses the same international endpoint and `QWEN_TOKEN_PLAN_API_KEY` as
+`qwen-token-plan-individual` uses the same international endpoint and `QWEN_TOKEN_PLAN_APHI_KEY` as
 `qwen-token-plan`, but limits the picker to the models documented for Individual subscriptions. The existing
 provider keeps its broader catalog for backward compatibility. When using `auth.json`, store the
 credential under the provider you select; an environment variable is shared by both international providers.
 
 The file is created with `0600` permissions (user read/write only). Auth file credentials take priority over environment variables.
 
-API key credentials can also include provider-scoped environment values. These values are used before process environment variables when resolving the credential key, provider/model headers, and provider configuration such as Cloudflare account IDs, Azure OpenAI settings, Vertex project/location, Bedrock settings, `PI_CACHE_RETENTION`, and `HTTP_PROXY`/`HTTPS_PROXY`.
+API key credentials can also include provider-scoped environment values. These values are used before process environment variables when resolving the credential key, provider/model headers, and provider configuration such as Cloudflare account IDs, Azure OpenAI settings, Vertex project/location, Bedrock settings, `PHI_CACHE_RETENTION`, and `HTTP_PROXY`/`HTTPS_PROXY`.
 
 ```json
 {
   "cloudflare-ai-gateway": {
     "type": "api_key",
-    "key": "$CLOUDFLARE_API_KEY",
+    "key": "$CLOUDFLARE_APHI_KEY",
     "env": {
-      "CLOUDFLARE_API_KEY": "...",
+      "CLOUDFLARE_APHI_KEY": "...",
       "CLOUDFLARE_ACCOUNT_ID": "account-id",
       "CLOUDFLARE_GATEWAY_ID": "gateway-id"
     }
@@ -154,7 +154,7 @@ API key credentials can also include provider-scoped environment values. These v
 }
 ```
 
-Use this when pi should use different provider settings than the project shell environment.
+Use this when phi should use different provider settings than the project shell environment.
 
 ### Key Resolution
 
@@ -176,7 +176,7 @@ The `key` field supports command execution, environment interpolation, and liter
   { "type": "api_key", "key": "$$literal-dollar-prefix" }
   { "type": "api_key", "key": "$!literal-bang-prefix" }
   ```
-- **Literal value:** Used directly. Plain uppercase strings such as `MY_API_KEY` are literals; use `$MY_API_KEY` for environment variables.
+- **Literal value:** Used directly. Plain uppercase strings such as `MY_APHI_KEY` are literals; use `$MY_APHI_KEY` for environment variables.
   ```json
   { "type": "api_key", "key": "sk-ant-..." }
   { "type": "api_key", "key": "public" }
@@ -189,7 +189,7 @@ OAuth credentials are also stored here after `/login` and managed automatically.
 ### Azure OpenAI
 
 ```bash
-export AZURE_OPENAI_API_KEY=...
+export AZURE_OPENAI_APHI_KEY=...
 export AZURE_OPENAI_BASE_URL=https://your-resource.ai.azure.com
 # also supported: https://your-resource.cognitiveservices.azure.com
 # also supported: https://your-resource.openai.azure.com
@@ -198,7 +198,7 @@ export AZURE_OPENAI_BASE_URL=https://your-resource.ai.azure.com
 export AZURE_OPENAI_RESOURCE_NAME=your-resource
 
 # Optional
-export AZURE_OPENAI_API_VERSION=2024-02-01
+export AZURE_OPENAI_APHI_VERSION=2024-02-01
 export AZURE_OPENAI_DEPLOYMENT_NAME_MAP=gpt-4=my-gpt4,gpt-4o=my-gpt4o
 ```
 
@@ -224,14 +224,14 @@ export AWS_REGION=us-west-2
 Also supports ECS task roles (`AWS_CONTAINER_CREDENTIALS_*`) and IRSA (`AWS_WEB_IDENTITY_TOKEN_FILE`).
 
 ```bash
-pi --provider amazon-bedrock --model us.anthropic.claude-sonnet-4-20250514-v1:0
+phi --provider amazon-bedrock --model us.anthropic.claude-sonnet-4-20250514-v1:0
 ```
 
 Prompt caching is enabled automatically for Claude models whose ID contains a recognizable model name (base models and system-defined inference profiles). For application inference profiles (whose ARNs don't contain the model name), set `AWS_BEDROCK_FORCE_CACHE=1` to enable cache points:
 
 ```bash
 export AWS_BEDROCK_FORCE_CACHE=1
-pi --provider amazon-bedrock --model arn:aws:bedrock:us-east-1:123456789012:application-inference-profile/abc123
+phi --provider amazon-bedrock --model arn:aws:bedrock:us-east-1:123456789012:application-inference-profile/abc123
 ```
 
 If you are connecting to a Bedrock API proxy, the following environment variables can be used:
@@ -249,18 +249,18 @@ export AWS_BEDROCK_FORCE_HTTP1=1
 
 ### Cloudflare AI Gateway
 
-`CLOUDFLARE_API_KEY` can be set via `/login`. The account ID and gateway slug can be set as environment variables or in the API key credential's `env` object in `auth.json`.
+`CLOUDFLARE_APHI_KEY` can be set via `/login`. The account ID and gateway slug can be set as environment variables or in the API key credential's `env` object in `auth.json`.
 
 ```bash
-export CLOUDFLARE_API_KEY=...           # or use /login
+export CLOUDFLARE_APHI_KEY=...           # or use /login
 export CLOUDFLARE_ACCOUNT_ID=...
 export CLOUDFLARE_GATEWAY_ID=...        # create at dash.cloudflare.com → AI → AI Gateway
-pi --provider cloudflare-ai-gateway --model "claude-sonnet-4-5"
+phi --provider cloudflare-ai-gateway --model "claude-sonnet-4-5"
 ```
 
 Routes to OpenAI, Anthropic, and Workers AI through Cloudflare AI Gateway. Workers AI uses the Unified API (`/compat`) and prefixed model IDs (`workers-ai/@cf/...`). OpenAI uses the OpenAI passthrough route (`/openai`) with native OpenAI model IDs such as `gpt-5.1`. Anthropic uses the Anthropic passthrough route (`/anthropic`) with native Anthropic model IDs such as `claude-sonnet-4-5`.
 
-AI Gateway authentication uses `CLOUDFLARE_API_KEY` as `cf-aig-authorization`. Upstream authentication can be one of:
+AI Gateway authentication uses `CLOUDFLARE_APHI_KEY` as `cf-aig-authorization`. Upstream authentication can be one of:
 
 | Mode | Request auth | Upstream auth |
 |------|--------------|---------------|
@@ -269,19 +269,19 @@ AI Gateway authentication uses `CLOUDFLARE_API_KEY` as `cf-aig-authorization`. U
 | Stored BYOK | Cloudflare token only | Cloudflare injects provider keys stored in the AI Gateway dashboard |
 | Inline BYOK | Cloudflare token plus upstream `Authorization` header | The request supplies the upstream provider key |
 
-For normal pi usage, prefer unified billing or stored BYOK. Inline BYOK requires configuring an additional upstream `Authorization` header for the Cloudflare AI Gateway provider, for example via a `models.json` provider/model override.
+For normal phi usage, prefer unified billing or stored BYOK. Inline BYOK requires configuring an additional upstream `Authorization` header for the Cloudflare AI Gateway provider, for example via a `models.json` provider/model override.
 
 ### Cloudflare Workers AI
 
-`CLOUDFLARE_API_KEY` can be set via `/login`. `CLOUDFLARE_ACCOUNT_ID` can be set as an environment variable or in the API key credential's `env` object in `auth.json`.
+`CLOUDFLARE_APHI_KEY` can be set via `/login`. `CLOUDFLARE_ACCOUNT_ID` can be set as an environment variable or in the API key credential's `env` object in `auth.json`.
 
 ```bash
-export CLOUDFLARE_API_KEY=...           # or use /login
+export CLOUDFLARE_APHI_KEY=...           # or use /login
 export CLOUDFLARE_ACCOUNT_ID=...
-pi --provider cloudflare-workers-ai --model "@cf/moonshotai/kimi-k2.6"
+phi --provider cloudflare-workers-ai --model "@cf/moonshotai/kimi-k2.6"
 ```
 
-Pi automatically sets `x-session-affinity` for [prefix caching](https://developers.cloudflare.com/workers-ai/features/prompt-caching/) discounts.
+Phi automatically sets `x-session-affinity` for [prefix caching](https://developers.cloudflare.com/workers-ai/features/prompt-caching/) discounts.
 
 ### Google Vertex AI
 
@@ -297,7 +297,7 @@ Or set `GOOGLE_APPLICATION_CREDENTIALS` to a service account key file.
 
 ## llama.cpp
 
-Pi supports the llama.cpp router server. Configure it with `/login llama.cpp`, manage loaded models with `/llama`, and select a loaded model with `/model`.
+Phi supports the llama.cpp router server. Configure it with `/login llama.cpp`, manage loaded models with `/llama`, and select a loaded model with `/model`.
 
 See [llama.cpp](llama-cpp.md) for server setup, model directory layout, environment variables, and command usage.
 

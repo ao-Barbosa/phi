@@ -1,6 +1,6 @@
 # Custom Providers
 
-Extensions can register custom model providers via `pi.registerProvider()`. This enables:
+Extensions can register custom model providers via `phi.registerProvider()`. This enables:
 
 - **Proxies** - Route requests through corporate proxies or API gateways
 - **Custom endpoints** - Use self-hosted or private model deployments
@@ -30,14 +30,14 @@ See these complete provider examples:
 
 ## Quick Reference
 
-Extensions can register either a complete pi-ai `Provider` or use the legacy provider-config form. Prefer a complete provider when custom authentication, filtering, refresh, or streaming behavior is required. Pi composes `models.json` overrides above registered native providers.
+Extensions can register either a complete phi-ai `Provider` or use the legacy provider-config form. Prefer a complete provider when custom authentication, filtering, refresh, or streaming behavior is required. Phi composes `models.json` overrides above registered native providers.
 
 ```typescript
-import { createProvider, openAICompletionsApi } from "@earendil-works/pi-ai";
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { createProvider, openAICompletionsApi } from "@ao-Barbosa/phi-ai";
+import type { ExtensionAPI } from "@ao-Barbosa/phi-coding-agent";
 
-export default function (pi: ExtensionAPI) {
-  pi.registerProvider(createProvider({
+export default function (phi: ExtensionAPI) {
+  phi.registerProvider(createProvider({
     id: "native-local",
     name: "Native Local",
     baseUrl: "http://localhost:8080/v1",
@@ -63,15 +63,15 @@ export default function (pi: ExtensionAPI) {
 
   // Legacy provider-config form:
   // Override baseUrl for existing provider
-  pi.registerProvider("anthropic", {
+  phi.registerProvider("anthropic", {
     baseUrl: "https://proxy.example.com"
   });
 
   // Register new provider with models
-  pi.registerProvider("my-provider", {
+  phi.registerProvider("my-provider", {
     name: "My Provider",
     baseUrl: "https://api.example.com",
-    apiKey: "$MY_API_KEY",
+    apiKey: "$MY_APHI_KEY",
     api: "openai-completions",
     models: [
       {
@@ -88,7 +88,7 @@ export default function (pi: ExtensionAPI) {
 }
 ```
 
-The extension factory can also be `async`. For dynamic model discovery, fetch and register models in the factory instead of `session_start`. pi waits for the factory before startup continues, so the provider is available during interactive startup and to `pi --list-models`.
+The extension factory can also be `async`. For dynamic model discovery, fetch and register models in the factory instead of `session_start`. phi waits for the factory before startup continues, so the provider is available during interactive startup and to `phi --list-models`.
 
 ## Override Existing Provider
 
@@ -96,19 +96,19 @@ The simplest use case: redirect an existing provider through a proxy.
 
 ```typescript
 // All Anthropic requests now go through your proxy
-pi.registerProvider("anthropic", {
+phi.registerProvider("anthropic", {
   baseUrl: "https://proxy.example.com"
 });
 
 // Add custom headers to OpenAI requests
-pi.registerProvider("openai", {
+phi.registerProvider("openai", {
   headers: {
     "X-Custom-Header": "value"
   }
 });
 
 // Both baseUrl and headers
-pi.registerProvider("google", {
+phi.registerProvider("google", {
   baseUrl: "https://ai-gateway.corp.com/google",
   headers: {
     "X-Corp-Auth": "$CORP_AUTH_TOKEN"  // env var or literal
@@ -125,9 +125,9 @@ To add a completely new provider, specify `models` along with the required confi
 If the model list comes from a remote endpoint, use an async extension factory:
 
 ```typescript
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI } from "@ao-Barbosa/phi-coding-agent";
 
-export default async function (pi: ExtensionAPI) {
+export default async function (phi: ExtensionAPI) {
   const response = await fetch("http://localhost:1234/v1/models");
   const payload = (await response.json()) as {
     data: Array<{
@@ -138,9 +138,9 @@ export default async function (pi: ExtensionAPI) {
     }>;
   };
 
-  pi.registerProvider("local-openai", {
+  phi.registerProvider("local-openai", {
     baseUrl: "http://localhost:1234/v1",
-    apiKey: "$LOCAL_OPENAI_API_KEY",
+    apiKey: "$LOCAL_OPENAI_APHI_KEY",
     api: "openai-completions",
     models: payload.data.map((model) => ({
       id: model.id,
@@ -158,9 +158,9 @@ export default async function (pi: ExtensionAPI) {
 This registers the fetched models before startup finishes.
 
 ```typescript
-pi.registerProvider("my-llm", {
+phi.registerProvider("my-llm", {
   baseUrl: "https://api.my-llm.com/v1",
-  apiKey: "$MY_LLM_API_KEY",  // env var reference
+  apiKey: "$MY_LLM_APHI_KEY",  // env var reference
   api: "openai-completions",  // which streaming API to use
   models: [
     {
@@ -187,13 +187,13 @@ When `models` is provided, it **replaces** all existing models for that provider
 
 ## Unregister Provider
 
-Use `pi.unregisterProvider(name)` to remove a provider that was previously registered via `pi.registerProvider(name, ...)`:
+Use `phi.unregisterProvider(name)` to remove a provider that was previously registered via `phi.registerProvider(name, ...)`:
 
 ```typescript
 // Register
-pi.registerProvider("my-llm", {
+phi.registerProvider("my-llm", {
   baseUrl: "https://api.my-llm.com/v1",
-  apiKey: "$MY_LLM_API_KEY",
+  apiKey: "$MY_LLM_APHI_KEY",
   api: "openai-completions",
   models: [
     {
@@ -209,7 +209,7 @@ pi.registerProvider("my-llm", {
 });
 
 // Later, remove it
-pi.unregisterProvider("my-llm");
+phi.unregisterProvider("my-llm");
 ```
 
 Unregistering removes that provider's dynamic models, API key fallback, OAuth provider registration, and custom stream handler registrations. Any built-in models or provider behavior that were overridden are restored.
@@ -239,7 +239,7 @@ models: [{
   id: "custom-model",
   // ...
   reasoning: true,
-  thinkingLevelMap: {              // map pi levels to provider values; null hides unsupported levels
+  thinkingLevelMap: {              // map phi levels to provider values; null hides unsupported levels
     minimal: null,
     low: null,
     medium: null,
@@ -272,9 +272,9 @@ For Anthropic-compatible providers using `api: "anthropic-messages"`, set `compa
 If your provider expects `Authorization: Bearer <key>` but doesn't use a standard API, set `authHeader: true`:
 
 ```typescript
-pi.registerProvider("custom-api", {
+phi.registerProvider("custom-api", {
   baseUrl: "https://api.example.com",
-  apiKey: "$MY_API_KEY",
+  apiKey: "$MY_APHI_KEY",
   authHeader: true,  // adds Authorization: Bearer header
   api: "openai-completions",
   models: [...]
@@ -288,9 +288,9 @@ The key is resolved for each request. An explicit request `Authorization` header
 Add OAuth/SSO authentication that integrates with `/login`:
 
 ```typescript
-import type { OAuthCredentials, OAuthLoginCallbacks } from "@earendil-works/pi-ai";
+import type { OAuthCredentials, OAuthLoginCallbacks } from "@ao-Barbosa/phi-ai";
 
-pi.registerProvider("corporate-ai", {
+phi.registerProvider("corporate-ai", {
   baseUrl: "https://ai.corp.com/v1",
   api: "openai-responses",
   models: [...],
@@ -382,7 +382,7 @@ interface OAuthLoginCallbacks {
 
 ### OAuthCredentials
 
-Credentials are persisted in `~/.pi/agent/auth.json`:
+Credentials are persisted in `~/.phi/agent/auth.json`:
 
 ```typescript
 interface OAuthCredentials {
@@ -397,12 +397,12 @@ interface OAuthCredentials {
 For providers with non-standard APIs, implement `streamSimple`. Study the existing API implementations before writing your own:
 
 **Reference implementations:**
-- [anthropic-messages.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/anthropic-messages.ts) - Anthropic Messages API
-- [mistral-conversations.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/mistral-conversations.ts) - Mistral Conversations API
-- [openai-completions.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/openai-completions.ts) - OpenAI Chat Completions
-- [openai-responses.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/openai-responses.ts) - OpenAI Responses API
-- [google-generative-ai.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/google-generative-ai.ts) - Google Generative AI
-- [bedrock-converse-stream.ts](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/api/bedrock-converse-stream.ts) - AWS Bedrock
+- [anthropic-messages.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/anthropic-messages.ts) - Anthropic Messages API
+- [mistral-conversations.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/mistral-conversations.ts) - Mistral Conversations API
+- [openai-completions.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/openai-completions.ts) - OpenAI Chat Completions
+- [openai-responses.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/openai-responses.ts) - OpenAI Responses API
+- [google-generative-ai.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/google-generative-ai.ts) - Google Generative AI
+- [bedrock-converse-stream.ts](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/api/bedrock-converse-stream.ts) - AWS Bedrock
 
 ### Stream Pattern
 
@@ -417,7 +417,7 @@ import {
   type SimpleStreamOptions,
   calculateCost,
   createAssistantMessageEventStream,
-} from "@earendil-works/pi-ai";
+} from "@ao-Barbosa/phi-ai";
 
 function streamMyProvider(
   model: Model<any>,
@@ -566,22 +566,22 @@ calculateCost(model, output.usage);
 
 ### Context Overflow Errors
 
-When a request exceeds the model's context window, pi can recover automatically by compacting the conversation and retrying. This recovery only kicks in if pi recognizes the failure as an overflow.
+When a request exceeds the model's context window, phi can recover automatically by compacting the conversation and retrying. This recovery only kicks in if phi recognizes the failure as an overflow.
 
 Detection runs on the finalized assistant message:
 
 - `stopReason === "error"`
-- `errorMessage` matches one of pi's known overflow patterns (see [`packages/ai/src/utils/overflow.ts`](https://github.com/earendil-works/pi-mono/blob/main/packages/ai/src/utils/overflow.ts))
+- `errorMessage` matches one of phi's known overflow patterns (see [`packages/ai/src/utils/overflow.ts`](https://github.com/ao-Barbosa/phi/blob/main/packages/ai/src/utils/overflow.ts))
 
-If your provider returns overflow errors with a message pi does not recognize, normalize the error from the same extension that registers the provider. Use a `message_end` handler to rewrite the assistant message so its `errorMessage` starts with a phrase pi recognizes. The generic fallback `context_length_exceeded` is the safest choice.
+If your provider returns overflow errors with a message phi does not recognize, normalize the error from the same extension that registers the provider. Use a `message_end` handler to rewrite the assistant message so its `errorMessage` starts with a phrase phi recognizes. The generic fallback `context_length_exceeded` is the safest choice.
 
 ```typescript
 const MY_PROVIDER_OVERFLOW_PATTERN = /your provider's overflow phrase/i;
 
-export default function (pi: ExtensionAPI) {
-  pi.registerProvider("my-provider", { /* ... */ });
+export default function (phi: ExtensionAPI) {
+  phi.registerProvider("my-provider", { /* ... */ });
 
-  pi.on("message_end", (event, ctx) => {
+  phi.on("message_end", (event, ctx) => {
     const message = event.message;
     if (message.role !== "assistant") return;
     if (message.stopReason !== "error") return;
@@ -605,7 +605,7 @@ export default function (pi: ExtensionAPI) {
 }
 ```
 
-`message_end` runs before pi tracks the assistant message for auto-compaction, so the rewritten `errorMessage` is what pi checks. With this in place, pi will:
+`message_end` runs before phi tracks the assistant message for auto-compaction, so the rewritten `errorMessage` is what phi checks. With this in place, phi will:
 
 1. Detect the overflow from `errorMessage`.
 2. Drop the failed assistant message from live context.
@@ -615,7 +615,7 @@ export default function (pi: ExtensionAPI) {
 Guard the rewrite carefully:
 
 - Scope it to your provider (`message.provider` and `ctx.model?.provider`) so unrelated errors from other providers are untouched.
-- Match a provider-specific pattern, not pi's generic overflow patterns. Rewriting rate-limit or throttling errors (`rate limit`, `too many requests`) would falsely trigger compaction instead of pi's normal retry-with-backoff path.
+- Match a provider-specific pattern, not phi's generic overflow patterns. Rewriting rate-limit or throttling errors (`rate limit`, `too many requests`) would falsely trigger compaction instead of phi's normal retry-with-backoff path.
 - Skip when `errorMessage` already includes `context_length_exceeded` so the handler is idempotent.
 
 ### Registration
@@ -623,9 +623,9 @@ Guard the rewrite carefully:
 Register your stream function:
 
 ```typescript
-pi.registerProvider("my-provider", {
+phi.registerProvider("my-provider", {
   baseUrl: "https://api.example.com",
-  apiKey: "$MY_API_KEY",
+  apiKey: "$MY_APHI_KEY",
   api: "my-custom-api",
   models: [...],
   streamSimple: streamMyProvider
@@ -634,7 +634,7 @@ pi.registerProvider("my-provider", {
 
 ## Testing Your Implementation
 
-Test your provider against the same test suites used by built-in providers. Copy and adapt these test files from [packages/ai/test/](https://github.com/earendil-works/pi-mono/tree/main/packages/ai/test):
+Test your provider against the same test suites used by built-in providers. Copy and adapt these test files from [packages/ai/test/](https://github.com/ao-Barbosa/phi/tree/main/packages/ai/test):
 
 | Test | Purpose |
 |------|---------|
@@ -713,7 +713,7 @@ interface ProviderModelConfig {
   /** Whether the model supports extended thinking. */
   reasoning: boolean;
 
-  /** Maps pi thinking levels to provider/model-specific values; null marks a level unsupported. */
+  /** Maps phi thinking levels to provider/model-specific values; null marks a level unsupported. */
   thinkingLevelMap?: Partial<Record<"off" | "minimal" | "low" | "medium" | "high" | "xhigh" | "max", string | null>>;
 
   /** Supported input types. */

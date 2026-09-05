@@ -2,7 +2,7 @@
 
 ## Status and baseline
 
-- Repository: `earendil-works/pi`
+- Repository: `ao-Barbosa/phi`
 - Branch at handoff creation: `dev`
 - Baseline commit: `d14d6b22327d545d6a253f932165b63e48d7f9c8`
 - The user reported the worktree clean immediately before this handoff.
@@ -478,7 +478,7 @@ Mini/presentation:
 22. `packages/coding-agent/src/experimental/client-tui-chat.ts`
 23. `packages/coding-agent/src/modes/interactive/components/tool-execution.ts`
 
-Before editing, run `git status --short` and inspect current diffs because other Pi sessions may share the worktree.
+Before editing, run `git status --short` and inspect current diffs because other Phi sessions may share the worktree.
 
 ## Validation commands
 

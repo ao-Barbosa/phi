@@ -196,7 +196,7 @@ Construct these addresses with `ephemeralScope(operationId)`:
 - `pendingToolOutput(operationId, invocationId)`;
 - `pendingAssistantFrames(operationId, responseEntryId)`.
 
-All other current built-ins remain session-scoped. In particular, `pi.op.state`, `pi.op.meta`, `pi.op.tool_args`, `pi.op.preparation`, and `pi.pending.entry` remain in the main scope because their writes coordinate atomically with lane/operation state.
+All other current built-ins remain session-scoped. In particular, `phi.op.state`, `phi.op.meta`, `phi.op.tool_args`, `phi.op.preparation`, and `phi.pending.entry` remain in the main scope because their writes coordinate atomically with lane/operation state.
 
 ### 5.2 No cross-file cleanup transaction
 

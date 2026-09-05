@@ -1,7 +1,7 @@
 # Facet Service RPC
 
 Chord owns the application-neutral service semantics and pluggable strict-JSON connection
-boundary. Pi owns the concrete wire envelope, routing, attachment state, and error adapters
+boundary. Phi owns the concrete wire envelope, routing, attachment state, and error adapters
 described here. The current implementation treats `JsonValue` as a static contract and defers
 runtime rejection of unsupported values to the concrete serializer.
 
@@ -162,8 +162,8 @@ interface SessionManagement {
 	detach(context: Context): Promise<void>;
 }
 
-const SessionDirectory = defineService<SessionDirectory>("pi.session-directory");
-const SessionManagement = defineService<SessionManagement>("pi.session-management");
+const SessionDirectory = defineService<SessionDirectory>("phi.session-directory");
+const SessionManagement = defineService<SessionManagement>("phi.session-management");
 ```
 
 A server facet derives the client from an authenticated `Context`, authorizes the requested Session, and performs the binding transition:

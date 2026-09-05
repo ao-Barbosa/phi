@@ -73,7 +73,7 @@ The initial state is a bounded `replace`. Growth emits `append`; a moving tail e
 ```ts
 {
   content: [{ type: "text", text: "…the retained window…" }],
-  details: { spillPath: "/tmp/pi-session-x/bash-8f2.log" },
+  details: { spillPath: "/tmp/phi-session-x/bash-8f2.log" },
   usage: undefined,
   addedTools: undefined,
   terminate: false,
@@ -102,7 +102,7 @@ consecutive ops on it omit the id entirely:
 [["#",0,["content",0,"text"]],["a",0,"cc -c src/a.c …\n"]]
 [["a",0,"cc -c src/b.c …\n"]]
 …
-[["s",["details","spillPath"],"/tmp/pi-session-x/bash-8f2.log"]]
+[["s",["details","spillPath"],"/tmp/phi-session-x/bash-8f2.log"]]
 …
 [["t",0,4096],["a","cc -c src/z.c\n"],["s",["truncation","totalBytes"],262144]]
 ```
