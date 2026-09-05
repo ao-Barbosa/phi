@@ -44,10 +44,10 @@
 		"src/delta/README.md"
 	],
 	"scripts": {
-		"clean": "shx rm -rf dist",
+		"clean": "rm -rf dist",
 		"build": "tsgo -p tsconfig.build.json",
 		"test": "vitest --run",
-		"prepublishOnly": "npm run clean && npm run build"
+		"prepublishOnly": "bun run clean && bun run build"
 	},
 	"keywords": [
 		"application",
@@ -70,7 +70,6 @@
 		"esbuild": "0.28.1"
 	},
 	"devDependencies": {
-		"shx": "0.4.0",
 		"vitest": "4.1.9"
 	},
 	"contributors": [

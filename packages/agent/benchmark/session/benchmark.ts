@@ -1,5 +1,51 @@
 import { strictEqual } from "node:assert/strict";
-import { bench, describe } from "vitest";
+
+export interface BenchOptions {
+	readonly time?: number;
+	readonly iterations?: number;
+	readonly warmupTime?: number;
+	readonly warmupIterations?: number;
+}
+
+interface PendingBenchmark {
+	readonly name: string;
+	readonly run: () => Promise<void>;
+	readonly options: BenchOptions;
+}
+
+const pendingBenchmarks: PendingBenchmark[] = [];
+
+/** Group benchmark output under a heading (minimal bun-native replacement for vitest describe). */
+export function describe(name: string, body: () => void): void {
+	console.log(`\n## ${name}`);
+	body();
+}
+
+/** Register a benchmark; collected jobs run when the registering file drains the queue. */
+export function bench(name: string, run: () => Promise<void>, options: BenchOptions = {}): void {
+	pendingBenchmarks.push({ name, run, options });
+}
+
+async function runPendingBenchmarks(): Promise<void> {
+	const jobs = pendingBenchmarks.splice(0, pendingBenchmarks.length);
+	for (const job of jobs) {
+		const warmupIterations = job.options.warmupIterations ?? 0;
+		for (let index = 0; index < warmupIterations; index++) await job.run();
+		const timeBudget = job.options.time ?? 0;
+		const maxIterations = job.options.iterations ?? Number.POSITIVE_INFINITY;
+		const deadline = timeBudget > 0 ? performance.now() + timeBudget : Number.POSITIVE_INFINITY;
+		let iterations = 0;
+		const started = performance.now();
+		while (iterations < maxIterations && performance.now() < deadline) {
+			await job.run();
+			iterations++;
+		}
+		const elapsed = performance.now() - started;
+		const average = iterations > 0 ? elapsed / iterations : 0;
+		const ops = elapsed > 0 && iterations > 0 ? (iterations / elapsed) * 1000 : 0;
+		console.log(`  ${job.name}: ${iterations} iterations, avg ${average.toFixed(3)} ms/op (${ops.toFixed(1)} ops/sec)`);
+	}
+}
 
 export interface BenchmarkTarget<TFixture extends AsyncDisposable> {
 	readonly name: string;
@@ -120,6 +166,8 @@ export async function registerReadBenchmarks<
 			});
 		}
 	}
+
+	await runPendingBenchmarks();
 }
 
 /** Prepares, validates, registers, and disposes one equivalent fixture per write invocation. */
@@ -176,4 +224,6 @@ export async function registerWriteBenchmarks<
 			}
 		});
 	}
+
+	await runPendingBenchmarks();
 }

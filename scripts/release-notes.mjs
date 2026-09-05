@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -291,7 +291,7 @@ function uniqueChanges(changes) {
 }
 
 function updateGithubRelease(repo, tag, body) {
-	const tempDir = mkdtempSync(path.join(tmpdir(), "pi-release-notes-"));
+	const tempDir = mkdtempSync(path.join(tmpdir(), "phi-release-notes-"));
 	try {
 		const notesPath = path.join(tempDir, "notes.md");
 		writeFileSync(notesPath, body);

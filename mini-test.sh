@@ -9,7 +9,7 @@ MINI_DIST="$SCRIPT_DIR/packages/coding-agent/dist/experimental/mini/main.js"
 # started with. Restart it after changing anything under mini/, or the protocol will not match.
 stop_server() {
   pkill -f "mini/server/entry" 2>/dev/null || true
-  rm -f "${PI_AGENT_DIR:-$HOME/.pi/agent}/experimental/mini.sock"
+  rm -f "${PHI_AGENT_DIR:-$HOME/.phi/agent}/experimental/mini.sock"
 }
 
 USE_DIST=false
@@ -23,7 +23,7 @@ for arg in "$@"; do
       cat <<'USAGE'
 Usage: ./mini-test.sh [--dist] [--fresh] [--stop] [mini args...]
 
-  --dist    run built output with plain node instead of tsx on sources
+  --dist    run built output with bun instead of sources
   --fresh   stop the detached session server first, so it picks up your changes
   --stop    stop the detached session server and exit
 
@@ -37,10 +37,10 @@ done
 
 if [[ "$USE_DIST" == "true" ]]; then
   if [[ ! -f "$MINI_DIST" ]]; then
-    echo "No build found. Run: npm run build -w @earendil-works/pi-coding-agent" >&2
+    echo "No build found. Run: bun run --filter @ao-barbosa/phi-coding-agent build" >&2
     exit 1
   fi
-  exec node "$MINI_DIST" ${ARGS[@]+"${ARGS[@]}"}
+  exec bun "$MINI_DIST" ${ARGS[@]+"${ARGS[@]}"}
 fi
 
-exec "$SCRIPT_DIR/node_modules/.bin/tsx" --tsconfig "$SCRIPT_DIR/tsconfig.json" "$MINI_SRC" ${ARGS[@]+"${ARGS[@]}"}
+exec bun "$MINI_SRC" ${ARGS[@]+"${ARGS[@]}"}

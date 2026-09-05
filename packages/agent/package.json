@@ -45,18 +45,18 @@
 		"README.md"
 	],
 	"scripts": {
-		"clean": "shx rm -rf dist",
-		"generate-telemetry-docs": "node scripts/generate-telemetry-docs.ts",
-		"check:telemetry-docs": "node scripts/generate-telemetry-docs.ts --check",
+		"clean": "rm -rf dist",
+		"generate-telemetry-docs": "bun scripts/generate-telemetry-docs.ts",
+		"check:telemetry-docs": "bun scripts/generate-telemetry-docs.ts --check",
 		"build": "tsgo -p tsconfig.build.json",
-		"bench:session:timing": "vitest bench --config vitest.benchmark.config.ts",
-		"bench:session:memory": "tsx --tsconfig benchmark/tsconfig.json benchmark/session/loaded-footprint.ts",
-		"bench:session:allocations": "tsx --tsconfig benchmark/tsconfig.json benchmark/session/allocation-profile.ts",
+		"bench:session:timing": "bun benchmark/session/session-repo.bench.ts && bun benchmark/session/storage.bench.ts",
+		"bench:session:memory": "bun benchmark/session/loaded-footprint.ts",
+		"bench:session:allocations": "bun benchmark/session/allocation-profile.ts",
 		"test": "vitest --run",
 		"test:harness": "vitest --run --config vitest.harness.config.ts",
 		"test:session:conformance": "vitest --run --config vitest.harness.config.ts test/harness/memory-conformance.test.ts",
 		"coverage:harness": "vitest --run --config vitest.harness.config.ts --coverage",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {
 		"@ao-barbosa/phi-chord": "^0.85.0",

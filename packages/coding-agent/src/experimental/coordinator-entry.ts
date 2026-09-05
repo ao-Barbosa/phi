@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 import { runCoordinatorProcess } from "./coordinator.ts";
 import { consumeInternalProcessRole } from "./process.ts";
 

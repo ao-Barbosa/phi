@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Developer wrapper that runs phi from this checkout's latest `npm run build`.
+# Developer wrapper that runs phi from this checkout's latest `bun run build`.
 # Development invocations use PHI_EXPERIMENTAL=1 by default. Pass --stable to use
 # the next phi executable on PATH; `phi update` also uses stable so self-update
 # works.
@@ -67,7 +67,7 @@ fi
 
 dev_phi="$repo_dir/packages/coding-agent/dist/bundle/cli.js"
 if [[ ! -x "$dev_phi" ]]; then
-	echo "error: development phi build not found; run \`npm run build\` in $repo_dir" >&2
+	echo "error: development phi build not found; run \`bun run build\` in $repo_dir" >&2
 	exit 1
 fi
 

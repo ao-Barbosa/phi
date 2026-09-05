@@ -21,8 +21,6 @@ function printHelp() {
   bun scripts/profile-coding-agent-bun.mjs [options]
 
 Profiles coding-agent startup with the runtime selected below:
-- npm run profile:tui     -> builds packages/coding-agent and profiles TUI startup with Node
-- npm run profile:rpc     -> builds packages/coding-agent and profiles RPC startup with Node
 - bun run profile:tui     -> profiles TUI startup from src/cli.ts directly with Bun
 - bun run profile:rpc     -> profiles RPC startup from src/cli.ts directly with Bun
 
@@ -401,7 +399,7 @@ async function runTuiBenchmarkRun({ runtime, runIndex, measuredIndex, options, p
 	const runNumber = runIndex + 1;
 	const suffix = String(runNumber).padStart(3, "0");
 	const profileName = `${options.label}-${suffix}.cpuprofile`;
-	const tempRoot = options.isolatedAgentDir ? mkdtempSync(join(tmpdir(), "pi-startup-benchmark-")) : undefined;
+	const tempRoot = options.isolatedAgentDir ? mkdtempSync(join(tmpdir(), "phi-startup-benchmark-")) : undefined;
 	const isolatedAgentDir = tempRoot ? join(tempRoot, "agent") : undefined;
 	if (isolatedAgentDir) {
 		mkdirSync(isolatedAgentDir, { recursive: true });
@@ -461,7 +459,7 @@ async function runRpcBenchmarkRun({ runtime, runIndex, measuredIndex, options, p
 	const runNumber = runIndex + 1;
 	const suffix = String(runNumber).padStart(3, "0");
 	const profileName = `${options.label}-${suffix}.cpuprofile`;
-	const tempRoot = options.isolatedAgentDir ? mkdtempSync(join(tmpdir(), "pi-startup-benchmark-")) : undefined;
+	const tempRoot = options.isolatedAgentDir ? mkdtempSync(join(tmpdir(), "phi-startup-benchmark-")) : undefined;
 	const isolatedAgentDir = tempRoot ? join(tempRoot, "agent") : undefined;
 	if (isolatedAgentDir) {
 		mkdirSync(isolatedAgentDir, { recursive: true });

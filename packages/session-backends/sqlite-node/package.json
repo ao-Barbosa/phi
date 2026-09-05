@@ -21,12 +21,12 @@
 		"CHANGELOG.md"
 	],
 	"scripts": {
-		"clean": "node -e \"import('node:fs/promises').then(fs=>fs.rm('dist',{recursive:true,force:true}))\"",
-		"build": "tsgo -p tsconfig.build.json && node scripts/copy-migrations.mjs",
-		"bench:session:timing": "vitest bench --config vitest.benchmark.config.ts",
+		"clean": "rm -rf dist",
+		"build": "tsgo -p tsconfig.build.json && bun scripts/copy-migrations.mjs",
+		"bench:session:timing": "bun benchmark/session/session-repo.bench.ts && bun benchmark/session/storage.bench.ts",
 		"test": "vitest --run",
 		"coverage": "vitest --run --coverage",
-		"prepublishOnly": "npm run clean && npm run build"
+		"prepublishOnly": "bun run clean && bun run build"
 	},
 	"author": "Earendil Works",
 	"license": "MIT",

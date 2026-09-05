@@ -16,22 +16,14 @@ interface LoadedFootprintResult {
 const execFileAsync = promisify(execFile);
 const packageRoot = fileURLToPath(new URL("../..", import.meta.url));
 const workerPath = fileURLToPath(new URL("./loaded-footprint-worker.ts", import.meta.url));
-const tsconfigPath = fileURLToPath(new URL("../tsconfig.json", import.meta.url));
 const results: LoadedFootprintResult[] = [];
 
 for (const target of storageBenchmarkTargets) {
 	for (const dataset of STORAGE_BENCHMARK_DATASETS) {
 		const { stdout } = await execFileAsync(
 			process.execPath,
-			[
-				"--expose-gc",
-				"--import",
-				"tsx",
-				workerPath,
-				target.name,
-				dataset.name,
-			],
-			{ cwd: packageRoot, env: { ...process.env, TSX_TSCONFIG_PATH: tsconfigPath } },
+			["--expose-gc", workerPath, target.name, dataset.name],
+			{ cwd: packageRoot },
 		);
 		results.push(JSON.parse(stdout) as LoadedFootprintResult);
 	}

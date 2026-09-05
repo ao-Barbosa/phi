@@ -8,15 +8,14 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"clean": "shx rm -rf .eval",
-		"eval": "node scripts/run-evals.mjs",
+		"clean": "rm -rf .eval",
+		"eval": "bun scripts/run-evals.mjs",
 		"test": "vitest run --config vitest.test.config.ts"
 	},
 	"devDependencies": {
 		"@ao-barbosa/phi-ai": "^0.85.0",
 		"@ao-barbosa/phi-coding-agent": "^0.85.0",
 		"@types/node": "22.19.19",
-		"shx": "0.4.0",
 		"typescript": "5.9.3",
 		"vitest-evals": "0.15.0",
 		"vitest": "4.1.9"

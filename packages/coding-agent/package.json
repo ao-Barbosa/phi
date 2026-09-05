@@ -39,15 +39,14 @@
 		"npm-shrinkwrap.json"
 	],
 	"scripts": {
-		"clean": "shx rm -rf dist",
-		"build": "npm run build:unbundled && node ../../scripts/build-coding-agent-bundle.mjs",
-		"build:unbundled": "tsgo -p tsconfig.build.json && shx chmod +x dist/cli.js dist/rpc-entry.js && npm run copy-assets",
-		"build:binary": "npm --prefix ../tui run build && npm --prefix ../telemetry run build && npm --prefix ../ai run build && npm --prefix ../agent run build && npm --prefix ../protocol run build && npm --prefix ../client run build && npm run build && bun build --compile --no-compile-autoload-bunfig ./src/bun/cli.ts ./src/utils/image-resize-worker.ts --outfile dist/phi && npm run copy-binary-assets",
-		"copy-assets": "shx mkdir -p dist/modes/interactive/theme && shx cp src/modes/interactive/theme/*.json dist/modes/interactive/theme/ && shx mkdir -p dist/modes/interactive/assets && shx cp src/modes/interactive/assets/*.png dist/modes/interactive/assets/ && shx mkdir -p dist/core/export-html/vendor && shx cp src/core/export-html/template.html src/core/export-html/template.css src/core/export-html/template.js dist/core/export-html/ && shx cp src/core/export-html/vendor/*.js dist/core/export-html/vendor/",
-		"copy-binary-assets": "shx cp package.json dist/ && shx cp README.md dist/ && shx cp CHANGELOG.md dist/ && shx mkdir -p dist/theme && shx cp src/modes/interactive/theme/*.json dist/theme/ && shx mkdir -p dist/assets && shx cp src/modes/interactive/assets/*.png dist/assets/ && shx mkdir -p dist/export-html/vendor && shx cp src/core/export-html/template.html dist/export-html/ && shx cp src/core/export-html/vendor/*.js dist/export-html/vendor/ && shx cp -r docs dist/ && shx cp -r examples dist/ && shx cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/",
+		"clean": "rm -rf dist",
+		"build": "bun run build:unbundled && bun ../../scripts/build-coding-agent-bundle.mjs",
+		"build:unbundled": "tsgo -p tsconfig.build.json && chmod +x dist/cli.js dist/rpc-entry.js && bun run copy-assets",
+		"build:binary": "bun run --filter @ao-barbosa/phi-tui build && bun run --filter @ao-barbosa/phi-telemetry build && bun run --filter @ao-barbosa/phi-ai build && bun run --filter @ao-barbosa/phi-agent-core build && bun run --filter @ao-barbosa/phi-protocol build && bun run --filter @ao-barbosa/phi-client build && bun run build && bun build --compile --no-compile-autoload-bunfig ./src/bun/cli.ts ./src/utils/image-resize-worker.ts --outfile dist/phi && bun run copy-binary-assets",
+		"copy-assets": "mkdir -p dist/modes/interactive/theme && cp src/modes/interactive/theme/*.json dist/modes/interactive/theme/ && mkdir -p dist/modes/interactive/assets && cp src/modes/interactive/assets/*.png dist/modes/interactive/assets/ && mkdir -p dist/core/export-html/vendor && cp src/core/export-html/template.html src/core/export-html/template.css src/core/export-html/template.js dist/core/export-html/ && cp src/core/export-html/vendor/*.js dist/core/export-html/vendor/",
+		"copy-binary-assets": "cp package.json dist/ && cp README.md dist/ && cp CHANGELOG.md dist/ && mkdir -p dist/theme && cp src/modes/interactive/theme/*.json dist/theme/ && mkdir -p dist/assets && cp src/modes/interactive/assets/*.png dist/assets/ && mkdir -p dist/export-html/vendor && cp src/core/export-html/template.html dist/export-html/ && cp src/core/export-html/vendor/*.js dist/export-html/vendor/ && cp -r docs dist/ && cp -r examples dist/ && cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/",
 		"test": "vitest --run",
-		"shrinkwrap": "node ../../scripts/generate-coding-agent-shrinkwrap.mjs",
-		"prepublishOnly": "npm run clean && npm run build && npm run shrinkwrap"
+		"prepublishOnly": "bun run clean && bun run build"
 	},
 	"dependencies": {
 		"@ao-barbosa/phi-chord": "^0.85.0",
@@ -64,7 +63,6 @@
 		"highlight.js": "10.7.3",
 		"hosted-git-info": "9.0.3",
 		"ignore": "7.0.5",
-		"jiti": "2.7.0",
 		"minimatch": "10.2.5",
 		"proper-lockfile": "4.1.2",
 		"semver": "7.8.0",
@@ -88,7 +86,6 @@
 		"@types/node": "22.19.19",
 		"@types/proper-lockfile": "4.1.4",
 		"@types/semver": "7.7.1",
-		"shx": "0.4.0",
 		"typescript": "5.9.3",
 		"vitest": "4.1.9"
 	},

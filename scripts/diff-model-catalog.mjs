@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import { copyFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -15,8 +15,8 @@ JSON differences. If providers are omitted, all providers are compared.
 worktree's getSupportedThinkingLevels() implementation.
 
 Examples:
-  node scripts/diff-model-catalog.mjs github-copilot
-  npm run diff:model-catalog -- --thinking moonshotai kimi-coding
+  bun scripts/diff-model-catalog.mjs github-copilot
+  bun run diff:model-catalog -- --thinking moonshotai kimi-coding
 `);
 }
 
@@ -54,7 +54,7 @@ if (requestedProviders.some((arg) => arg.startsWith("-"))) {
 }
 
 const repoRoot = run("git", ["rev-parse", "--show-toplevel"], { capture: true }).trim();
-const temporaryRoot = mkdtempSync(join(tmpdir(), "pi-model-catalog-diff-"));
+const temporaryRoot = mkdtempSync(join(tmpdir(), "phi-model-catalog-diff-"));
 const baselineWorktree = join(temporaryRoot, "baseline-worktree");
 const baselineOutput = join(temporaryRoot, "before");
 const currentOutput = join(temporaryRoot, "after");

@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 import { runCoordinatorProcess } from "../experimental/coordinator.ts";
 import { consumeInternalProcessRole, getInternalProcessRole } from "../experimental/process.ts";
 import { restoreSandboxEnv } from "./restore-sandbox-env.ts";

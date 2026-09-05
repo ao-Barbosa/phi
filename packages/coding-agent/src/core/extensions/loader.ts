@@ -1,12 +1,25 @@
+// Minimal Bun API surface for the compiled-binary extension module plugin.
+// A local ambient declaration keeps bun-types globals (fetch, streams,
+// process events) from leaking into the node-typed codebase.
+declare const Bun:
+	| {
+			plugin(definition: {
+				name: string;
+				setup(build: {
+					module(specifier: string, callback: () => { loader: "object"; exports: Record<string, unknown> }): void;
+				}): void;
+			}): void;
+	  }
+	| undefined;
+
 /**
- * Extension loader - loads TypeScript extension modules using jiti.
- *
+ * Extension loader - loads extension modules with native dynamic import.
+ * Bun runs TypeScript directly; the compiled binary exposes embedded modules
+ * to extensions through a Bun plugin (see registerBunExtensionModules).
  */
 
 import * as fs from "node:fs";
-import { createRequire } from "node:module";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
 import * as _bundledPhiAgentCore from "@ao-barbosa/phi-agent-core";
 import type { Provider } from "@ao-barbosa/phi-ai";
 import * as _bundledPhiAiCompat from "@ao-barbosa/phi-ai/compat";
@@ -14,10 +27,9 @@ import * as _bundledPhiAiOauth from "@ao-barbosa/phi-ai/oauth";
 import * as _bundledPhiAiProviders from "@ao-barbosa/phi-ai/providers/all";
 import type { KeyId } from "@ao-barbosa/phi-tui";
 import * as _bundledPhiTui from "@ao-barbosa/phi-tui";
-import { createJiti } from "jiti/static";
 // Static imports of packages that extensions may use.
 // These MUST be static so Bun bundles them into the compiled binary.
-// The virtualModules option then makes them available to extensions.
+// registerBunExtensionModules then makes them available to extensions.
 import * as _bundledTypebox from "typebox";
 import * as _bundledTypeboxCompile from "typebox/compile";
 import * as _bundledTypeboxValue from "typebox/value";
@@ -73,72 +85,34 @@ const VIRTUAL_MODULES: Record<string, unknown> = {
 	"@mariozechner/pi-coding-agent": _bundledPhiCodingAgent,
 };
 
-const require = createRequire(import.meta.url);
-
-const isNodeSeaBinary =
-	("sea" in process.features && process.features.sea === true) ||
-	process.getBuiltinModule("node:sea")?.isSea() === true;
-const isTypeScriptSourceRuntime = !isBunBinary && path.extname(fileURLToPath(import.meta.url)) === ".ts";
+let bunExtensionModulesRegistered = false;
 
 /**
- * Get aliases for jiti (used in built Node.js mode).
- * In compiled binary mode, virtualModules is used instead.
+ * Expose embedded modules to extensions in the compiled binary.
+ * Source and dist runtimes resolve workspace packages normally (tsconfig
+ * paths under bun, dist aliases under node), so no plugin is needed there.
  */
-let _aliases: Record<string, string> | null = null;
-
-function getAliases(): Record<string, string> {
-	if (_aliases) return _aliases;
-
-	const __dirname = path.dirname(fileURLToPath(import.meta.url));
-	const packageIndex = path.resolve(__dirname, "../..", "index.js");
-
-	const typeboxEntry = require.resolve("typebox");
-	const typeboxCompileEntry = require.resolve("typebox/compile");
-	const typeboxValueEntry = require.resolve("typebox/value");
-
-	const packagesRoot = path.resolve(__dirname, "../../../../");
-	const resolveWorkspaceOrImport = (workspaceRelativePath: string, specifier: string): string => {
-		const workspacePath = path.join(packagesRoot, workspaceRelativePath);
-		if (fs.existsSync(workspacePath)) {
-			return workspacePath;
-		}
-		return fileURLToPath(import.meta.resolve(specifier));
-	};
-
-	const phiCodingAgentEntry = packageIndex;
-	const phiAgentCoreEntry = resolveWorkspaceOrImport("agent/dist/index.js", "@ao-barbosa/phi-agent-core");
-	const phiTuiEntry = resolveWorkspaceOrImport("tui/dist/index.js", "@ao-barbosa/phi-tui");
-	// Extensions resolve the pi-ai root to the compat entrypoint (a strict
-	// superset of the core entrypoint): existing extensions using the old
-	// global API keep working at runtime until compat is removed.
-	const phiAiCompatEntry = resolveWorkspaceOrImport("ai/dist/compat.js", "@ao-barbosa/phi-ai/compat");
-	const phiAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@ao-barbosa/phi-ai/oauth");
-	const phiAiProvidersEntry = resolveWorkspaceOrImport("ai/dist/providers/all.js", "@ao-barbosa/phi-ai/providers/all");
-
-	_aliases = {
-		"@ao-barbosa/phi-coding-agent": phiCodingAgentEntry,
-		"@ao-barbosa/phi-agent-core": phiAgentCoreEntry,
-		"@ao-barbosa/phi-tui": phiTuiEntry,
-		"@ao-barbosa/phi-ai/providers/all": phiAiProvidersEntry,
-		"@ao-barbosa/phi-ai/compat": phiAiCompatEntry,
-		"@ao-barbosa/phi-ai/oauth": phiAiOauthEntry,
-		"@ao-barbosa/phi-ai": phiAiCompatEntry,
-		"@mariozechner/pi-coding-agent": phiCodingAgentEntry,
-		"@mariozechner/pi-agent-core": phiAgentCoreEntry,
-		"@mariozechner/pi-tui": phiTuiEntry,
-		"@mariozechner/pi-ai/providers/all": phiAiProvidersEntry,
-		"@mariozechner/pi-ai/compat": phiAiCompatEntry,
-		"@mariozechner/pi-ai/oauth": phiAiOauthEntry,
-		"@mariozechner/pi-ai": phiAiCompatEntry,
-		typebox: typeboxEntry,
-		"typebox/compile": typeboxCompileEntry,
-		"typebox/value": typeboxValueEntry,
-		"@sinclair/typebox": typeboxEntry,
-		"@sinclair/typebox/compile": typeboxCompileEntry,
-		"@sinclair/typebox/value": typeboxValueEntry,
-	};
-
-	return _aliases;
+function registerBunExtensionModules(): void {
+	if (
+		bunExtensionModulesRegistered ||
+		!isBunBinary ||
+		typeof Bun === "undefined" ||
+		typeof Bun.plugin !== "function"
+	) {
+		return;
+	}
+	bunExtensionModulesRegistered = true;
+	Bun.plugin({
+		name: "phi-extension-modules",
+		setup(build) {
+			for (const [specifier, namespace] of Object.entries(VIRTUAL_MODULES)) {
+				build.module(specifier, () => ({
+					loader: "object",
+					exports: { ...(namespace as Record<string, unknown>) },
+				}));
+			}
+		},
+	});
 }
 
 type HandlerFn = (...args: unknown[]) => Promise<unknown>;
@@ -490,19 +464,13 @@ async function loadExtensionModule(extensionPath: string, cacheToken?: Extension
 		}
 	}
 
-	const jiti = createJiti(import.meta.url, {
-		moduleCache: false,
-		// Compiled binaries and the bundled Node distribution use embedded modules.
-		// Source TypeScript reuses host modules and root tsconfig paths. Unbundled
-		// Node builds use dist aliases.
-		...(isBunBinary || isNodeSeaBinary
-			? { virtualModules: VIRTUAL_MODULES, tryNative: false }
-			: isTypeScriptSourceRuntime
-				? { virtualModules: VIRTUAL_MODULES, tsconfigPaths: true }
-				: { alias: getAliases() }),
-	});
+	// Bun runs TypeScript extension sources directly; node runs built JavaScript.
+	// The compiled binary additionally needs its embedded modules registered first.
+	registerBunExtensionModules();
 
-	const module = await jiti.import(extensionPath, { default: true });
+	const loaded = (await import(extensionPath)) as { default?: unknown };
+	const module = loaded.default ?? loaded;
+
 	const factory = module as ExtensionFactory;
 	if (typeof factory !== "function") {
 		return undefined;

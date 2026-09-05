@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -283,7 +283,7 @@ async function main() {
 		publishedAt: new Date().toISOString(),
 		packages: publishedPackages,
 	};
-	const temporaryDirectory = mkdtempSync(join(tmpdir(), "pi-release-announcement-"));
+	const temporaryDirectory = mkdtempSync(join(tmpdir(), "phi-release-announcement-"));
 	try {
 		const releasePath = join(temporaryDirectory, "release.json");
 		const latestPath = join(temporaryDirectory, "latest.json");

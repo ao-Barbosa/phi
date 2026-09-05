@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 /**
  * Extracts session transcripts for a given cwd, splits into context-sized files,
  * optionally spawns subagents to analyze patterns.
