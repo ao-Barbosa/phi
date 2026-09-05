@@ -25,28 +25,28 @@ import {
 } from "vitest-evals/harness";
 import { PHI_SESSION_SNAPSHOT_ARTIFACT } from "./vitest-evals/artifacts.ts";
 
-export type PiCodingAgentInput = string | Array<{ type: "prompt"; content: string } | { type: "reload" }>;
+export type PhiCodingAgentInput = string | Array<{ type: "prompt"; content: string } | { type: "reload" }>;
 
-type PiCodingAgentModelSelection = {
+type PhiCodingAgentModelSelection = {
 	provider: string;
 	id: string;
 };
 
-type PiCodingAgentHarnessOptions = {
+type PhiCodingAgentHarnessOptions = {
 	name?: string;
-	model?: PiCodingAgentModelSelection;
+	model?: PhiCodingAgentModelSelection;
 	noTools?: CreateAgentSessionOptions["noTools"];
 	transformSystemPrompt?: (defaultPrompt: string) => string;
 };
 
-type PiCodingAgentHarnessWithOutput<TOutput extends JsonValue> = PiCodingAgentHarnessOptions & {
+type PhiCodingAgentHarnessWithOutput<TOutput extends JsonValue> = PhiCodingAgentHarnessOptions & {
 	output: (args: { response: string; session: AgentSession }) => TOutput | Promise<TOutput>;
 };
 
 export function resolveModelSelection(
-	explicitModel: PiCodingAgentModelSelection | undefined,
+	explicitModel: PhiCodingAgentModelSelection | undefined,
 	environment: { PHI_PROVIDER?: string; PHI_MODEL?: string } = process.env,
-): PiCodingAgentModelSelection {
+): PhiCodingAgentModelSelection {
 	const provider = (explicitModel?.provider ?? environment.PHI_PROVIDER)?.trim();
 	const id = (explicitModel?.id ?? environment.PHI_MODEL)?.trim();
 	if (!provider || !id) {
@@ -106,11 +106,11 @@ async function promptAgent(session: AgentSession, input: string, signal: AbortSi
 	return output;
 }
 
-async function runPiCodingAgent<TOutput extends JsonValue>(
-	input: PiCodingAgentInput,
+async function runPhiCodingAgent<TOutput extends JsonValue>(
+	input: PhiCodingAgentInput,
 	signal: AbortSignal | undefined,
 	setArtifact: HarnessContext["setArtifact"],
-	options: PiCodingAgentHarnessOptions | PiCodingAgentHarnessWithOutput<TOutput>,
+	options: PhiCodingAgentHarnessOptions | PhiCodingAgentHarnessWithOutput<TOutput>,
 ): Promise<SimpleHarnessResult<string | TOutput>> {
 	const startedAt = performance.now();
 	signal?.throwIfAborted();
@@ -243,15 +243,17 @@ async function runPiCodingAgent<TOutput extends JsonValue>(
 	};
 }
 
-export function createPiCodingAgentHarness<TOutput extends JsonValue>(
-	options: PiCodingAgentHarnessWithOutput<TOutput>,
-): Harness<PiCodingAgentInput, TOutput>;
-export function createPiCodingAgentHarness(options?: PiCodingAgentHarnessOptions): Harness<PiCodingAgentInput, string>;
-export function createPiCodingAgentHarness<TOutput extends JsonValue>(
-	options: PiCodingAgentHarnessOptions | PiCodingAgentHarnessWithOutput<TOutput> = {},
+export function createPhiCodingAgentHarness<TOutput extends JsonValue>(
+	options: PhiCodingAgentHarnessWithOutput<TOutput>,
+): Harness<PhiCodingAgentInput, TOutput>;
+export function createPhiCodingAgentHarness(
+	options?: PhiCodingAgentHarnessOptions,
+): Harness<PhiCodingAgentInput, string>;
+export function createPhiCodingAgentHarness<TOutput extends JsonValue>(
+	options: PhiCodingAgentHarnessOptions | PhiCodingAgentHarnessWithOutput<TOutput> = {},
 ) {
-	return createHarness<PiCodingAgentInput, string | TOutput>({
+	return createHarness<PhiCodingAgentInput, string | TOutput>({
 		name: options.name ?? "phi-coding-agent",
-		run: ({ input, signal, setArtifact }) => runPiCodingAgent(input, signal, setArtifact, options),
+		run: ({ input, signal, setArtifact }) => runPhiCodingAgent(input, signal, setArtifact, options),
 	});
 }

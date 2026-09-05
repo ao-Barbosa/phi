@@ -7,13 +7,13 @@ import * as fs from "node:fs";
 import { createRequire } from "node:module";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import * as _bundledPiAgentCore from "@ao-barbosa/phi-agent-core";
+import * as _bundledPhiAgentCore from "@ao-barbosa/phi-agent-core";
 import type { Provider } from "@ao-barbosa/phi-ai";
-import * as _bundledPiAiCompat from "@ao-barbosa/phi-ai/compat";
-import * as _bundledPiAiOauth from "@ao-barbosa/phi-ai/oauth";
-import * as _bundledPiAiProviders from "@ao-barbosa/phi-ai/providers/all";
+import * as _bundledPhiAiCompat from "@ao-barbosa/phi-ai/compat";
+import * as _bundledPhiAiOauth from "@ao-barbosa/phi-ai/oauth";
+import * as _bundledPhiAiProviders from "@ao-barbosa/phi-ai/providers/all";
 import type { KeyId } from "@ao-barbosa/phi-tui";
-import * as _bundledPiTui from "@ao-barbosa/phi-tui";
+import * as _bundledPhiTui from "@ao-barbosa/phi-tui";
 import { createJiti } from "jiti/static";
 // Static imports of packages that extensions may use.
 // These MUST be static so Bun bundles them into the compiled binary.
@@ -24,7 +24,7 @@ import * as _bundledTypeboxValue from "typebox/value";
 import { CONFIG_DIR_NAME, getAgentDir, isBunBinary } from "../../config.ts";
 // NOTE: This import works because loader.ts exports are NOT re-exported from index.ts,
 // avoiding a circular dependency. Extensions can import from @ao-barbosa/phi-coding-agent.
-import * as _bundledPiCodingAgent from "../../index.ts";
+import * as _bundledPhiCodingAgent from "../../index.ts";
 import { resolvePath } from "../../utils/paths.ts";
 import { createEventBus, type EventBus } from "../event-bus.ts";
 import type { ExecOptions } from "../exec.ts";
@@ -54,23 +54,23 @@ const VIRTUAL_MODULES: Record<string, unknown> = {
 	"@sinclair/typebox": _bundledTypebox,
 	"@sinclair/typebox/compile": _bundledTypeboxCompile,
 	"@sinclair/typebox/value": _bundledTypeboxValue,
-	"@ao-barbosa/phi-agent-core": _bundledPiAgentCore,
-	"@ao-barbosa/phi-tui": _bundledPiTui,
+	"@ao-barbosa/phi-agent-core": _bundledPhiAgentCore,
+	"@ao-barbosa/phi-tui": _bundledPhiTui,
 	// Extensions resolve the pi-ai root to the compat entrypoint (a strict
 	// superset of the core entrypoint): existing extensions using the old
 	// global API keep working at runtime until compat is removed.
-	"@ao-barbosa/phi-ai": _bundledPiAiCompat,
-	"@ao-barbosa/phi-ai/compat": _bundledPiAiCompat,
-	"@ao-barbosa/phi-ai/oauth": _bundledPiAiOauth,
-	"@ao-barbosa/phi-ai/providers/all": _bundledPiAiProviders,
-	"@ao-barbosa/phi-coding-agent": _bundledPiCodingAgent,
-	"@mariozechner/pi-agent-core": _bundledPiAgentCore,
-	"@mariozechner/pi-tui": _bundledPiTui,
-	"@mariozechner/pi-ai": _bundledPiAiCompat,
-	"@mariozechner/pi-ai/compat": _bundledPiAiCompat,
-	"@mariozechner/pi-ai/oauth": _bundledPiAiOauth,
-	"@mariozechner/pi-ai/providers/all": _bundledPiAiProviders,
-	"@mariozechner/pi-coding-agent": _bundledPiCodingAgent,
+	"@ao-barbosa/phi-ai": _bundledPhiAiCompat,
+	"@ao-barbosa/phi-ai/compat": _bundledPhiAiCompat,
+	"@ao-barbosa/phi-ai/oauth": _bundledPhiAiOauth,
+	"@ao-barbosa/phi-ai/providers/all": _bundledPhiAiProviders,
+	"@ao-barbosa/phi-coding-agent": _bundledPhiCodingAgent,
+	"@mariozechner/pi-agent-core": _bundledPhiAgentCore,
+	"@mariozechner/pi-tui": _bundledPhiTui,
+	"@mariozechner/pi-ai": _bundledPhiAiCompat,
+	"@mariozechner/pi-ai/compat": _bundledPhiAiCompat,
+	"@mariozechner/pi-ai/oauth": _bundledPhiAiOauth,
+	"@mariozechner/pi-ai/providers/all": _bundledPhiAiProviders,
+	"@mariozechner/pi-coding-agent": _bundledPhiCodingAgent,
 };
 
 const require = createRequire(import.meta.url);
@@ -105,31 +105,31 @@ function getAliases(): Record<string, string> {
 		return fileURLToPath(import.meta.resolve(specifier));
 	};
 
-	const piCodingAgentEntry = packageIndex;
-	const piAgentCoreEntry = resolveWorkspaceOrImport("agent/dist/index.js", "@ao-barbosa/phi-agent-core");
-	const piTuiEntry = resolveWorkspaceOrImport("tui/dist/index.js", "@ao-barbosa/phi-tui");
+	const phiCodingAgentEntry = packageIndex;
+	const phiAgentCoreEntry = resolveWorkspaceOrImport("agent/dist/index.js", "@ao-barbosa/phi-agent-core");
+	const phiTuiEntry = resolveWorkspaceOrImport("tui/dist/index.js", "@ao-barbosa/phi-tui");
 	// Extensions resolve the pi-ai root to the compat entrypoint (a strict
 	// superset of the core entrypoint): existing extensions using the old
 	// global API keep working at runtime until compat is removed.
-	const piAiCompatEntry = resolveWorkspaceOrImport("ai/dist/compat.js", "@ao-barbosa/phi-ai/compat");
-	const piAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@ao-barbosa/phi-ai/oauth");
-	const piAiProvidersEntry = resolveWorkspaceOrImport("ai/dist/providers/all.js", "@ao-barbosa/phi-ai/providers/all");
+	const phiAiCompatEntry = resolveWorkspaceOrImport("ai/dist/compat.js", "@ao-barbosa/phi-ai/compat");
+	const phiAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@ao-barbosa/phi-ai/oauth");
+	const phiAiProvidersEntry = resolveWorkspaceOrImport("ai/dist/providers/all.js", "@ao-barbosa/phi-ai/providers/all");
 
 	_aliases = {
-		"@ao-barbosa/phi-coding-agent": piCodingAgentEntry,
-		"@ao-barbosa/phi-agent-core": piAgentCoreEntry,
-		"@ao-barbosa/phi-tui": piTuiEntry,
-		"@ao-barbosa/phi-ai/providers/all": piAiProvidersEntry,
-		"@ao-barbosa/phi-ai/compat": piAiCompatEntry,
-		"@ao-barbosa/phi-ai/oauth": piAiOauthEntry,
-		"@ao-barbosa/phi-ai": piAiCompatEntry,
-		"@mariozechner/pi-coding-agent": piCodingAgentEntry,
-		"@mariozechner/pi-agent-core": piAgentCoreEntry,
-		"@mariozechner/pi-tui": piTuiEntry,
-		"@mariozechner/pi-ai/providers/all": piAiProvidersEntry,
-		"@mariozechner/pi-ai/compat": piAiCompatEntry,
-		"@mariozechner/pi-ai/oauth": piAiOauthEntry,
-		"@mariozechner/pi-ai": piAiCompatEntry,
+		"@ao-barbosa/phi-coding-agent": phiCodingAgentEntry,
+		"@ao-barbosa/phi-agent-core": phiAgentCoreEntry,
+		"@ao-barbosa/phi-tui": phiTuiEntry,
+		"@ao-barbosa/phi-ai/providers/all": phiAiProvidersEntry,
+		"@ao-barbosa/phi-ai/compat": phiAiCompatEntry,
+		"@ao-barbosa/phi-ai/oauth": phiAiOauthEntry,
+		"@ao-barbosa/phi-ai": phiAiCompatEntry,
+		"@mariozechner/pi-coding-agent": phiCodingAgentEntry,
+		"@mariozechner/pi-agent-core": phiAgentCoreEntry,
+		"@mariozechner/pi-tui": phiTuiEntry,
+		"@mariozechner/pi-ai/providers/all": phiAiProvidersEntry,
+		"@mariozechner/pi-ai/compat": phiAiCompatEntry,
+		"@mariozechner/pi-ai/oauth": phiAiOauthEntry,
+		"@mariozechner/pi-ai": phiAiCompatEntry,
 		typebox: typeboxEntry,
 		"typebox/compile": typeboxCompileEntry,
 		"typebox/value": typeboxValueEntry,

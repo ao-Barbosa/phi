@@ -175,12 +175,12 @@ function createPiShim(installDirectory) {
 	const binDirectory = join(installDirectory, "node_modules", ".bin");
 	if (process.platform === "win32") {
 		if (existsSync(join(binDirectory, "phi.cmd"))) {
-			writeFileSync(join(installDirectory, "phi.cmd"), '@ECHO off\r\n"%~dp0node_modules\\.bin\\pi.cmd" %*\r\n');
-			writeFileSync(join(installDirectory, "phi.ps1"), '& "$PSScriptRoot/node_modules/.bin/pi.ps1" @args\n');
+			writeFileSync(join(installDirectory, "phi.cmd"), '@ECHO off\r\n"%~dp0node_modules\\.bin\\phi.cmd" %*\r\n');
+			writeFileSync(join(installDirectory, "phi.ps1"), '& "$PSScriptRoot/node_modules/.bin/phi.ps1" @args\n');
 			return;
 		}
-		writeFileSync(join(installDirectory, "phi.cmd"), '@ECHO off\r\n"%~dp0node_modules\\.bin\\pi.exe" %*\r\n');
-		writeFileSync(join(installDirectory, "phi.ps1"), '& "$PSScriptRoot/node_modules/.bin/pi.exe" @args\n');
+		writeFileSync(join(installDirectory, "phi.cmd"), '@ECHO off\r\n"%~dp0node_modules\\.bin\\phi.exe" %*\r\n');
+		writeFileSync(join(installDirectory, "phi.ps1"), '& "$PSScriptRoot/node_modules/.bin/phi.exe" @args\n');
 		return;
 	}
 	symlinkSync(join("node_modules", ".bin", "phi"), join(installDirectory, "phi"));
@@ -278,19 +278,19 @@ for (const tarball of tarballs.values()) {
 if (!options.skipInstall) {
 	console.log("\nLocal Bun binary release:");
 	console.log(`  ${binaryDirectory}`);
-	console.log(`  ${join(outDir, `pi-${binaryPlatform}.${String(binaryPlatform).startsWith("windows-") ? "zip" : "tar.gz"}`)}`);
+	console.log(`  ${join(outDir, `phi-${binaryPlatform}.${String(binaryPlatform).startsWith("windows-") ? "zip" : "tar.gz"}`)}`);
 	console.log("\nRun the local Bun binary release from outside the repository:");
-	console.log(`  ${join(binaryDirectory, String(binaryPlatform).startsWith("windows-") ? "phi.exe" : "pi")} --help`);
+	console.log(`  ${join(binaryDirectory, String(binaryPlatform).startsWith("windows-") ? "phi.exe" : "phi")} --help`);
 
 	console.log("\nIsolated npm install:");
 	console.log(`  ${nodeInstallDirectory}`);
 	console.log("\nRun the locally packed npm CLI from outside the repository:");
-	console.log(`  ${join(nodeInstallDirectory, process.platform === "win32" ? "phi.cmd" : "pi")} --help`);
+	console.log(`  ${join(nodeInstallDirectory, process.platform === "win32" ? "phi.cmd" : "phi")} --help`);
 
 	if (!options.skipBunInstall) {
 		console.log("\nIsolated Bun package install:");
 		console.log(`  ${bunInstallDirectory}`);
 		console.log("\nRun the locally packed Bun package CLI from outside the repository:");
-		console.log(`  ${join(bunInstallDirectory, process.platform === "win32" ? "phi.cmd" : "pi")} --help`);
+		console.log(`  ${join(bunInstallDirectory, process.platform === "win32" ? "phi.cmd" : "phi")} --help`);
 	}
 }
