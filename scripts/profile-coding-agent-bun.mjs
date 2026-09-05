@@ -18,7 +18,7 @@ const startupBenchmarkEnvName = "PHI_STARTUP_BENCHMARK";
 
 function printHelp() {
 	console.log(`Usage:
-  node scripts/profile-coding-agent-node.mjs [options]
+  bun scripts/profile-coding-agent-bun.mjs [options]
 
 Profiles coding-agent startup with the runtime selected below:
 - npm run profile:tui     -> builds packages/coding-agent and profiles TUI startup with Node
