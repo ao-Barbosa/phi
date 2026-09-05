@@ -461,9 +461,9 @@ describe("runtime assistant generation", () => {
 		).toEqual([
 			"entry",
 			"usage",
-			"value:set:pi.branch.tip",
-			"list:delete:pi.pending.assistant_frame",
-			"value:set:pi.op.state",
+			"value:set:phi.branch.tip",
+			"list:delete:phi.pending.assistant_frame",
+			"value:set:phi.op.state",
 		]);
 		expect(fixture.events.map((event) => event.type)).toEqual(
 			expect.arrayContaining([

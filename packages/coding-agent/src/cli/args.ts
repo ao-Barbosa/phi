@@ -434,7 +434,7 @@ ${chalk.bold("Environment Variables:")}
   PHI_SERVER_ID                     - Logical experimental server ID (overridden by --server-id)
   PHI_OFFLINE                       - Disable startup network operations when set to 1/true/yes
   PHI_TELEMETRY                     - Override install telemetry when set to 1/true/yes or 0/false/no
-  PHI_SHARE_VIEWER_URL              - Base URL for /share command (default: https://pi.dev/session/)
+  PHI_SHARE_VIEWER_URL              - Base URL for /share command (default: https://phi.dev/session/)
 
 ${chalk.bold("Built-in Tool Names:")}
   read       - Read file contents

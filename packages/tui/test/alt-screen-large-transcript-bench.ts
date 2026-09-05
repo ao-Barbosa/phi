@@ -133,7 +133,7 @@ const root = new VStack([
 	{ component: dock, basis: "auto", minSize: 1 },
 ]);
 const terminal = new NullTerminal();
-const tui = new TuiAltScreen(terminal, false, "/tmp/pi-tui-bench");
+const tui = new TuiAltScreen(terminal, false, "/tmp/phi-tui-bench");
 tui.setLayoutRoot(root);
 tui.start();
 tui.renderNow();

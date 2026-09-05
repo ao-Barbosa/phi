@@ -321,7 +321,7 @@ export class TuiMainScreen extends TuiBase implements TUI {
 		const redrawLogDirectory = process.env.PHI_TUI_DEBUG_REDRAW === "1" ? this.logDirectory : undefined;
 		const logRedraw = (reason: string): void => {
 			if (redrawLogDirectory === undefined) return;
-			const logPath = path.join(redrawLogDirectory, "pi-tui-debug.log");
+			const logPath = path.join(redrawLogDirectory, "phi-tui-debug.log");
 			const msg = `[${new Date().toISOString()}] fullRender: ${reason} (prev=${this.previousLines.length}, new=${newLines.length}, height=${height})\n`;
 			fs.mkdirSync(path.dirname(logPath), { recursive: true });
 			fs.appendFileSync(logPath, msg);

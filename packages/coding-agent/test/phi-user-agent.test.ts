@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { getPhiUserAgent } from "../src/utils/phi-user-agent.ts";
 
 describe("getPhiUserAgent", () => {
-	it("formats the user agent expected by pi.dev", () => {
+	it("formats the user agent expected by phi.dev", () => {
 		const runtime = process.versions.bun ? `bun/${process.versions.bun}` : `node/${process.version}`;
 		const userAgent = getPhiUserAgent("1.2.3");
 

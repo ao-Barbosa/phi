@@ -596,11 +596,11 @@ describe("runtime deferred polling", () => {
 						: write.kind,
 				),
 		).toEqual([
-			"value:delete:pi.op.meta",
-			"value:delete:pi.op.state",
-			"list:delete:pi.pending.assistant_frame",
-			"value:set:pi.result",
-			"value:set:pi.lane.state",
+			"value:delete:phi.op.meta",
+			"value:delete:phi.op.state",
+			"list:delete:phi.pending.assistant_frame",
+			"value:set:phi.result",
+			"value:set:phi.lane.state",
 		]);
 		expect(
 			fixture.storage

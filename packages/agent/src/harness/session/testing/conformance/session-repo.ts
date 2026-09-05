@@ -676,7 +676,7 @@ export function createSessionRepoForkBehaviorConformance<TMetadata extends Sessi
 				BACKGROUND_CONTEXT,
 			);
 
-			for (const namespace of ["pi", "phi.unknown"] as const) {
+			for (const namespace of ["phi", "phi.unknown"] as const) {
 				const address = value<JsonValue>(namespace);
 				await source.setValue(address, true, BACKGROUND_CONTEXT);
 				await rejects(repo.fork(source.metadata, { id: "tree", scope: "tree" }, BACKGROUND_CONTEXT));

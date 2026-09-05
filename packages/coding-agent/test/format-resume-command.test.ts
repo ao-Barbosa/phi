@@ -44,7 +44,7 @@ function createSessionManager(options: {
 		isPersisted: () => options.persisted ?? true,
 		getSessionFile: () => options.sessionFile,
 		getSessionId: () => options.sessionId ?? "0197f6e4-4cf9-7f44-a2d8-f8f7f49ee9d3",
-		getSessionDir: () => options.sessionDir ?? "/tmp/pi-sessions",
+		getSessionDir: () => options.sessionDir ?? "/tmp/phi-sessions",
 		usesDefaultSessionDir: () => options.usesDefaultSessionDir ?? true,
 	} as unknown as SessionManager;
 }
@@ -121,7 +121,7 @@ describe("formatResumeCommand", () => {
 
 	it("returns undefined when the session file is missing", () => {
 		setStdoutIsTTY(true);
-		const sessionManager = createSessionManager({ sessionFile: "/tmp/pi-missing-session.jsonl" });
+		const sessionManager = createSessionManager({ sessionFile: "/tmp/phi-missing-session.jsonl" });
 
 		expect(formatResumeCommand(sessionManager)).toBeUndefined();
 	});

@@ -7,13 +7,13 @@ afterEach(() => vi.unstubAllEnvs());
 
 describe("experimental server session directory", () => {
 	test("uses the experimental directory under the configured agent directory by default", () => {
-		vi.stubEnv("PHI_CODING_AGENT_DIR", "/tmp/pi-agent-config");
+		vi.stubEnv("PHI_CODING_AGENT_DIR", "/tmp/phi-agent-config");
 
-		expect(resolveSessionDirectory()).toBe("/tmp/pi-agent-config/experimental/sessions");
+		expect(resolveSessionDirectory()).toBe("/tmp/phi-agent-config/experimental/sessions");
 	});
 
 	test("resolves an explicit relative directory from the current working directory", () => {
-		vi.stubEnv("PHI_CODING_AGENT_DIR", "/tmp/pi-agent-config");
+		vi.stubEnv("PHI_CODING_AGENT_DIR", "/tmp/phi-agent-config");
 
 		expect(resolveSessionDirectory("relative/sessions")).toBe(resolve("relative/sessions"));
 	});

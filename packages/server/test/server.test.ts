@@ -79,7 +79,7 @@ test("handshake timeout closes with a final hello_error frame", async () => {
 });
 
 test("rejects timeout values above Node's maximum timer delay", () => {
-	const path = "/tmp/pi-server-timeout-test.sock";
+	const path = "/tmp/phi-server-timeout-test.sock";
 	expect(() =>
 		createUnixServer(host, {
 			path,
