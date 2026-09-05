@@ -21,7 +21,7 @@ import { clampOpenAIPromptCacheKey } from "./openai-prompt-cache.ts";
 import { convertResponsesMessages, convertResponsesTools, processResponsesStream } from "./openai-responses-shared.ts";
 import { buildBaseOptions } from "./simple-options.ts";
 
-const DEFAULT_AZURE_API_VERSION = "v1";
+const DEFAULT_AZURE_APHI_VERSION = "v1";
 const AZURE_TOOL_CALL_PROVIDERS = new Set(["openai", "openai-codex", "opencode", "azure-openai-responses"]);
 // OpenAI Responses rejects max_output_tokens below 16: https://github.com/earendil-works/pi/issues/6265
 const OPENAI_RESPONSES_MIN_OUTPUT_TOKENS = 16;
@@ -224,8 +224,8 @@ function resolveAzureConfig(
 ): { baseUrl: string; apiVersion: string } {
 	const apiVersion =
 		options?.azureApiVersion ||
-		getProviderEnvValue("AZURE_OPENAI_API_VERSION", options?.env) ||
-		DEFAULT_AZURE_API_VERSION;
+		getProviderEnvValue("AZURE_OPENAI_APHI_VERSION", options?.env) ||
+		DEFAULT_AZURE_APHI_VERSION;
 
 	const baseUrl =
 		options?.azureBaseUrl?.trim() || getProviderEnvValue("AZURE_OPENAI_BASE_URL", options?.env)?.trim() || undefined;

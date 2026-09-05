@@ -8,7 +8,7 @@ export function minimaxProvider(): Provider<"anthropic-messages"> {
 		id: "minimax",
 		name: "MiniMax",
 		baseUrl: "https://api.minimax.io/anthropic",
-		auth: { apiKey: envApiKeyAuth("MiniMax API key", ["MINIMAX_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("MiniMax API key", ["MINIMAX_APHI_KEY"]) },
 		models: Object.values(MINIMAX_MODELS),
 		api: anthropicMessagesApi(),
 	});

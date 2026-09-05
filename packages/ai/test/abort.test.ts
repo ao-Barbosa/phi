@@ -98,7 +98,7 @@ async function testAbortThenNewMessage<TApi extends Api>(llm: Model<TApi>, optio
 }
 
 describe("AI Providers Abort Tests", () => {
-	describe.skipIf(!process.env.GEMINI_API_KEY)("Google Provider Abort", () => {
+	describe.skipIf(!process.env.GEMINI_APHI_KEY)("Google Provider Abort", () => {
 		const llm = getModel("google", "gemini-2.5-flash");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -110,7 +110,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.OPENAI_API_KEY)("OpenAI Completions Provider Abort", () => {
+	describe.skipIf(!process.env.OPENAI_APHI_KEY)("OpenAI Completions Provider Abort", () => {
 		const { compat: _compat, ...baseModel } = getModel("openai", "gpt-4o-mini")!;
 		void _compat;
 		const llm: Model<"openai-completions"> = {
@@ -127,7 +127,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.OPENAI_API_KEY)("OpenAI Responses Provider Abort", () => {
+	describe.skipIf(!process.env.OPENAI_APHI_KEY)("OpenAI Responses Provider Abort", () => {
 		const llm = getModel("openai", "gpt-5-mini");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -165,7 +165,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.MISTRAL_API_KEY)("Mistral Provider Abort", () => {
+	describe.skipIf(!process.env.MISTRAL_APHI_KEY)("Mistral Provider Abort", () => {
 		const llm = getModel("mistral", "devstral-medium-latest");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -177,7 +177,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.TOGETHER_API_KEY)("Together AI Provider Abort", () => {
+	describe.skipIf(!process.env.TOGETHER_APHI_KEY)("Together AI Provider Abort", () => {
 		const llm = getModel("together", "moonshotai/Kimi-K2.6");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -189,7 +189,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.BASETEN_API_KEY)("Baseten Provider Abort", () => {
+	describe.skipIf(!process.env.BASETEN_APHI_KEY)("Baseten Provider Abort", () => {
 		const llm = getModel("baseten", "zai-org/GLM-5.2");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -201,7 +201,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.MINIMAX_API_KEY)("MiniMax Provider Abort", () => {
+	describe.skipIf(!process.env.MINIMAX_APHI_KEY)("MiniMax Provider Abort", () => {
 		const llm = getModel("minimax", "MiniMax-M2.7");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -213,7 +213,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.XIAOMI_API_KEY)("Xiaomi MiMo (API billing) Provider Abort", () => {
+	describe.skipIf(!process.env.XIAOMI_APHI_KEY)("Xiaomi MiMo (API billing) Provider Abort", () => {
 		const llm = getModel("xiaomi", "mimo-v2.5-pro");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -225,7 +225,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_CN_API_KEY)("Xiaomi MiMo Token Plan (CN) Provider Abort", () => {
+	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_CN_APHI_KEY)("Xiaomi MiMo Token Plan (CN) Provider Abort", () => {
 		const llm = getModel("xiaomi-token-plan-cn", "mimo-v2.5-pro");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -237,7 +237,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_AMS_API_KEY)("Xiaomi MiMo Token Plan (AMS) Provider Abort", () => {
+	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_AMS_APHI_KEY)("Xiaomi MiMo Token Plan (AMS) Provider Abort", () => {
 		const llm = getModel("xiaomi-token-plan-ams", "mimo-v2.5-pro");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -249,7 +249,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_SGP_API_KEY)("Xiaomi MiMo Token Plan (SGP) Provider Abort", () => {
+	describe.skipIf(!process.env.XIAOMI_TOKEN_PLAN_SGP_APHI_KEY)("Xiaomi MiMo Token Plan (SGP) Provider Abort", () => {
 		const llm = getModel("xiaomi-token-plan-sgp", "mimo-v2.5-pro");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -261,7 +261,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_API_KEY)("Qwen Token Plan Provider Abort", () => {
+	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_APHI_KEY)("Qwen Token Plan Provider Abort", () => {
 		const llm = getModel("qwen-token-plan", "qwen3.7-max");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -273,7 +273,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_API_KEY)("Qwen Token Plan Individual Provider Abort", () => {
+	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_APHI_KEY)("Qwen Token Plan Individual Provider Abort", () => {
 		const llm = getModel("qwen-token-plan-individual", "qwen3.8-max");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -285,7 +285,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_CN_API_KEY)("Qwen Token Plan (CN) Provider Abort", () => {
+	describe.skipIf(!process.env.QWEN_TOKEN_PLAN_CN_APHI_KEY)("Qwen Token Plan (CN) Provider Abort", () => {
 		const llm = getModel("qwen-token-plan-cn", "qwen3.7-max");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -297,7 +297,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.KIMI_API_KEY)("Kimi For Coding Provider Abort", () => {
+	describe.skipIf(!process.env.KIMI_APHI_KEY)("Kimi For Coding Provider Abort", () => {
 		const llm = getModel("kimi-coding", "kimi-for-coding");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {
@@ -309,7 +309,7 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
-	describe.skipIf(!process.env.AI_GATEWAY_API_KEY)("Vercel AI Gateway Provider Abort", () => {
+	describe.skipIf(!process.env.AI_GATEWAY_APHI_KEY)("Vercel AI Gateway Provider Abort", () => {
 		const llm = getModel("vercel-ai-gateway", "google/gemini-2.5-flash");
 
 		it("should abort mid-stream", { retry: 3 }, async () => {

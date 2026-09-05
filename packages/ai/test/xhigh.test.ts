@@ -14,7 +14,7 @@ function makeContext(): Context {
 	};
 }
 
-describe.skipIf(!process.env.OPENAI_API_KEY)("xhigh reasoning", () => {
+describe.skipIf(!process.env.OPENAI_APHI_KEY)("xhigh reasoning", () => {
 	describe("gpt 5.5 (supports xhigh)", () => {
 		// Note: codex models only support the responses API, not chat completions
 		it("should work with openai-responses", async () => {

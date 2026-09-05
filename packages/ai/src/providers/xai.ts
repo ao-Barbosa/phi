@@ -10,7 +10,7 @@ export function xaiProvider(): Provider<"openai-responses"> {
 		name: "xAI",
 		baseUrl: "https://api.x.ai/v1",
 		auth: {
-			apiKey: envApiKeyAuth("xAI API key", ["XAI_API_KEY"]),
+			apiKey: envApiKeyAuth("xAI API key", ["XAI_APHI_KEY"]),
 			oauth: lazyOAuth({
 				name: "xAI (Grok/X subscription)",
 				isSubscription: true,

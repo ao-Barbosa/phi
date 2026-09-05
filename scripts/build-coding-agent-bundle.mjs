@@ -83,7 +83,6 @@ function commonBuildOptions() {
 		absWorkingDir: repoRoot,
 		banner,
 		bundle: true,
-		define: { PI_BUNDLED_NODE: "true" },
 		external: ["@ao-barbosa/phi-chord", "@silvia-odwyer/photon-node"],
 		format: "esm",
 		legalComments: "none",

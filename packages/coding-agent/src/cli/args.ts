@@ -315,7 +315,7 @@ ${chalk.bold("Options:")}
   --tui-mode <mode>              TUI mode: regular (default) or fullscreen
   --approve, -a                  Trust project-local files for this run
   --no-approve, -na              Ignore project-local files for this run
-  --offline                      Disable startup network operations (same as PI_OFFLINE=1)
+  --offline                      Disable startup network operations (same as PHI_OFFLINE=1)
   --                             End option parsing; treat remaining arguments as messages/files
   --help, -h                     Show this help
   --version, -v                  Show version number
@@ -386,42 +386,42 @@ ${chalk.bold("Examples:")}
 
 ${chalk.bold("Environment Variables:")}
   ANTHROPIC_AUTH_TOKEN             - Anthropic bearer auth token
-  ANTHROPIC_API_KEY                - Anthropic Claude API key
+  ANTHROPIC_APHI_KEY                - Anthropic Claude API key
   ANTHROPIC_OAUTH_TOKEN            - Anthropic OAuth token (alternative to API key)
-  ANT_LING_API_KEY                 - Ant Ling API key
-  OPENAI_API_KEY                   - OpenAI GPT API key
-  AZURE_OPENAI_API_KEY             - Azure OpenAI API key
+  ANT_LING_APHI_KEY                 - Ant Ling API key
+  OPENAI_APHI_KEY                   - OpenAI GPT API key
+  AZURE_OPENAI_APHI_KEY             - Azure OpenAI API key
   AZURE_OPENAI_BASE_URL            - Azure OpenAI/Cognitive Services base URL (e.g. https://{resource}.openai.azure.com)
   AZURE_OPENAI_RESOURCE_NAME       - Azure OpenAI resource name (alternative to base URL)
-  AZURE_OPENAI_API_VERSION         - Azure OpenAI API version (default: v1)
+  AZURE_OPENAI_APHI_VERSION         - Azure OpenAI API version (default: v1)
   AZURE_OPENAI_DEPLOYMENT_NAME_MAP - Azure OpenAI model=deployment map (comma-separated)
-  DEEPSEEK_API_KEY                 - DeepSeek API key
-  NVIDIA_API_KEY                   - NVIDIA NIM API key
-  GEMINI_API_KEY                   - Google Gemini API key
-  GROQ_API_KEY                     - Groq API key
-  CEREBRAS_API_KEY                 - Cerebras API key
-  XAI_API_KEY                      - xAI Grok API key
-  FIREWORKS_API_KEY                - Fireworks API key
-  TOGETHER_API_KEY                 - Together AI API key
-  BASETEN_API_KEY                  - Baseten API key
-  OPENROUTER_API_KEY               - OpenRouter API key
-  AI_GATEWAY_API_KEY               - Vercel AI Gateway API key
-  ZAI_API_KEY                      - ZAI Coding Plan API key (Global)
-  ZAI_CODING_CN_API_KEY            - ZAI Coding Plan API key (China)
-  MISTRAL_API_KEY                  - Mistral API key
-  MINIMAX_API_KEY                  - MiniMax API key
-  MOONSHOT_API_KEY                 - Moonshot AI API key
-  OPENCODE_API_KEY                 - OpenCode Zen/OpenCode Go API key
-  KIMI_API_KEY                     - Kimi For Coding API key
-  CLOUDFLARE_API_KEY               - Cloudflare API token (Workers AI and AI Gateway)
+  DEEPSEEK_APHI_KEY                 - DeepSeek API key
+  NVIDIA_APHI_KEY                   - NVIDIA NIM API key
+  GEMINI_APHI_KEY                   - Google Gemini API key
+  GROQ_APHI_KEY                     - Groq API key
+  CEREBRAS_APHI_KEY                 - Cerebras API key
+  XAI_APHI_KEY                      - xAI Grok API key
+  FIREWORKS_APHI_KEY                - Fireworks API key
+  TOGETHER_APHI_KEY                 - Together AI API key
+  BASETEN_APHI_KEY                  - Baseten API key
+  OPENROUTER_APHI_KEY               - OpenRouter API key
+  AI_GATEWAY_APHI_KEY               - Vercel AI Gateway API key
+  ZAI_APHI_KEY                      - ZAI Coding Plan API key (Global)
+  ZAI_CODING_CN_APHI_KEY            - ZAI Coding Plan API key (China)
+  MISTRAL_APHI_KEY                  - Mistral API key
+  MINIMAX_APHI_KEY                  - MiniMax API key
+  MOONSHOT_APHI_KEY                 - Moonshot AI API key
+  OPENCODE_APHI_KEY                 - OpenCode Zen/OpenCode Go API key
+  KIMI_APHI_KEY                     - Kimi For Coding API key
+  CLOUDFLARE_APHI_KEY               - Cloudflare API token (Workers AI and AI Gateway)
   CLOUDFLARE_ACCOUNT_ID            - Cloudflare account id (required for both)
   CLOUDFLARE_GATEWAY_ID            - Cloudflare AI Gateway slug (required for AI Gateway)
-  QWEN_TOKEN_PLAN_API_KEY          - Qwen Token Plan API key (international region)
-  QWEN_TOKEN_PLAN_CN_API_KEY       - Qwen Token Plan API key (China region)
-  XIAOMI_API_KEY                   - Xiaomi MiMo API key (api.xiaomimimo.com billing)
-  XIAOMI_TOKEN_PLAN_CN_API_KEY     - Xiaomi MiMo Token Plan API key (China region)
-  XIAOMI_TOKEN_PLAN_AMS_API_KEY    - Xiaomi MiMo Token Plan API key (Amsterdam region)
-  XIAOMI_TOKEN_PLAN_SGP_API_KEY    - Xiaomi MiMo Token Plan API key (Singapore region)
+  QWEN_TOKEN_PLAN_APHI_KEY          - Qwen Token Plan API key (international region)
+  QWEN_TOKEN_PLAN_CN_APHI_KEY       - Qwen Token Plan API key (China region)
+  XIAOMI_APHI_KEY                   - Xiaomi MiMo API key (api.xiaomimimo.com billing)
+  XIAOMI_TOKEN_PLAN_CN_APHI_KEY     - Xiaomi MiMo Token Plan API key (China region)
+  XIAOMI_TOKEN_PLAN_AMS_APHI_KEY    - Xiaomi MiMo Token Plan API key (Amsterdam region)
+  XIAOMI_TOKEN_PLAN_SGP_APHI_KEY    - Xiaomi MiMo Token Plan API key (Singapore region)
   AWS_PROFILE                      - AWS profile for Amazon Bedrock
   AWS_ACCESS_KEY_ID                - AWS access key for Amazon Bedrock
   AWS_SECRET_ACCESS_KEY            - AWS secret key for Amazon Bedrock
@@ -429,12 +429,12 @@ ${chalk.bold("Environment Variables:")}
   AWS_REGION                       - AWS region for Amazon Bedrock (e.g., us-east-1)
   ${ENV_AGENT_DIR.padEnd(32)} - Config directory (default: ~/${CONFIG_DIR_NAME}/agent)
   ${ENV_SESSION_DIR.padEnd(32)} - Session storage directory (overridden by --session-dir)
-  PI_PACKAGE_DIR                   - Override package directory (for Nix/Guix store paths)
-  PI_SERVER_DIR                    - Experimental server profile and socket directory (default: ~/.pi/server)
-  PI_SERVER_ID                     - Logical experimental server ID (overridden by --server-id)
-  PI_OFFLINE                       - Disable startup network operations when set to 1/true/yes
-  PI_TELEMETRY                     - Override install telemetry when set to 1/true/yes or 0/false/no
-  PI_SHARE_VIEWER_URL              - Base URL for /share command (default: https://pi.dev/session/)
+  PHI_PACKAGE_DIR                   - Override package directory (for Nix/Guix store paths)
+  PHI_SERVER_DIR                    - Experimental server profile and socket directory (default: ~/.phi/server)
+  PHI_SERVER_ID                     - Logical experimental server ID (overridden by --server-id)
+  PHI_OFFLINE                       - Disable startup network operations when set to 1/true/yes
+  PHI_TELEMETRY                     - Override install telemetry when set to 1/true/yes or 0/false/no
+  PHI_SHARE_VIEWER_URL              - Base URL for /share command (default: https://pi.dev/session/)
 
 ${chalk.bold("Built-in Tool Names:")}
   read       - Read file contents

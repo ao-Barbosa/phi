@@ -22,9 +22,9 @@ import {
 } from "../src/core/agent-session-runtime.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { SessionManager } from "../src/core/session-manager.ts";
-import { API_KEY } from "./utilities.ts";
+import { APHI_KEY } from "./utilities.ts";
 
-describe.skipIf(!API_KEY)("AgentSession forking", () => {
+describe.skipIf(!APHI_KEY)("AgentSession forking", () => {
 	let session: AgentSession;
 	let runtimeHost: AgentSessionRuntime;
 	let tempDir: string;
@@ -48,7 +48,7 @@ describe.skipIf(!API_KEY)("AgentSession forking", () => {
 		const model = getModel("anthropic", "claude-sonnet-4-5")!;
 		sessionManager = noSession ? SessionManager.inMemory(tempDir) : SessionManager.create(tempDir);
 		const authStorage = AuthStorage.create(join(tempDir, "auth.json"));
-		await authStorage.modify("anthropic", async () => ({ type: "api_key", key: API_KEY! }));
+		await authStorage.modify("anthropic", async () => ({ type: "api_key", key: APHI_KEY! }));
 
 		const servicesOptions = {
 			agentDir: tempDir,

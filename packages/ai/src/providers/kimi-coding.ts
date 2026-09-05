@@ -10,7 +10,7 @@ export function kimiCodingProvider(): Provider<"anthropic-messages"> {
 		name: "Kimi For Coding",
 		baseUrl: "https://api.kimi.com/coding",
 		auth: {
-			apiKey: envApiKeyAuth("Kimi API key", ["KIMI_API_KEY"]),
+			apiKey: envApiKeyAuth("Kimi API key", ["KIMI_APHI_KEY"]),
 			oauth: lazyOAuth({
 				name: "Kimi Code (subscription)",
 				isSubscription: true,

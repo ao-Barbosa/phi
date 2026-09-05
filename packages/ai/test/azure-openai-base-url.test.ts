@@ -41,7 +41,7 @@ vi.mock("openai", () => {
 	return { AzureOpenAI };
 });
 
-const PI_USER_AGENT = `pi (${platform()} ${release()}; ${arch()})`;
+const PHI_USER_AGENT = `pi (${platform()} ${release()}; ${arch()})`;
 
 const context: Context = {
 	messages: [{ role: "user", content: "hello", timestamp: Date.now() }],
@@ -49,16 +49,16 @@ const context: Context = {
 
 const originalAzureOpenAIBaseUrl = process.env.AZURE_OPENAI_BASE_URL;
 const originalAzureOpenAIResourceName = process.env.AZURE_OPENAI_RESOURCE_NAME;
-const originalAzureOpenAIApiVersion = process.env.AZURE_OPENAI_API_VERSION;
-const originalAzureOpenAIApiKey = process.env.AZURE_OPENAI_API_KEY;
+const originalAzureOpenAIApiVersion = process.env.AZURE_OPENAI_APHI_VERSION;
+const originalAzureOpenAIApiKey = process.env.AZURE_OPENAI_APHI_KEY;
 
 beforeEach(() => {
 	azureMock.constructorCalls.length = 0;
 	azureMock.lastParams = undefined;
 	delete process.env.AZURE_OPENAI_BASE_URL;
 	delete process.env.AZURE_OPENAI_RESOURCE_NAME;
-	delete process.env.AZURE_OPENAI_API_VERSION;
-	delete process.env.AZURE_OPENAI_API_KEY;
+	delete process.env.AZURE_OPENAI_APHI_VERSION;
+	delete process.env.AZURE_OPENAI_APHI_KEY;
 });
 
 afterEach(() => {
@@ -75,15 +75,15 @@ afterEach(() => {
 	}
 
 	if (originalAzureOpenAIApiVersion === undefined) {
-		delete process.env.AZURE_OPENAI_API_VERSION;
+		delete process.env.AZURE_OPENAI_APHI_VERSION;
 	} else {
-		process.env.AZURE_OPENAI_API_VERSION = originalAzureOpenAIApiVersion;
+		process.env.AZURE_OPENAI_APHI_VERSION = originalAzureOpenAIApiVersion;
 	}
 
 	if (originalAzureOpenAIApiKey === undefined) {
-		delete process.env.AZURE_OPENAI_API_KEY;
+		delete process.env.AZURE_OPENAI_APHI_KEY;
 	} else {
-		process.env.AZURE_OPENAI_API_KEY = originalAzureOpenAIApiKey;
+		process.env.AZURE_OPENAI_APHI_KEY = originalAzureOpenAIApiKey;
 	}
 });
 
@@ -218,7 +218,7 @@ describe("azure-openai-responses base URL normalization", () => {
 
 describe("azure-openai-responses user agent", () => {
 	it("uses pi's User-Agent by default", async () => {
-		expect((await captureClientHeaders())["User-Agent"]).toBe(PI_USER_AGENT);
+		expect((await captureClientHeaders())["User-Agent"]).toBe(PHI_USER_AGENT);
 	});
 
 	it("lets explicit headers override the default User-Agent", async () => {

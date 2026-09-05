@@ -9,7 +9,7 @@ export function fireworksProvider(): Provider<"anthropic-messages" | "openai-com
 		id: "fireworks",
 		name: "Fireworks",
 		baseUrl: "https://api.fireworks.ai/inference",
-		auth: { apiKey: envApiKeyAuth("Fireworks API key", ["FIREWORKS_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("Fireworks API key", ["FIREWORKS_APHI_KEY"]) },
 		models: Object.values(FIREWORKS_MODELS),
 		api: {
 			"anthropic-messages": anthropicMessagesApi(),

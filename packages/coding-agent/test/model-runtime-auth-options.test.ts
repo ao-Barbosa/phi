@@ -161,7 +161,7 @@ describe("ModelRuntime auth options", () => {
 		runtime.registerProvider("extension-api-key", {
 			name: "Extension API Key",
 			baseUrl: "https://example.test/v1",
-			apiKey: "$EXTENSION_TEST_API_KEY",
+			apiKey: "$EXTENSION_TEST_APHI_KEY",
 			api: "openai-completions",
 			models: [testModel("extension-model")],
 		});
@@ -180,14 +180,14 @@ describe("ModelRuntime auth options", () => {
 		const runtime = await ModelRuntime.create({ credentials: AuthStorage.inMemory(), modelsPath: null });
 		runtime.registerProvider("request-env-provider", {
 			baseUrl: "https://example.test/v1",
-			apiKey: "$REQUEST_SCOPED_API_KEY",
+			apiKey: "$REQUEST_SCOPED_APHI_KEY",
 			headers: { "x-request-value": "$REQUEST_SCOPED_HEADER" },
 			api: "openai-completions",
 			models: [testModel("request-env-model")],
 		});
 
 		const auth = await runtime.getAuth("request-env-provider", {
-			env: { REQUEST_SCOPED_API_KEY: "request-key", REQUEST_SCOPED_HEADER: "request-header" },
+			env: { REQUEST_SCOPED_APHI_KEY: "request-key", REQUEST_SCOPED_HEADER: "request-header" },
 		});
 
 		expect(auth?.auth).toEqual({ apiKey: "request-key", headers: { "x-request-value": "request-header" } });

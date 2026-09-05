@@ -16,8 +16,8 @@ if (internalProcessRole === "server") {
 		throw new Error(`Internal ${internalProcessRole} process must use its lightweight entrypoint`);
 	}
 	process.title = APP_NAME;
-	process.env.PI_CODING_AGENT = "true";
-	process.env.AI_AGENT = "pi";
+	process.env.PHI_CODING_AGENT = "true";
+	process.env.AI_AGENT = "phi";
 	process.emitWarning = (() => {}) as typeof process.emitWarning;
 
 	// Configure undici's global dispatcher before provider SDKs issue requests.

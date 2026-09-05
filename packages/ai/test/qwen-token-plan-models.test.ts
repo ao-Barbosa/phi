@@ -128,8 +128,8 @@ describe("Qwen Token Plan models", () => {
 	});
 
 	it("reuses the international Token Plan environment variable", () => {
-		expect(findEnvKeys("qwen-token-plan-individual", { QWEN_TOKEN_PLAN_API_KEY: "test" })).toEqual([
-			"QWEN_TOKEN_PLAN_API_KEY",
+		expect(findEnvKeys("qwen-token-plan-individual", { QWEN_TOKEN_PLAN_APHI_KEY: "test" })).toEqual([
+			"QWEN_TOKEN_PLAN_APHI_KEY",
 		]);
 	});
 

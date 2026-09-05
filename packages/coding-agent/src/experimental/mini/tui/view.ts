@@ -50,7 +50,7 @@ import type { AuthPromptRequest, CommandResult, ProviderAccount } from "../share
 import type { AttachedSession } from "./session.ts";
 
 const SUBSCRIPTION_LOGIN_LABEL = "Sign in with an account";
-const API_KEY_LOGIN_LABEL = "Sign in with an API key";
+const APHI_KEY_LOGIN_LABEL = "Sign in with an API key";
 
 function userMessageText(message: AgentMessage): string {
 	if (message.role !== "user") return "";
@@ -508,7 +508,7 @@ export async function runView(client: AttachedSession): Promise<void> {
 	const login = (): void => {
 		const selector = new ExtensionSelectorComponent(
 			"Select authentication method:",
-			[SUBSCRIPTION_LOGIN_LABEL, API_KEY_LOGIN_LABEL],
+			[SUBSCRIPTION_LOGIN_LABEL, APHI_KEY_LOGIN_LABEL],
 			(option) => selectLoginProvider(option === SUBSCRIPTION_LOGIN_LABEL ? "oauth" : "api_key"),
 			() => view.restoreEditor(),
 		);

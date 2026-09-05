@@ -94,13 +94,13 @@ const PROVIDER_MODEL_PAIRS: ProviderModelPair[] = [
 		provider: "cloudflare-ai-gateway",
 		model: "claude-sonnet-4-5",
 		label: "cloudflare-gateway-claude-sonnet-4-5",
-		upstreamApiKeyEnv: "ANTHROPIC_API_KEY",
+		upstreamApiKeyEnv: "ANTHROPIC_APHI_KEY",
 	},
 	{
 		provider: "cloudflare-ai-gateway",
 		model: "gpt-5.1",
 		label: "cloudflare-gateway-gpt-5.1",
-		upstreamApiKeyEnv: "OPENAI_API_KEY",
+		upstreamApiKeyEnv: "OPENAI_APHI_KEY",
 	},
 	// Groq
 	{ provider: "groq", model: "openai/gpt-oss-120b", label: "groq-gpt-oss-120b" },

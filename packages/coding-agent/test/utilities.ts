@@ -27,9 +27,9 @@ import { createCodingTools } from "../src/index.ts";
 
 /**
  * API key for authenticated tests. Tests using this should be wrapped in
- * describe.skipIf(!API_KEY)
+ * describe.skipIf(!APHI_KEY)
  */
-export const API_KEY = process.env.ANTHROPIC_OAUTH_TOKEN || process.env.ANTHROPIC_API_KEY;
+export const APHI_KEY = process.env.ANTHROPIC_OAUTH_TOKEN || process.env.ANTHROPIC_APHI_KEY;
 
 // ============================================================================
 // OAuth API key resolution from ~/.pi/agent/auth.json
@@ -112,7 +112,7 @@ export function hasAuthForProvider(provider: string): boolean {
 }
 
 /** Path to the real pi agent config directory */
-export const PI_AGENT_DIR = join(homedir(), ".phi", "agent");
+export const PHI_AGENT_DIR = join(homedir(), ".phi", "agent");
 
 /**
  * Get an AuthStorage instance backed by ~/.pi/agent/auth.json
@@ -242,7 +242,7 @@ export async function createTestSession(options: TestSessionOptions = {}): Promi
 
 	const model = getModel("anthropic", "claude-sonnet-4-5")!;
 	const agent = new Agent({
-		getApiKey: () => API_KEY,
+		getApiKey: () => APHI_KEY,
 		initialState: {
 			model,
 			systemPrompt: options.systemPrompt ?? "You are a helpful assistant. Be extremely concise.",

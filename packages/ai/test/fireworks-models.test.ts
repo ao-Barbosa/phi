@@ -7,13 +7,13 @@ import { getModel, streamSimple } from "../src/compat.ts";
 import { findEnvKeys, getEnvApiKey } from "../src/env-api-keys.ts";
 import type { Context, Model, Tool } from "../src/types.ts";
 
-const originalFireworksApiKey = process.env.FIREWORKS_API_KEY;
+const originalFireworksApiKey = process.env.FIREWORKS_APHI_KEY;
 
 afterEach(() => {
 	if (originalFireworksApiKey === undefined) {
-		delete process.env.FIREWORKS_API_KEY;
+		delete process.env.FIREWORKS_APHI_KEY;
 	} else {
-		process.env.FIREWORKS_API_KEY = originalFireworksApiKey;
+		process.env.FIREWORKS_APHI_KEY = originalFireworksApiKey;
 	}
 });
 
@@ -121,10 +121,10 @@ describe("Fireworks models", () => {
 		expect(payload?.reasoning_effort).toBe("max");
 	});
 
-	it("resolves FIREWORKS_API_KEY from the environment", () => {
-		process.env.FIREWORKS_API_KEY = "test-fireworks-key";
+	it("resolves FIREWORKS_APHI_KEY from the environment", () => {
+		process.env.FIREWORKS_APHI_KEY = "test-fireworks-key";
 
-		expect(findEnvKeys("fireworks")).toEqual(["FIREWORKS_API_KEY"]);
+		expect(findEnvKeys("fireworks")).toEqual(["FIREWORKS_APHI_KEY"]);
 		expect(getEnvApiKey("fireworks")).toBe("test-fireworks-key");
 	});
 

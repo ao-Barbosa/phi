@@ -54,7 +54,7 @@ vi.mock("@anthropic-ai/sdk", () => {
 	return { default: FakeAnthropic };
 });
 
-const PI_USER_AGENT = `pi (${platform()} ${release()}; ${arch()})`;
+const PHI_USER_AGENT = `pi (${platform()} ${release()}; ${arch()})`;
 const neverAbortedSignal = new AbortController().signal;
 
 const context: Context = {
@@ -97,7 +97,7 @@ describe("Anthropic auth token env", () => {
 					({
 						ANTHROPIC_AUTH_TOKEN: "auth-token",
 						ANTHROPIC_OAUTH_TOKEN: "oauth-token",
-						ANTHROPIC_API_KEY: "api-key",
+						ANTHROPIC_APHI_KEY: "api-key",
 					})[name],
 				fileExists: async () => false,
 			},
@@ -117,7 +117,7 @@ describe("Anthropic auth token env", () => {
 				env: async (name) =>
 					({
 						ANTHROPIC_OAUTH_TOKEN: "oauth-token",
-						ANTHROPIC_API_KEY: "api-key",
+						ANTHROPIC_APHI_KEY: "api-key",
 					})[name],
 				fileExists: async () => false,
 			},
@@ -202,7 +202,7 @@ describe("Anthropic-compatible user agents", () => {
 		await streamAnthropic(anthropicModel, context, { apiKey: "anthropic-key" }).result();
 
 		const headers = mockState.constructorOpts?.defaultHeaders as Record<string, string>;
-		expect(headers["User-Agent"]).toBe(PI_USER_AGENT);
+		expect(headers["User-Agent"]).toBe(PHI_USER_AGENT);
 	});
 
 	it("lets explicit headers override the default Anthropic Messages User-Agent", async () => {

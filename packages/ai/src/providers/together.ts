@@ -8,7 +8,7 @@ export function togetherProvider(): Provider<"openai-completions"> {
 		id: "together",
 		name: "Together",
 		baseUrl: "https://api.together.ai/v1",
-		auth: { apiKey: envApiKeyAuth("Together API key", ["TOGETHER_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("Together API key", ["TOGETHER_APHI_KEY"]) },
 		models: Object.values(TOGETHER_MODELS),
 		api: openAICompletionsApi(),
 	});

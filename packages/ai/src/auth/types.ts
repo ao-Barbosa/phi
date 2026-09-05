@@ -105,7 +105,7 @@ export interface AuthResult {
 	auth: ModelAuth;
 	/** Provider-scoped environment/config values resolved from credentials and ambient context. */
 	env?: ProviderEnv;
-	/** Human-readable label for status UI: "ANTHROPIC_API_KEY", "OAuth", "~/.aws/credentials". */
+	/** Human-readable label for status UI: "ANTHROPIC_APHI_KEY", "OAuth", "~/.aws/credentials". */
 	source?: string;
 }
 

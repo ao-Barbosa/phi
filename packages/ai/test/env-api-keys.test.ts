@@ -4,10 +4,10 @@ import { findEnvKeys, getEnvApiKey } from "../src/env-api-keys.ts";
 const originalCopilotGitHubToken = process.env.COPILOT_GITHUB_TOKEN;
 const originalGhToken = process.env.GH_TOKEN;
 const originalGitHubToken = process.env.GITHUB_TOKEN;
-const originalZaiCodingCnApiKey = process.env.ZAI_CODING_CN_API_KEY;
+const originalZaiCodingCnApiKey = process.env.ZAI_CODING_CN_APHI_KEY;
 const originalAnthropicAuthToken = process.env.ANTHROPIC_AUTH_TOKEN;
 const originalAnthropicOauthToken = process.env.ANTHROPIC_OAUTH_TOKEN;
-const originalAnthropicApiKey = process.env.ANTHROPIC_API_KEY;
+const originalAnthropicApiKey = process.env.ANTHROPIC_APHI_KEY;
 
 afterEach(() => {
 	if (originalCopilotGitHubToken === undefined) {
@@ -29,9 +29,9 @@ afterEach(() => {
 	}
 
 	if (originalZaiCodingCnApiKey === undefined) {
-		delete process.env.ZAI_CODING_CN_API_KEY;
+		delete process.env.ZAI_CODING_CN_APHI_KEY;
 	} else {
-		process.env.ZAI_CODING_CN_API_KEY = originalZaiCodingCnApiKey;
+		process.env.ZAI_CODING_CN_APHI_KEY = originalZaiCodingCnApiKey;
 	}
 
 	if (originalAnthropicAuthToken === undefined) {
@@ -47,9 +47,9 @@ afterEach(() => {
 	}
 
 	if (originalAnthropicApiKey === undefined) {
-		delete process.env.ANTHROPIC_API_KEY;
+		delete process.env.ANTHROPIC_APHI_KEY;
 	} else {
-		process.env.ANTHROPIC_API_KEY = originalAnthropicApiKey;
+		process.env.ANTHROPIC_APHI_KEY = originalAnthropicApiKey;
 	}
 });
 
@@ -72,26 +72,26 @@ describe("environment API keys", () => {
 		expect(getEnvApiKey("github-copilot")).toBe("copilot-token");
 	});
 
-	it("resolves ZAI China Coding Plan credentials from ZAI_CODING_CN_API_KEY", () => {
-		process.env.ZAI_CODING_CN_API_KEY = "zai-coding-cn-token";
+	it("resolves ZAI China Coding Plan credentials from ZAI_CODING_CN_APHI_KEY", () => {
+		process.env.ZAI_CODING_CN_APHI_KEY = "zai-coding-cn-token";
 
-		expect(findEnvKeys("zai-coding-cn")).toEqual(["ZAI_CODING_CN_API_KEY"]);
+		expect(findEnvKeys("zai-coding-cn")).toEqual(["ZAI_CODING_CN_APHI_KEY"]);
 		expect(getEnvApiKey("zai-coding-cn")).toBe("zai-coding-cn-token");
 	});
 
 	it("reports ANTHROPIC_AUTH_TOKEN but preserves OAuth token API key lookup", () => {
 		process.env.ANTHROPIC_AUTH_TOKEN = "auth-token";
 		process.env.ANTHROPIC_OAUTH_TOKEN = "oauth-token";
-		process.env.ANTHROPIC_API_KEY = "api-key";
+		process.env.ANTHROPIC_APHI_KEY = "api-key";
 
-		expect(findEnvKeys("anthropic")).toEqual(["ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_OAUTH_TOKEN", "ANTHROPIC_API_KEY"]);
+		expect(findEnvKeys("anthropic")).toEqual(["ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_OAUTH_TOKEN", "ANTHROPIC_APHI_KEY"]);
 		expect(getEnvApiKey("anthropic")).toBe("oauth-token");
 	});
 
 	it("does not return ANTHROPIC_AUTH_TOKEN as an API key", () => {
 		process.env.ANTHROPIC_AUTH_TOKEN = "auth-token";
 		delete process.env.ANTHROPIC_OAUTH_TOKEN;
-		delete process.env.ANTHROPIC_API_KEY;
+		delete process.env.ANTHROPIC_APHI_KEY;
 
 		expect(findEnvKeys("anthropic")).toEqual(["ANTHROPIC_AUTH_TOKEN"]);
 		expect(getEnvApiKey("anthropic")).toBeUndefined();
@@ -100,16 +100,16 @@ describe("environment API keys", () => {
 	it("preserves ANTHROPIC_OAUTH_TOKEN as an API key", () => {
 		delete process.env.ANTHROPIC_AUTH_TOKEN;
 		process.env.ANTHROPIC_OAUTH_TOKEN = "oauth-token";
-		delete process.env.ANTHROPIC_API_KEY;
+		delete process.env.ANTHROPIC_APHI_KEY;
 
 		expect(findEnvKeys("anthropic")).toEqual(["ANTHROPIC_OAUTH_TOKEN"]);
 		expect(getEnvApiKey("anthropic")).toBe("oauth-token");
 	});
 
-	it("falls back to ANTHROPIC_API_KEY for API key lookup", () => {
+	it("falls back to ANTHROPIC_APHI_KEY for API key lookup", () => {
 		delete process.env.ANTHROPIC_AUTH_TOKEN;
 		delete process.env.ANTHROPIC_OAUTH_TOKEN;
-		process.env.ANTHROPIC_API_KEY = "api-key";
+		process.env.ANTHROPIC_APHI_KEY = "api-key";
 
 		expect(getEnvApiKey("anthropic")).toBe("api-key");
 	});

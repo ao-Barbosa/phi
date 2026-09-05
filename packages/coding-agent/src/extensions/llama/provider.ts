@@ -127,7 +127,7 @@ export function createLlamaProvider(): LlamaProviderController {
 				resolve: async ({ ctx, credential }): Promise<AuthResult | undefined> => {
 					const serverUrl = await resolveServerUrl(ctx, credential);
 					if (!serverUrl) return undefined;
-					const apiKey = credential?.key ?? (await ctx.env("LLAMA_API_KEY")) ?? "local";
+					const apiKey = credential?.key ?? (await ctx.env("LLAMA_APHI_KEY")) ?? "local";
 					return {
 						auth: { apiKey, baseUrl: llamaInferenceUrl(serverUrl) },
 						env: { ...credential?.env, LLAMA_BASE_URL: serverUrl },

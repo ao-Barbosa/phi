@@ -95,7 +95,7 @@ describe("builtin providers", () => {
 			authContext: fakeAuthContext({
 				ANTHROPIC_AUTH_TOKEN: "auth-token",
 				ANTHROPIC_OAUTH_TOKEN: "oauth-token",
-				ANTHROPIC_API_KEY: "api-key",
+				ANTHROPIC_APHI_KEY: "api-key",
 			}),
 		});
 		models.setProvider(anthropicProvider());
@@ -108,7 +108,7 @@ describe("builtin providers", () => {
 
 	it("preserves Anthropic OAuth token precedence over the API key", async () => {
 		const models = createModels({
-			authContext: fakeAuthContext({ ANTHROPIC_API_KEY: "key", ANTHROPIC_OAUTH_TOKEN: "oauth-token" }),
+			authContext: fakeAuthContext({ ANTHROPIC_APHI_KEY: "key", ANTHROPIC_OAUTH_TOKEN: "oauth-token" }),
 		});
 		models.setProvider(anthropicProvider());
 
@@ -167,13 +167,13 @@ describe("builtin providers", () => {
 	});
 
 	it("requires Cloudflare Workers AI account config and returns scoped env", async () => {
-		const missingAccount = createModels({ authContext: fakeAuthContext({ CLOUDFLARE_API_KEY: "cf-key" }) });
+		const missingAccount = createModels({ authContext: fakeAuthContext({ CLOUDFLARE_APHI_KEY: "cf-key" }) });
 		missingAccount.setProvider(cloudflareWorkersAIProvider());
 		const model = missingAccount.getModels("cloudflare-workers-ai")[0];
 		expect(await missingAccount.getAuth(model.provider)).toBeUndefined();
 
 		const configured = createModels({
-			authContext: fakeAuthContext({ CLOUDFLARE_API_KEY: "cf-key", CLOUDFLARE_ACCOUNT_ID: "account-id" }),
+			authContext: fakeAuthContext({ CLOUDFLARE_APHI_KEY: "cf-key", CLOUDFLARE_ACCOUNT_ID: "account-id" }),
 		});
 		configured.setProvider(cloudflareWorkersAIProvider());
 		const result = await configured.getAuth(model.provider);
@@ -183,7 +183,7 @@ describe("builtin providers", () => {
 
 	it("requires Cloudflare AI Gateway account and gateway config and returns scoped env headers", async () => {
 		const missingGateway = createModels({
-			authContext: fakeAuthContext({ CLOUDFLARE_API_KEY: "cf-key", CLOUDFLARE_ACCOUNT_ID: "account-id" }),
+			authContext: fakeAuthContext({ CLOUDFLARE_APHI_KEY: "cf-key", CLOUDFLARE_ACCOUNT_ID: "account-id" }),
 		});
 		missingGateway.setProvider(cloudflareAIGatewayProvider());
 		const model = missingGateway.getModels("cloudflare-ai-gateway")[0];
@@ -191,7 +191,7 @@ describe("builtin providers", () => {
 
 		const configured = createModels({
 			authContext: fakeAuthContext({
-				CLOUDFLARE_API_KEY: "cf-key",
+				CLOUDFLARE_APHI_KEY: "cf-key",
 				CLOUDFLARE_ACCOUNT_ID: "account-id",
 				CLOUDFLARE_GATEWAY_ID: "gateway-id",
 			}),
@@ -273,7 +273,7 @@ describe("builtin providers", () => {
 		expect(await partial.getAuth(model.provider)).toBeUndefined();
 
 		// explicit key wins over ADC
-		const keyed = createModels({ authContext: fakeAuthContext({ GOOGLE_CLOUD_API_KEY: "vertex-key" }) });
+		const keyed = createModels({ authContext: fakeAuthContext({ GOOGLE_CLOUD_APHI_KEY: "vertex-key" }) });
 		keyed.setProvider(googleVertexProvider());
 		expect((await keyed.getAuth(model.provider))?.auth.apiKey).toBe("vertex-key");
 	});

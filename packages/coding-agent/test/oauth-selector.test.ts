@@ -99,13 +99,20 @@ describe("OAuthSelectorComponent", () => {
 	it("shows environment API key auth as configured", () => {
 		const selector = new OAuthSelectorComponent(
 			"login",
-			[{ id: "openai", name: "OpenAI", authType: "api_key", status: { type: "api_key", source: "OPENAI_API_KEY" } }],
+			[
+				{
+					id: "openai",
+					name: "OpenAI",
+					authType: "api_key",
+					status: { type: "api_key", source: "OPENAI_APHI_KEY" },
+				},
+			],
 			() => {},
 			() => {},
 		);
 
 		const output = stripAnsi(selector.render(120).join("\n"));
-		expect(output).toContain("✓ env: OPENAI_API_KEY");
+		expect(output).toContain("✓ env: OPENAI_APHI_KEY");
 		expect(output).not.toContain("unconfigured");
 	});
 

@@ -8,7 +8,7 @@ export function vercelAIGatewayProvider(): Provider<"anthropic-messages"> {
 		id: "vercel-ai-gateway",
 		name: "Vercel AI Gateway",
 		baseUrl: "https://ai-gateway.vercel.sh",
-		auth: { apiKey: envApiKeyAuth("Vercel AI Gateway API key", ["AI_GATEWAY_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("Vercel AI Gateway API key", ["AI_GATEWAY_APHI_KEY"]) },
 		models: Object.values(VERCEL_AI_GATEWAY_MODELS),
 		api: anthropicMessagesApi(),
 	});

@@ -7,7 +7,7 @@ export function azureOpenAIResponsesProvider(): Provider<"azure-openai-responses
 	return createProvider({
 		id: "azure-openai-responses",
 		name: "Azure OpenAI",
-		auth: { apiKey: envApiKeyAuth("Azure OpenAI API key", ["AZURE_OPENAI_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("Azure OpenAI API key", ["AZURE_OPENAI_APHI_KEY"]) },
 		models: Object.values(AZURE_OPENAI_RESPONSES_MODELS),
 		api: azureOpenAIResponsesApi(),
 	});

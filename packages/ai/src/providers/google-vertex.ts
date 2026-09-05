@@ -68,8 +68,9 @@ const vertexAuth: ApiKeyAuth = {
 			signal.throwIfAborted();
 			return value;
 		};
-		const key = credential?.key ?? (await env("GOOGLE_CLOUD_API_KEY"));
-		if (key) return { auth: { apiKey: key }, source: credential?.key ? "stored credential" : "GOOGLE_CLOUD_API_KEY" };
+		const key = credential?.key ?? (await env("GOOGLE_CLOUD_APHI_KEY"));
+		if (key)
+			return { auth: { apiKey: key }, source: credential?.key ? "stored credential" : "GOOGLE_CLOUD_APHI_KEY" };
 
 		const adcPath = credential?.env?.GOOGLE_APPLICATION_CREDENTIALS ?? (await env("GOOGLE_APPLICATION_CREDENTIALS"));
 		signal.throwIfAborted();

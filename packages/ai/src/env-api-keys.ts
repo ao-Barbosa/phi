@@ -28,7 +28,7 @@ import { getProviderEnvValue } from "./utils/provider-env.ts";
 
 export const ANTHROPIC_AUTH_TOKEN_ENV = "ANTHROPIC_AUTH_TOKEN";
 export const ANTHROPIC_OAUTH_TOKEN_ENV = "ANTHROPIC_OAUTH_TOKEN";
-export const ANTHROPIC_API_KEY_ENV = "ANTHROPIC_API_KEY";
+export const ANTHROPIC_APHI_KEY_ENV = "ANTHROPIC_APHI_KEY";
 
 let cachedVertexAdcCredentialsExists: boolean | null = null;
 
@@ -73,46 +73,46 @@ function getApiKeyEnvVars(provider: string): readonly string[] | undefined {
 	// ANTHROPIC_AUTH_TOKEN participates in env discovery/status, but
 	// getEnvApiKey() skips it because requests must pass it as Authorization: Bearer.
 	if (provider === "anthropic") {
-		return [ANTHROPIC_AUTH_TOKEN_ENV, ANTHROPIC_OAUTH_TOKEN_ENV, ANTHROPIC_API_KEY_ENV];
+		return [ANTHROPIC_AUTH_TOKEN_ENV, ANTHROPIC_OAUTH_TOKEN_ENV, ANTHROPIC_APHI_KEY_ENV];
 	}
 
 	const envMap: Record<string, string> = {
-		"ant-ling": "ANT_LING_API_KEY",
-		"qwen-token-plan": "QWEN_TOKEN_PLAN_API_KEY",
-		"qwen-token-plan-cn": "QWEN_TOKEN_PLAN_CN_API_KEY",
-		"qwen-token-plan-individual": "QWEN_TOKEN_PLAN_API_KEY",
-		openai: "OPENAI_API_KEY",
-		"azure-openai-responses": "AZURE_OPENAI_API_KEY",
-		nvidia: "NVIDIA_API_KEY",
-		deepseek: "DEEPSEEK_API_KEY",
-		google: "GEMINI_API_KEY",
-		"google-vertex": "GOOGLE_CLOUD_API_KEY",
-		groq: "GROQ_API_KEY",
-		cerebras: "CEREBRAS_API_KEY",
-		xai: "XAI_API_KEY",
-		radius: "RADIUS_API_KEY",
-		openrouter: "OPENROUTER_API_KEY",
-		"vercel-ai-gateway": "AI_GATEWAY_API_KEY",
-		zai: "ZAI_API_KEY",
-		"zai-coding-cn": "ZAI_CODING_CN_API_KEY",
-		mistral: "MISTRAL_API_KEY",
-		minimax: "MINIMAX_API_KEY",
-		"minimax-cn": "MINIMAX_CN_API_KEY",
-		moonshotai: "MOONSHOT_API_KEY",
-		"moonshotai-cn": "MOONSHOT_API_KEY",
+		"ant-ling": "ANT_LING_APHI_KEY",
+		"qwen-token-plan": "QWEN_TOKEN_PLAN_APHI_KEY",
+		"qwen-token-plan-cn": "QWEN_TOKEN_PLAN_CN_APHI_KEY",
+		"qwen-token-plan-individual": "QWEN_TOKEN_PLAN_APHI_KEY",
+		openai: "OPENAI_APHI_KEY",
+		"azure-openai-responses": "AZURE_OPENAI_APHI_KEY",
+		nvidia: "NVIDIA_APHI_KEY",
+		deepseek: "DEEPSEEK_APHI_KEY",
+		google: "GEMINI_APHI_KEY",
+		"google-vertex": "GOOGLE_CLOUD_APHI_KEY",
+		groq: "GROQ_APHI_KEY",
+		cerebras: "CEREBRAS_APHI_KEY",
+		xai: "XAI_APHI_KEY",
+		radius: "RADIUS_APHI_KEY",
+		openrouter: "OPENROUTER_APHI_KEY",
+		"vercel-ai-gateway": "AI_GATEWAY_APHI_KEY",
+		zai: "ZAI_APHI_KEY",
+		"zai-coding-cn": "ZAI_CODING_CN_APHI_KEY",
+		mistral: "MISTRAL_APHI_KEY",
+		minimax: "MINIMAX_APHI_KEY",
+		"minimax-cn": "MINIMAX_CN_APHI_KEY",
+		moonshotai: "MOONSHOT_APHI_KEY",
+		"moonshotai-cn": "MOONSHOT_APHI_KEY",
 		huggingface: "HF_TOKEN",
-		fireworks: "FIREWORKS_API_KEY",
-		together: "TOGETHER_API_KEY",
-		baseten: "BASETEN_API_KEY",
-		opencode: "OPENCODE_API_KEY",
-		"opencode-go": "OPENCODE_API_KEY",
-		"kimi-coding": "KIMI_API_KEY",
-		"cloudflare-workers-ai": "CLOUDFLARE_API_KEY",
-		"cloudflare-ai-gateway": "CLOUDFLARE_API_KEY",
-		xiaomi: "XIAOMI_API_KEY",
-		"xiaomi-token-plan-cn": "XIAOMI_TOKEN_PLAN_CN_API_KEY",
-		"xiaomi-token-plan-ams": "XIAOMI_TOKEN_PLAN_AMS_API_KEY",
-		"xiaomi-token-plan-sgp": "XIAOMI_TOKEN_PLAN_SGP_API_KEY",
+		fireworks: "FIREWORKS_APHI_KEY",
+		together: "TOGETHER_APHI_KEY",
+		baseten: "BASETEN_APHI_KEY",
+		opencode: "OPENCODE_APHI_KEY",
+		"opencode-go": "OPENCODE_APHI_KEY",
+		"kimi-coding": "KIMI_APHI_KEY",
+		"cloudflare-workers-ai": "CLOUDFLARE_APHI_KEY",
+		"cloudflare-ai-gateway": "CLOUDFLARE_APHI_KEY",
+		xiaomi: "XIAOMI_APHI_KEY",
+		"xiaomi-token-plan-cn": "XIAOMI_TOKEN_PLAN_CN_APHI_KEY",
+		"xiaomi-token-plan-ams": "XIAOMI_TOKEN_PLAN_AMS_APHI_KEY",
+		"xiaomi-token-plan-sgp": "XIAOMI_TOKEN_PLAN_SGP_APHI_KEY",
 	};
 
 	const envVar = envMap[provider];
@@ -137,7 +137,7 @@ export function findEnvKeys(provider: string, env?: ProviderEnv): string[] | und
 }
 
 /**
- * Get API key for provider from known environment variables, e.g. OPENAI_API_KEY.
+ * Get API key for provider from known environment variables, e.g. OPENAI_APHI_KEY.
  *
  * Will not return API keys for providers that require OAuth tokens.
  */

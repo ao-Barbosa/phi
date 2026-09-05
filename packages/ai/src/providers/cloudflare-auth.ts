@@ -1,7 +1,7 @@
 import type { ApiKeyAuth, ApiKeyCredential, AuthContext } from "../auth/types.ts";
 import type { ProviderEnv } from "../types.ts";
 
-const CLOUDFLARE_API_KEY = "CLOUDFLARE_API_KEY";
+const CLOUDFLARE_APHI_KEY = "CLOUDFLARE_APHI_KEY";
 const CLOUDFLARE_ACCOUNT_ID = "CLOUDFLARE_ACCOUNT_ID";
 const CLOUDFLARE_GATEWAY_ID = "CLOUDFLARE_GATEWAY_ID";
 
@@ -17,7 +17,7 @@ async function resolveValue(
 	// A credential carrying only the API key must still pick up the account /
 	// gateway id from the environment.
 	const fromCredential = credential
-		? name === CLOUDFLARE_API_KEY
+		? name === CLOUDFLARE_APHI_KEY
 			? credential.key
 			: credential.env?.[name]
 		: undefined;
@@ -34,7 +34,7 @@ async function resolveCloudflareEnv(
 	credential: ApiKeyCredential | undefined,
 	signal: AbortSignal,
 ): Promise<{ apiKey: string; env: ProviderEnv; source: string } | undefined> {
-	const apiKey = await resolveValue(CLOUDFLARE_API_KEY, ctx, credential, signal);
+	const apiKey = await resolveValue(CLOUDFLARE_APHI_KEY, ctx, credential, signal);
 	const accountId = await resolveValue(CLOUDFLARE_ACCOUNT_ID, ctx, credential, signal);
 	const gatewayId =
 		kind === "ai-gateway" ? await resolveValue(CLOUDFLARE_GATEWAY_ID, ctx, credential, signal) : undefined;
@@ -47,7 +47,7 @@ async function resolveCloudflareEnv(
 			CLOUDFLARE_ACCOUNT_ID: accountId,
 			...(gatewayId ? { CLOUDFLARE_GATEWAY_ID: gatewayId } : {}),
 		},
-		source: credential ? "stored credential" : CLOUDFLARE_API_KEY,
+		source: credential ? "stored credential" : CLOUDFLARE_APHI_KEY,
 	};
 }
 

@@ -44,8 +44,8 @@ describe("config value env var syntax migration", () => {
 			path.join(agentDir, "auth.json"),
 			`${JSON.stringify(
 				{
-					anthropic: { type: "api_key", key: "ANTHROPIC_API_KEY" },
-					openai: { type: "api_key", key: "$OPENAI_API_KEY" },
+					anthropic: { type: "api_key", key: "ANTHROPIC_APHI_KEY" },
+					openai: { type: "api_key", key: "$OPENAI_APHI_KEY" },
 					opencode: { type: "api_key", key: "public" },
 					github: { type: "oauth", access: "ACCESS_TOKEN", refresh: "REFRESH_TOKEN", expires: 1 },
 				},
@@ -62,8 +62,8 @@ describe("config value env var syntax migration", () => {
 			string,
 			Record<string, unknown>
 		>;
-		expect(migrated.anthropic.key).toBe("ANTHROPIC_API_KEY");
-		expect(migrated.openai.key).toBe("$OPENAI_API_KEY");
+		expect(migrated.anthropic.key).toBe("ANTHROPIC_APHI_KEY");
+		expect(migrated.openai.key).toBe("$OPENAI_APHI_KEY");
 		expect(migrated.opencode.key).toBe("public");
 		expect(migrated.github.access).toBe("ACCESS_TOKEN");
 		expect(logSpy).not.toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe("config value env var syntax migration", () => {
 
 	it("leaves uppercase models.json API key and header values unchanged", async () => {
 		const agentDir = createAgentDir();
-		const envKeys = ["CUSTOM_API_KEY", "HEADER_API_KEY", "MODEL_API_KEY", "OVERRIDE_API_KEY"];
+		const envKeys = ["CUSTOM_APHI_KEY", "HEADER_APHI_KEY", "MODEL_APHI_KEY", "OVERRIDE_APHI_KEY"];
 		const savedEnv: Record<string, string | undefined> = {};
 		for (const key of envKeys) {
 			savedEnv[key] = process.env[key];
@@ -103,20 +103,20 @@ describe("config value env var syntax migration", () => {
 						providers: {
 							"custom-provider": {
 								baseUrl: "https://example.com/v1",
-								apiKey: "CUSTOM_API_KEY",
+								apiKey: "CUSTOM_APHI_KEY",
 								api: "openai-completions",
 								headers: {
-									"x-api-key": "HEADER_API_KEY",
+									"x-api-key": "HEADER_APHI_KEY",
 									"x-literal": "literal",
 								},
 								models: [
 									{
 										id: "model-a",
-										headers: { "x-model-key": "MODEL_API_KEY" },
+										headers: { "x-model-key": "MODEL_APHI_KEY" },
 									},
 								],
 								modelOverrides: {
-									"model-b": { headers: { "x-override-key": "OVERRIDE_API_KEY" } },
+									"model-b": { headers: { "x-override-key": "OVERRIDE_APHI_KEY" } },
 								},
 							},
 						},
@@ -142,11 +142,11 @@ describe("config value env var syntax migration", () => {
 				>;
 			};
 			const provider = migrated.providers["custom-provider"]!;
-			expect(provider.apiKey).toBe("CUSTOM_API_KEY");
-			expect(provider.headers?.["x-api-key"]).toBe("HEADER_API_KEY");
+			expect(provider.apiKey).toBe("CUSTOM_APHI_KEY");
+			expect(provider.headers?.["x-api-key"]).toBe("HEADER_APHI_KEY");
 			expect(provider.headers?.["x-literal"]).toBe("literal");
-			expect(provider.models?.[0]?.headers?.["x-model-key"]).toBe("MODEL_API_KEY");
-			expect(provider.modelOverrides?.["model-b"]?.headers?.["x-override-key"]).toBe("OVERRIDE_API_KEY");
+			expect(provider.models?.[0]?.headers?.["x-model-key"]).toBe("MODEL_APHI_KEY");
+			expect(provider.modelOverrides?.["model-b"]?.headers?.["x-override-key"]).toBe("OVERRIDE_APHI_KEY");
 			expect(logSpy).not.toHaveBeenCalled();
 
 			const registry = await createModelRegistry(
@@ -155,14 +155,14 @@ describe("config value env var syntax migration", () => {
 			);
 			const model = registry.find("custom-provider", "model-a");
 			expect(model).toBeDefined();
-			expect(await registry.getApiKeyForProvider("custom-provider")).toBe("CUSTOM_API_KEY");
+			expect(await registry.getApiKeyForProvider("custom-provider")).toBe("CUSTOM_APHI_KEY");
 			expect(await registry.getApiKeyAndHeaders(model!)).toMatchObject({
 				ok: true,
-				apiKey: "CUSTOM_API_KEY",
+				apiKey: "CUSTOM_APHI_KEY",
 				headers: {
-					"x-api-key": "HEADER_API_KEY",
+					"x-api-key": "HEADER_APHI_KEY",
 					"x-literal": "literal",
-					"x-model-key": "MODEL_API_KEY",
+					"x-model-key": "MODEL_APHI_KEY",
 				},
 			});
 		} finally {

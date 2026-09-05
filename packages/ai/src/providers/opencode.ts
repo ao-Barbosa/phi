@@ -12,7 +12,7 @@ export function opencodeProvider(): Provider<
 	return createProvider({
 		id: "opencode",
 		name: "OpenCode Zen",
-		auth: { apiKey: envApiKeyAuth("OpenCode API key", ["OPENCODE_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("OpenCode API key", ["OPENCODE_APHI_KEY"]) },
 		models: Object.values(OPENCODE_MODELS),
 		api: {
 			"anthropic-messages": anthropicMessagesApi(),

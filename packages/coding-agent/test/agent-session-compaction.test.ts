@@ -19,9 +19,9 @@ import { AuthStorage } from "../src/core/auth-storage.ts";
 import { SessionManager } from "../src/core/session-manager.ts";
 import { SettingsManager } from "../src/core/settings-manager.ts";
 import { createCodingTools } from "../src/index.ts";
-import { API_KEY, createTestResourceLoader } from "./utilities.ts";
+import { APHI_KEY, createTestResourceLoader } from "./utilities.ts";
 
-describe.skipIf(!API_KEY)("AgentSession compaction e2e", () => {
+describe.skipIf(!APHI_KEY)("AgentSession compaction e2e", () => {
 	let session: AgentSession;
 	let tempDir: string;
 	let sessionManager: SessionManager;
@@ -48,7 +48,7 @@ describe.skipIf(!API_KEY)("AgentSession compaction e2e", () => {
 	async function createSession(inMemory = false) {
 		const model = getModel("anthropic", "claude-sonnet-4-5")!;
 		const agent = new Agent({
-			getApiKey: () => API_KEY,
+			getApiKey: () => APHI_KEY,
 			streamFn: streamSimple,
 			initialState: {
 				model,

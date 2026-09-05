@@ -9,7 +9,7 @@ export function openrouterImagesProvider(): ImagesProvider {
 		id: "openrouter",
 		name: "OpenRouter",
 		auth: {
-			apiKey: envApiKeyAuth("OpenRouter API key", ["OPENROUTER_API_KEY"]),
+			apiKey: envApiKeyAuth("OpenRouter API key", ["OPENROUTER_APHI_KEY"]),
 			oauth: lazyOAuth({
 				name: "OpenRouter OAuth",
 				loginLabel: "Sign in with OpenRouter",

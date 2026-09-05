@@ -24,9 +24,9 @@ import { createSyntheticSourceInfo } from "../src/core/source-info.ts";
 import { createCodingTools } from "../src/index.ts";
 import { createTestResourceLoader } from "./utilities.ts";
 
-const API_KEY = process.env.ANTHROPIC_OAUTH_TOKEN || process.env.ANTHROPIC_API_KEY;
+const APHI_KEY = process.env.ANTHROPIC_OAUTH_TOKEN || process.env.ANTHROPIC_APHI_KEY;
 
-describe.skipIf(!API_KEY)("Compaction extensions", () => {
+describe.skipIf(!APHI_KEY)("Compaction extensions", () => {
 	let session: AgentSession;
 	let tempDir: string;
 	let capturedEvents: SessionEvent[];
@@ -88,7 +88,7 @@ describe.skipIf(!API_KEY)("Compaction extensions", () => {
 	async function createSession(extensions: Extension[]) {
 		const model = getModel("anthropic", "claude-sonnet-4-5")!;
 		const agent = new Agent({
-			getApiKey: () => API_KEY,
+			getApiKey: () => APHI_KEY,
 			streamFn: streamSimple,
 			initialState: {
 				model,

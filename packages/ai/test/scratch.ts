@@ -1,6 +1,6 @@
 // Scratch script showing real-world use of the new Models API.
 // Run from packages/ai: node test/scratch.ts
-// Requires ANTHROPIC_API_KEY.
+// Requires ANTHROPIC_APHI_KEY.
 
 import { createModels } from "../src/models.ts";
 import { anthropicProvider } from "../src/providers/anthropic.ts";

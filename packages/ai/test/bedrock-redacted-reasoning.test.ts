@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  * return encrypted reasoning as the opaque `redactedContent` member of
  * `reasoningContent`, not as `reasoningText`. The AWS SDK decodes the wire blob to
  * `Uint8Array`.
- * @see https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ReasoningContentBlockDelta.html
+ * @see https://docs.aws.amazon.com/bedrock/latest/APIReference/APHI_runtime_ReasoningContentBlockDelta.html
  */
 const bedrockMock = vi.hoisted(() => {
 	const redactedBase64 = "cnNuXzVaVnJpZjRKMGJYSXFtV2RsZWRqN1FJRmVOaWtSUWJF";

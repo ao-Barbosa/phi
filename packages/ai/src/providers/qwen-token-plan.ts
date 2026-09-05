@@ -8,7 +8,7 @@ export function qwenTokenPlanProvider(): Provider<"openai-completions"> {
 		id: "qwen-token-plan",
 		name: "Qwen Token Plan",
 		baseUrl: "https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1",
-		auth: { apiKey: envApiKeyAuth("Qwen Token Plan API key", ["QWEN_TOKEN_PLAN_API_KEY"]) },
+		auth: { apiKey: envApiKeyAuth("Qwen Token Plan API key", ["QWEN_TOKEN_PLAN_APHI_KEY"]) },
 		models: Object.values(QWEN_TOKEN_PLAN_MODELS),
 		api: openAICompletionsApi(),
 	});
