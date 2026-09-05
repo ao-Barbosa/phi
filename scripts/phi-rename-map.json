@@ -1,0 +1,14 @@
+{
+	"scope": { "from": "@earendil-works", "to": "@ao-barbosa" },
+	"packageInfix": { "from": "pi-", "to": "phi-" },
+	"chord": { "from": "@earendil-works/chord", "to": "@ao-barbosa/phi-chord" },
+	"root": { "from": "pi-monorepo", "to": "phi-monorepo" },
+	"bins": { "pi": "phi", "pi-ai": "phi-ai" },
+	"env": { "from": "PI_", "to": "PHI_" },
+	"markers": { "AI_AGENT": "phi", "flag": "PHI_CODING_AGENT" },
+	"configKey": { "from": "piConfig", "to": "phiConfig" },
+	"configDir": { "from": ".pi", "to": ".phi" },
+	"title": { "from": "π", "to": "φ" },
+	"domain": { "from": "pi.dev", "to": "phi.dev" },
+	"shareViewer": { "from": "https://pi.dev/session/", "to": "https://phi.dev/session/" }
+}
