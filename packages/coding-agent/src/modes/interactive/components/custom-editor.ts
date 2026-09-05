@@ -1,4 +1,4 @@
-import { Editor, type EditorOptions, type EditorTheme, type TUI, visibleWidth } from "@earendil-works/pi-tui";
+import { Editor, type EditorOptions, type EditorTheme, type TUI, visibleWidth } from "@ao-barbosa/phi-tui";
 import type { AppKeybinding, KeybindingsManager } from "../../../core/keybindings.ts";
 import type { WorkingStatusIndicator } from "./status-indicator.ts";
 

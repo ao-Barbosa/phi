@@ -1,5 +1,5 @@
-import type { JsonValue, ServiceCall, ServiceProviderUpdate } from "@earendil-works/chord";
-import type { Context, SessionMetadata } from "@earendil-works/pi-agent-core";
+import type { JsonValue, ServiceCall, ServiceProviderUpdate } from "@ao-barbosa/phi-chord";
+import type { Context, SessionMetadata } from "@ao-barbosa/phi-agent-core";
 import type { ServerListener } from "./listener.ts";
 
 export interface ServerOptions {

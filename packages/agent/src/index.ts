@@ -1,4 +1,4 @@
-export { uuidv7 } from "@earendil-works/pi-ai";
+export { uuidv7 } from "@ao-barbosa/phi-ai";
 export type {
 	AttributeValue,
 	ExactTelemetryAttributes,
@@ -31,13 +31,13 @@ export type {
 	TelemetrySpanDefinition,
 	TelemetryStartAttributeDefinition,
 	TypedSpanStarter,
-} from "@earendil-works/pi-telemetry";
+} from "@ao-barbosa/phi-telemetry";
 export {
 	createTypedSpanStarter,
 	defineTelemetrySchema,
 	InMemoryTelemetryContext,
 	NOOP_TELEMETRY_CONTEXT,
-} from "@earendil-works/pi-telemetry";
+} from "@ao-barbosa/phi-telemetry";
 export * from "./agent.ts";
 export * from "./agent-loop.ts";
 export * from "./harness/agent-harness.ts";

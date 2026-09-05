@@ -1,7 +1,7 @@
 {
-	"name": "@earendil-works/pi-telemetry",
+	"name": "@ao-barbosa/phi-telemetry",
 	"version": "0.85.0",
-	"description": "Vendor-neutral telemetry contracts and typed schema utilities for pi",
+	"description": "Vendor-neutral telemetry contracts and typed schema utilities for phi",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -34,7 +34,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/earendil-works/pi.git",
+		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/telemetry"
 	},
 	"engines": {
@@ -43,5 +43,11 @@
 	"devDependencies": {
 		"@types/node": "22.19.19",
 		"vitest": "4.1.9"
-	}
+	},
+	"contributors": [
+		{
+			"name": "ao-Barbosa",
+			"url": "https://github.com/ao-Barbosa"
+		}
+	]
 }

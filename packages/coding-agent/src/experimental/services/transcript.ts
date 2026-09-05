@@ -1,5 +1,5 @@
-import { defineService, type ReplicatedState } from "@earendil-works/chord";
-import type { LaneTranscriptSnapshot, LaneWatchEvent } from "@earendil-works/pi-agent-core";
+import { defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
+import type { LaneTranscriptSnapshot, LaneWatchEvent } from "@ao-barbosa/phi-agent-core";
 
 export interface TranscriptState {
 	snapshot: LaneTranscriptSnapshot | null;

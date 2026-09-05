@@ -1,4 +1,4 @@
-import type { AssistantMessage } from "@earendil-works/pi-ai";
+import type { AssistantMessage } from "@ao-barbosa/phi-ai";
 import type { SessionEntry } from "./session-manager.ts";
 
 /**

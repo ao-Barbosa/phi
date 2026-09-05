@@ -7,8 +7,8 @@ import {
 	RemoteServiceError,
 	type ServiceCall,
 	type ServiceProviderUpdate,
-} from "@earendil-works/chord";
-import { BACKGROUND_CONTEXT, type SessionMetadata, TODO_CONTEXT, withAbortSignal } from "@earendil-works/pi-agent-core";
+} from "@ao-barbosa/phi-chord";
+import { BACKGROUND_CONTEXT, type SessionMetadata, TODO_CONTEXT, withAbortSignal } from "@ao-barbosa/phi-agent-core";
 import {
 	type CancelEnvelope,
 	type ClientHello,
@@ -27,7 +27,7 @@ import {
 	type ServerHello,
 	type ServerHelloError,
 	type ServerMessage,
-} from "@earendil-works/pi-protocol";
+} from "@ao-barbosa/phi-protocol";
 import {
 	type ByteConnection,
 	type ByteConnectionHandler,

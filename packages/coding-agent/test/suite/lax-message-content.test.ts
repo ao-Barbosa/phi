@@ -7,8 +7,8 @@
  * (issues #6259, #6276).
  */
 
-import type { AgentMessage, AgentToolResult } from "@earendil-works/pi-agent-core";
-import { fauxAssistantMessage, fauxToolCall } from "@earendil-works/pi-ai";
+import type { AgentMessage, AgentToolResult } from "@ao-barbosa/phi-agent-core";
+import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
 import { describe, expect, it } from "vitest";
 import { type SessionEntry, sessionEntryToContextMessages } from "../../src/core/session-manager.ts";

@@ -13,7 +13,7 @@ import type {
 	StoredValue,
 	Value,
 	ValueList,
-} from "@earendil-works/pi-agent-core";
+} from "@ao-barbosa/phi-agent-core";
 import type { SqliteSessionMetadata } from "./session/session-row.ts";
 
 export interface SqliteOpenSessionOptions {

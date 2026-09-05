@@ -1,4 +1,4 @@
-import { type Context, defineService } from "@earendil-works/chord";
+import { type Context, defineService } from "@ao-barbosa/phi-chord";
 
 export interface AgentPromptImage {
 	type: "image";

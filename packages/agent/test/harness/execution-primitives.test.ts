@@ -1,4 +1,4 @@
-import { fauxProvider } from "@earendil-works/pi-ai";
+import { fauxProvider } from "@ao-barbosa/phi-ai";
 import { describe, expect, it, vi } from "vitest";
 import {
 	BACKGROUND_CONTEXT,

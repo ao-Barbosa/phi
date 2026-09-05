@@ -1,6 +1,6 @@
-import type { JsonValue, ServiceCall } from "@earendil-works/chord";
-import type { Context, Session, SessionMetadata } from "@earendil-works/pi-agent-core";
-import { BACKGROUND_CONTEXT, MemorySessionRepo } from "@earendil-works/pi-agent-core";
+import type { JsonValue, ServiceCall } from "@ao-barbosa/phi-chord";
+import type { Context, Session, SessionMetadata } from "@ao-barbosa/phi-agent-core";
+import { BACKGROUND_CONTEXT, MemorySessionRepo } from "@ao-barbosa/phi-agent-core";
 import { SessionAmbiguousError, SessionNotFoundError } from "../errors.ts";
 import type { RoutedServerServiceHost, RoutedSessionHandle, ServerHost } from "../types.ts";
 

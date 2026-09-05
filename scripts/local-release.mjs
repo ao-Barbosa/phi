@@ -6,16 +6,16 @@ import { isAbsolute, join, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const packages = [
-	{ directory: "packages/chord", name: "@earendil-works/chord" },
-	{ directory: "packages/telemetry", name: "@earendil-works/pi-telemetry" },
-	{ directory: "packages/ai", name: "@earendil-works/pi-ai" },
-	{ directory: "packages/tui", name: "@earendil-works/pi-tui" },
-	{ directory: "packages/agent", name: "@earendil-works/pi-agent-core" },
-	{ directory: "packages/protocol", name: "@earendil-works/pi-protocol" },
-	{ directory: "packages/client", name: "@earendil-works/pi-client" },
-	{ directory: "packages/session-backends/sqlite-node", name: "@earendil-works/pi-session-backend-sqlite-node" },
-	{ directory: "packages/server", name: "@earendil-works/pi-server" },
-	{ directory: "packages/coding-agent", name: "@earendil-works/pi-coding-agent" },
+	{ directory: "packages/chord", name: "@ao-barbosa/phi-chord" },
+	{ directory: "packages/telemetry", name: "@ao-barbosa/phi-telemetry" },
+	{ directory: "packages/ai", name: "@ao-barbosa/phi-ai" },
+	{ directory: "packages/tui", name: "@ao-barbosa/phi-tui" },
+	{ directory: "packages/agent", name: "@ao-barbosa/phi-agent-core" },
+	{ directory: "packages/protocol", name: "@ao-barbosa/phi-protocol" },
+	{ directory: "packages/client", name: "@ao-barbosa/phi-client" },
+	{ directory: "packages/session-backends/sqlite-node", name: "@ao-barbosa/phi-session-backend-sqlite-node" },
+	{ directory: "packages/server", name: "@ao-barbosa/phi-server" },
+	{ directory: "packages/coding-agent", name: "@ao-barbosa/phi-coding-agent" },
 ];
 
 function printUsage() {

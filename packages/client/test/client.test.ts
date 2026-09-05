@@ -1,11 +1,11 @@
-import { BACKGROUND_CONTEXT } from "@earendil-works/chord/context";
+import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import {
 	encodeCbor,
 	encodeFrame,
 	encodeServerMessage,
 	PROTOCOL_VERSION,
 	ProtocolValidationError,
-} from "@earendil-works/pi-protocol";
+} from "@ao-barbosa/phi-protocol";
 import { describe, expect, test, vi } from "vitest";
 import {
 	type ByteTransportFactory,

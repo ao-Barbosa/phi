@@ -1,1 +1,1 @@
-export * from "@earendil-works/pi-client";
+export * from "@ao-barbosa/phi-client";

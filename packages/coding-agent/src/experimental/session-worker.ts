@@ -9,7 +9,7 @@ import {
 	type RemoteServiceErrorCode,
 	type ServiceCall,
 	type ServiceProviderUpdate,
-} from "@earendil-works/chord";
+} from "@ao-barbosa/phi-chord";
 import {
 	AgentHarness,
 	type AgentHarness as AgentHarnessInstance,
@@ -23,8 +23,8 @@ import {
 	type Session,
 	TODO_CONTEXT,
 	withCancel,
-} from "@earendil-works/pi-agent-core";
-import { NodeExecutionEnv } from "@earendil-works/pi-agent-core/node";
+} from "@ao-barbosa/phi-agent-core";
+import { NodeExecutionEnv } from "@ao-barbosa/phi-agent-core/node";
 import lockfile from "proper-lockfile";
 import Type, { type Static } from "typebox";
 import { Check } from "typebox/value";

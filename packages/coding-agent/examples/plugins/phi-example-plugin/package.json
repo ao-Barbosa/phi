@@ -1,0 +1,10 @@
+{
+	"name": "@ao-barbosa/phi-example-plugin",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"peerDependencies": {
+		"@ao-barbosa/phi-chord": "^0.84.4",
+		"@ao-barbosa/phi-coding-agent": "^0.84.4"
+	}
+}

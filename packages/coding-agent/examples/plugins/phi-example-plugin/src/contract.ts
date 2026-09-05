@@ -1,4 +1,4 @@
-import { type Context, defineService, type ReplicatedState } from "@earendil-works/chord";
+import { type Context, defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
 
 export interface ExampleFacetReply {
 	readonly message: string;

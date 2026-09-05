@@ -1,7 +1,7 @@
 {
-	"name": "@earendil-works/pi-session-backend-sqlite-node",
+	"name": "@ao-barbosa/phi-session-backend-sqlite-node",
 	"version": "0.85.0",
-	"description": "Node sqlite session backend for @earendil-works/pi-agent-core sessions",
+	"description": "Node sqlite session backend for @ao-barbosa/phi-agent-core sessions",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -28,18 +28,24 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/earendil-works/pi.git",
+		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/session-backends/sqlite-node"
 	},
 	"engines": {
 		"node": ">=22.19.0"
 	},
 	"dependencies": {
-		"@earendil-works/pi-ai": "^0.85.0",
-		"@earendil-works/pi-agent-core": "^0.85.0"
+		"@ao-barbosa/phi-ai": "^0.85.0",
+		"@ao-barbosa/phi-agent-core": "^0.85.0"
 	},
 	"devDependencies": {
 		"@vitest/coverage-v8": "4.1.9",
 		"vitest": "4.1.9"
-	}
+	},
+	"contributors": [
+		{
+			"name": "ao-Barbosa",
+			"url": "https://github.com/ao-Barbosa"
+		}
+	]
 }

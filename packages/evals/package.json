@@ -1,5 +1,5 @@
 {
-	"name": "@earendil-works/pi-evals",
+	"name": "@ao-barbosa/phi-evals",
 	"version": "0.85.0",
 	"private": true,
 	"type": "module",
@@ -9,12 +9,18 @@
 		"test": "vitest run --config vitest.test.config.ts"
 	},
 	"devDependencies": {
-		"@earendil-works/pi-ai": "^0.85.0",
-		"@earendil-works/pi-coding-agent": "^0.85.0",
+		"@ao-barbosa/phi-ai": "^0.85.0",
+		"@ao-barbosa/phi-coding-agent": "^0.85.0",
 		"@types/node": "22.19.19",
 		"shx": "0.4.0",
 		"typescript": "5.9.3",
 		"vitest-evals": "0.15.0",
 		"vitest": "4.1.9"
-	}
+	},
+	"contributors": [
+		{
+			"name": "ao-Barbosa",
+			"url": "https://github.com/ao-Barbosa"
+		}
+	]
 }

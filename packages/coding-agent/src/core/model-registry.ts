@@ -9,7 +9,7 @@ import type {
 	ModelsRefreshResult,
 	Provider,
 	ProviderHeaders,
-} from "@earendil-works/pi-ai";
+} from "@ao-barbosa/phi-ai";
 import type { ModelRuntime } from "./model-runtime.ts";
 import type { AuthStatus, ProviderConfigInput } from "./provider-composer.ts";
 

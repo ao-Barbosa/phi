@@ -19,11 +19,11 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** Workspace package name -> its source root, so cross-package imports are followed. */
 const WORKSPACE = {
-	"@earendil-works/chord": "packages/chord/src",
-	"@earendil-works/pi-ai": "packages/ai/src",
-	"@earendil-works/pi-agent-core": "packages/agent/src",
-	"@earendil-works/pi-telemetry": "packages/telemetry/src",
-	"@earendil-works/pi-tui": "packages/tui/src",
+	"@ao-barbosa/phi-chord": "packages/chord/src",
+	"@ao-barbosa/phi-ai": "packages/ai/src",
+	"@ao-barbosa/phi-agent-core": "packages/agent/src",
+	"@ao-barbosa/phi-telemetry": "packages/telemetry/src",
+	"@ao-barbosa/phi-tui": "packages/tui/src",
 };
 
 /**

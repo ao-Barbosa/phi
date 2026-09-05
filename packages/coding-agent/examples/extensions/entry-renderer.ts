@@ -8,8 +8,8 @@
  * Usage: /status-card [message]
  */
 
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { Box, Text } from "@earendil-works/pi-tui";
+import type { ExtensionAPI } from "@ao-barbosa/phi-coding-agent";
+import { Box, Text } from "@ao-barbosa/phi-tui";
 
 interface StatusCardData {
 	message: string;

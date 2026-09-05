@@ -4,7 +4,7 @@ import {
 	encodeServerMessage,
 	PROTOCOL_VERSION,
 	type ServerMessage,
-} from "@earendil-works/pi-protocol";
+} from "@ao-barbosa/phi-protocol";
 import type { ByteTransport, ByteTransportHandlers } from "../src/index.ts";
 
 export class MemoryByteServer {

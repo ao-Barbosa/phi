@@ -8,14 +8,14 @@ import {
 	parseServiceProviderUpdate,
 	type ServiceCall,
 	type ServiceProviderUpdate,
-} from "@earendil-works/chord";
+} from "@ao-barbosa/phi-chord";
 import {
 	BACKGROUND_CONTEXT,
 	type Context,
 	type JsonlSessionMetadata,
 	TODO_CONTEXT,
-} from "@earendil-works/pi-agent-core";
-import { type RoutedSessionAttachment, type RoutedSessionHandle, ServerError } from "@earendil-works/pi-server";
+} from "@ao-barbosa/phi-agent-core";
+import { type RoutedSessionAttachment, type RoutedSessionHandle, ServerError } from "@ao-barbosa/phi-server";
 import { Check } from "typebox/value";
 import type { CoordinatorConnection, CoordinatorConnectionEvent } from "./coordinator.ts";
 import { spawnInternalProcess } from "./process.ts";

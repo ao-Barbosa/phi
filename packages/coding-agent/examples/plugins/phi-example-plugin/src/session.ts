@@ -1,9 +1,9 @@
-import { defineFacet } from "@earendil-works/chord";
-import { BACKGROUND_CONTEXT } from "@earendil-works/chord/context";
+import { defineFacet } from "@ao-barbosa/phi-chord";
+import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import { ExampleFacetService } from "./contract.ts";
 
 export default defineFacet({
-	id: "@earendil-works/pi-example-plugin/session",
+	id: "@ao-barbosa/phi-example-plugin/session",
 	setup(env) {
 		const workerActivations = env.replicatedState({ count: 0 });
 		env.provide(ExampleFacetService, {
