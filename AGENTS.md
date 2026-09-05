@@ -70,6 +70,15 @@ If rebase conflicts occur:
 - If a conflict is in a file you did not modify, abort and ask the user.
 - Never force push.
 
+## Upstream sync (phi fork)
+
+- Upstream remote is `https://github.com/earendil-works/pi.git`. Fork-point baseline: `92d8e2d17`.
+- Integrate with `git fetch upstream` + `git merge upstream/main`. No rebase, squash, or force-push.
+- Released `CHANGELOG.md` sections are immutable; never rewrite historical `pi`/`pi-mono` links. New entries use phi URLs (`https://github.com/ao-Barbosa/phi/issues|pull/...`).
+- Refix scope: only files upstream touched can reintroduce `pi` names. After each merge, scope with `git log <baseline>..upstream/main --stat`, then re-apply `scripts/phi-rename-map.json` to touched areas (`PI_*`, `@earendil-works/pi-*`, `pi.dev`, `setup-node`/`npm ci`).
+- If a merge re-adds `package-lock.json`, delete it, keep `bun.lock`, run `bun install` to pick up new deps.
+- Merge log (append each merge SHA here): none yet.
+
 ## Issues and PRs
 
 See `CONTRIBUTING.md` for the contributor gate (auto-close workflows, `lgtm`/`lgtmi`, quality bar).

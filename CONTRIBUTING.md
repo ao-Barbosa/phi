@@ -70,6 +70,10 @@ Do not edit `CHANGELOG.md`. Changelog entries are added by maintainers.
 
 If you are adding a new provider to `packages/ai`, see `AGENTS.md` for required tests.
 
+## Upstream sync
+
+phi merges `upstream/main` (`https://github.com/earendil-works/pi.git`) periodically. The full merge policy (commands, changelog freeze, re-apply checklist, merge log) lives in `AGENTS.md` under "Upstream sync (phi fork)". No rebase, squash, or force-push.
+
 ## Questions?
 
 Ask on [Discord](https://discord.com/invite/nKXTsAcmbT).
