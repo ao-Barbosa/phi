@@ -13,7 +13,7 @@ const aiDistDir = join(repoRoot, "packages", "ai", "dist");
 const codingAgentDistDir = join(codingAgentDir, "dist");
 const bundleDir = join(codingAgentDistDir, "bundle");
 const banner = {
-	js: 'import { createRequire as __piCreateRequire } from "node:module"; const require = __piCreateRequire(import.meta.url);',
+	js: 'import { createRequire as __phiCreateRequire } from "node:module"; const require = __phiCreateRequire(import.meta.url);',
 };
 const allowedExternalPackages = new Set([
 	"@ao-barbosa/phi-chord",
@@ -22,7 +22,6 @@ const allowedExternalPackages = new Set([
 	"@ao-barbosa/phi-chord/delta",
 	"@ao-barbosa/phi-chord/node",
 	"@silvia-odwyer/photon-node",
-	"jiti",
 	// Optional native accelerators. Their callers fall back to JavaScript when absent.
 	"bufferutil",
 	"utf-8-validate",
@@ -30,29 +29,6 @@ const allowedExternalPackages = new Set([
 	"supports-color",
 ]);
 
-const lazyJitiPlugin = {
-	name: "lazy-jiti-transform",
-	setup(build) {
-		build.onResolve({ filter: /^jiti\/static$/ }, () => ({
-			namespace: "lazy-jiti",
-			path: "jiti/static",
-		}));
-		build.onLoad({ filter: /.*/, namespace: "lazy-jiti" }, () => ({
-			contents: `
-import { createRequire } from "node:module";
-
-const require = createRequire(import.meta.url);
-let createJitiImpl;
-
-export function createJiti(...args) {
-	createJitiImpl ??= require("jiti").createJiti;
-	return createJitiImpl(...args);
-}
-`,
-			loader: "js",
-		}));
-	},
-};
 
 const httpsProxyAgentNamedExportPlugin = {
 	name: "https-proxy-agent-named-export",
@@ -72,7 +48,7 @@ const httpsProxyAgentNamedExportPlugin = {
 			() => ({
 				contents: 'export { HttpsProxyAgent } from "https-proxy-agent";',
 				loader: "js",
-				resolveDir: repoRoot,
+				resolveDir: aiDistDir,
 			}),
 		);
 	},
@@ -91,11 +67,7 @@ function commonBuildOptions() {
 		minifySyntax: true,
 		minifyWhitespace: true,
 		platform: "node",
-		// The source uses jiti/static so Bun embeds its Babel transform. The Node
-		// package replaces it with a synchronous lazy require so jiti loads only
-		// when importing an extension; Babel remains deferred until a cache miss
-		// needs transformation.
-		plugins: [lazyJitiPlugin, httpsProxyAgentNamedExportPlugin],
+		plugins: [httpsProxyAgentNamedExportPlugin],
 		sourcemap: false,
 		target: "node22.19",
 		// Do not apply the monorepo's source-oriented path aliases while bundling

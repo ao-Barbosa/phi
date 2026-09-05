@@ -47,9 +47,6 @@
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/client"
 	},
-	"engines": {
-		"node": ">=22.19.0"
-	},
 	"dependencies": {
 		"@ao-barbosa/phi-chord": "^0.85.0",
 		"@ao-barbosa/phi-protocol": "^0.85.0"

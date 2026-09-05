@@ -63,9 +63,6 @@
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/chord"
 	},
-	"engines": {
-		"node": ">=22.19.0"
-	},
 	"dependencies": {
 		"esbuild": "0.28.1"
 	},

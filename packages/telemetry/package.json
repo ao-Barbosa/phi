@@ -41,9 +41,6 @@
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/telemetry"
 	},
-	"engines": {
-		"node": ">=22.19.0"
-	},
 	"devDependencies": {
 		"@types/node": "22.19.19",
 		"vitest": "4.1.9"

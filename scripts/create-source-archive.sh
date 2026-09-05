@@ -2,7 +2,7 @@
 # Create the deterministic source archive uploaded with GitHub releases.
 #
 # Usage:
-#   npm run hydrate:model-data
+#   bun run hydrate:model-data
 #   ./scripts/create-source-archive.sh --version <version> --ref <git-ref> --out <archive.tar.gz>
 
 set -euo pipefail
@@ -67,7 +67,7 @@ cd "$repo_root"
 
 commit="$(git rev-parse --verify --end-of-options "${source_ref}^{commit}")"
 
-package_version="$(git show "${commit}:packages/coding-agent/package.json" | node -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).version')"
+package_version="$(git show "${commit}:packages/coding-agent/package.json" | bun -p 'JSON.parse(require("fs").readFileSync(0, "utf8")).version')"
 if [[ "$package_version" != "$version" ]]; then
     echo "Version ${version} does not match package version ${package_version} at ${source_ref}" >&2
     exit 1
@@ -81,7 +81,7 @@ output="$(cd "$(dirname "$output")" && pwd)/$(basename "$output")"
 
 model_data_dir="packages/ai/src/providers/data"
 if [[ ! -f "${model_data_dir}/.manifest.json" ]]; then
-    echo "Generated model data is missing. Run npm run hydrate:model-data first." >&2
+    echo "Generated model data is missing. Run bun run hydrate:model-data first." >&2
     exit 1
 fi
 
@@ -108,14 +108,14 @@ GIT_INDEX_FILE="$temporary_index" git add -f -- "${model_data_files[@]}"
 archive_tree="$(GIT_INDEX_FILE="$temporary_index" git write-tree)"
 archive_mtime="$(git show -s --format=%ct "$commit")"
 
-archive_root="pi-${version}"
+archive_root="phi-${version}"
 git archive --format=tar --prefix="${archive_root}/" --mtime="@${archive_mtime}" "$archive_tree" \
     | gzip -n -9 > "$temporary_archive"
 tar -tzf "$temporary_archive" > "$manifest"
 
 required_paths=(
     "package.json"
-    "package-lock.json"
+    "bun.lock"
     "scripts/build-binaries.sh"
     "packages/ai/src/models.generated.ts"
     "packages/ai/src/image-models.generated.ts"
@@ -143,7 +143,7 @@ if grep -Eq '(^|/)node_modules/|(^|/)packages/coding-agent/binaries/' "$manifest
 fi
 
 tar -xzf "$temporary_archive" -C "$validation_root"
-node "${validation_root}/${archive_root}/packages/ai/scripts/check-model-data.ts"
+bun "${validation_root}/${archive_root}/packages/ai/scripts/check-model-data.ts"
 
 mv "$temporary_archive" "$output"
 trap 'rm -f "$temporary_index" "$manifest"; rm -rf "$validation_root"' EXIT

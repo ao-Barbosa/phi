@@ -44,9 +44,6 @@
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/tui"
 	},
-	"engines": {
-		"node": ">=22.19.0"
-	},
 	"types": "./dist/index.d.ts",
 	"dependencies": {
 		"get-east-asian-width": "1.6.0",

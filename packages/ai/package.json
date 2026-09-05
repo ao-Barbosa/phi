@@ -63,7 +63,7 @@
 		"generate-image-models": "bun scripts/generate-image-models.ts --strict",
 		"check:model-data": "bun scripts/check-model-data.ts",
 		"build": "bun run generate-models && bun run build:offline",
-		"build:offline": "bun run check:model-data && tsgo -p tsconfig.build.json && rm -rf dist/providers/data && cp -r src/providers/data dist/providers/data",
+		"build:offline": "bun run check:model-data && tsgo -p tsconfig.build.json && rm -rf dist/providers/data && cp -R src/providers/data dist/providers/data",
 		"test": "vitest --run",
 		"prepublishOnly": "bun run clean && bun run build"
 	},
@@ -96,9 +96,6 @@
 		"type": "git",
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/ai"
-	},
-	"engines": {
-		"node": ">=22.19.0"
 	},
 	"devDependencies": {
 		"@types/node": "22.19.19",

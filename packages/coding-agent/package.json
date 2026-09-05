@@ -44,7 +44,7 @@
 		"build:unbundled": "tsgo -p tsconfig.build.json && chmod +x dist/cli.js dist/rpc-entry.js && bun run copy-assets",
 		"build:binary": "bun run --filter @ao-barbosa/phi-tui build && bun run --filter @ao-barbosa/phi-telemetry build && bun run --filter @ao-barbosa/phi-ai build && bun run --filter @ao-barbosa/phi-agent-core build && bun run --filter @ao-barbosa/phi-protocol build && bun run --filter @ao-barbosa/phi-client build && bun run build && bun build --compile --no-compile-autoload-bunfig ./src/bun/cli.ts ./src/utils/image-resize-worker.ts --outfile dist/phi && bun run copy-binary-assets",
 		"copy-assets": "mkdir -p dist/modes/interactive/theme && cp src/modes/interactive/theme/*.json dist/modes/interactive/theme/ && mkdir -p dist/modes/interactive/assets && cp src/modes/interactive/assets/*.png dist/modes/interactive/assets/ && mkdir -p dist/core/export-html/vendor && cp src/core/export-html/template.html src/core/export-html/template.css src/core/export-html/template.js dist/core/export-html/ && cp src/core/export-html/vendor/*.js dist/core/export-html/vendor/",
-		"copy-binary-assets": "cp package.json dist/ && cp README.md dist/ && cp CHANGELOG.md dist/ && mkdir -p dist/theme && cp src/modes/interactive/theme/*.json dist/theme/ && mkdir -p dist/assets && cp src/modes/interactive/assets/*.png dist/assets/ && mkdir -p dist/export-html/vendor && cp src/core/export-html/template.html dist/export-html/ && cp src/core/export-html/vendor/*.js dist/export-html/vendor/ && cp -r docs dist/ && cp -r examples dist/ && cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/",
+		"copy-binary-assets": "cp package.json dist/ && cp README.md dist/ && cp CHANGELOG.md dist/ && mkdir -p dist/theme && cp src/modes/interactive/theme/*.json dist/theme/ && mkdir -p dist/assets && cp src/modes/interactive/assets/*.png dist/assets/ && mkdir -p dist/export-html/vendor && cp src/core/export-html/template.html dist/export-html/ && cp src/core/export-html/vendor/*.js dist/export-html/vendor/ && cp -R docs dist/ && cp -R examples dist/ && cp ../../node_modules/@silvia-odwyer/photon-node/photon_rs_bg.wasm dist/",
 		"test": "vitest --run",
 		"prepublishOnly": "bun run clean && bun run build"
 	},
@@ -54,6 +54,7 @@
 		"@ao-barbosa/phi-ai": "^0.85.0",
 		"@ao-barbosa/phi-client": "^0.85.0",
 		"@ao-barbosa/phi-protocol": "^0.85.0",
+		"@ao-barbosa/phi-server": "^0.85.0",
 		"@ao-barbosa/phi-tui": "^0.85.0",
 		"@silvia-odwyer/photon-node": "0.3.4",
 		"chalk": "5.6.2",
@@ -103,9 +104,6 @@
 		"type": "git",
 		"url": "git+https://github.com/ao-Barbosa/phi.git",
 		"directory": "packages/coding-agent"
-	},
-	"engines": {
-		"node": ">=22.19.0"
 	},
 	"phiConfig": {
 		"configDir": ".phi"
