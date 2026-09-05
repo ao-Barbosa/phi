@@ -13,7 +13,7 @@ const servers = new Set<Server>();
 const sockets = new Set<Socket>();
 
 async function makeSocketPath(): Promise<string> {
-	const directory = await mkdtemp(join("/tmp", "pi-client-transport-"));
+	const directory = await mkdtemp(join("/tmp", "phi-client-transport-"));
 	tempDirectories.add(directory);
 	return join(directory, "phi.sock");
 }

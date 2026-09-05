@@ -29,7 +29,7 @@ describe.skipIf(!APHI_KEY)("AgentSession compaction e2e", () => {
 
 	beforeEach(async () => {
 		// Create temp directory for session files
-		tempDir = join(tmpdir(), `pi-compaction-test-${Date.now()}`);
+		tempDir = join(tmpdir(), `phi-compaction-test-${Date.now()}`);
 		mkdirSync(tempDir, { recursive: true });
 
 		// Track events

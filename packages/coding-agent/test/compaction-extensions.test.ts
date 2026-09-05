@@ -32,7 +32,7 @@ describe.skipIf(!APHI_KEY)("Compaction extensions", () => {
 	let capturedEvents: SessionEvent[];
 
 	beforeEach(async () => {
-		tempDir = join(tmpdir(), `pi-compaction-extensions-test-${Date.now()}`);
+		tempDir = join(tmpdir(), `phi-compaction-extensions-test-${Date.now()}`);
 		mkdirSync(tempDir, { recursive: true });
 		capturedEvents = [];
 	});

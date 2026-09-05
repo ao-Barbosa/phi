@@ -37,7 +37,7 @@ describe("regression #2860: replaced session callbacks", () => {
 	});
 
 	async function createRuntimeForTest(extensionFactory: ExtensionFactory, responses: string[]) {
-		const tempDir = join(tmpdir(), `pi-2860-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+		const tempDir = join(tmpdir(), `phi-2860-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 		mkdirSync(tempDir, { recursive: true });
 
 		const faux = registerFauxProvider({

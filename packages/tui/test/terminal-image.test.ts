@@ -629,7 +629,7 @@ describe("imageFallback", () => {
 		try {
 			const abs = join(homedir(), ".phi", "agent", "shot.png");
 			const result = imageFallback("image/png", { widthPx: 1280, heightPx: 720 }, abs);
-			assert.strictEqual(result, "[Image: ~/.pi/agent/shot.png [image/png] 1280x720]");
+			assert.strictEqual(result, `[Image: ~${abs.slice(homedir().length)} [image/png] 1280x720]`);
 		} finally {
 			resetCapabilitiesCache();
 		}
@@ -647,7 +647,7 @@ describe("imageFallback", () => {
 			);
 			// Visible text must use ~/... not the expanded home path.
 			const visible = result.replace(/\x1b\]8;;.*?\x1b\\/g, "");
-			assert.strictEqual(visible, "[Image: ~/.pi/agent/shot.png [image/png] 10x10]");
+			assert.strictEqual(visible, `[Image: ~${abs.slice(homedir().length)} [image/png] 10x10]`);
 		} finally {
 			resetCapabilitiesCache();
 		}
