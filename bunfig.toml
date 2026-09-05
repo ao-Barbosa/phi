@@ -1,0 +1,5 @@
+[install]
+# Mirror the old .npmrc exactly: save-exact plus a strict 2-day minimum
+# release age with no excludes. Bun never runs dependency lifecycle scripts.
+exact = true
+minimumReleaseAge = 172800

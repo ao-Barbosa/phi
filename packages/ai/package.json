@@ -1,6 +1,10 @@
 {
 	"name": "@ao-barbosa/phi-ai",
 	"version": "0.85.0",
+	"engines": {
+		"bun": ">=1.4.2"
+	},
+	"packageManager": "bun@1.4.2",
 	"description": "Unified LLM API with automatic model discovery and provider configuration",
 	"type": "module",
 	"main": "./dist/index.js",
@@ -69,6 +73,7 @@
 		"@ao-barbosa/phi-telemetry": "^0.85.0",
 		"@google/genai": "1.52.0",
 		"@smithy/node-http-handler": "4.7.3",
+		"@smithy/types": "4.18.0",
 		"http-proxy-agent": "7.0.2",
 		"https-proxy-agent": "7.0.6",
 		"openai": "6.40.0",

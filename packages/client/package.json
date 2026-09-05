@@ -1,6 +1,10 @@
 {
 	"name": "@ao-barbosa/phi-client",
 	"version": "0.85.0",
+	"engines": {
+		"bun": ">=1.4.2"
+	},
+	"packageManager": "bun@1.4.2",
 	"description": "Transport-neutral client for remote phi sessions over framed CBOR bytes",
 	"type": "module",
 	"main": "./dist/index.js",

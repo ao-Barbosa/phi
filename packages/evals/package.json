@@ -1,6 +1,10 @@
 {
 	"name": "@ao-barbosa/phi-evals",
 	"version": "0.85.0",
+	"engines": {
+		"bun": ">=1.4.2"
+	},
+	"packageManager": "bun@1.4.2",
 	"private": true,
 	"type": "module",
 	"scripts": {

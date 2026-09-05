@@ -1,6 +1,10 @@
 {
 	"name": "@ao-barbosa/phi-session-backend-sqlite-node",
 	"version": "0.85.0",
+	"engines": {
+		"bun": ">=1.4.2"
+	},
+	"packageManager": "bun@1.4.2",
 	"description": "Node sqlite session backend for @ao-barbosa/phi-agent-core sessions",
 	"type": "module",
 	"main": "./dist/index.js",
