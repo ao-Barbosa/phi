@@ -54,7 +54,7 @@ vi.mock("@anthropic-ai/sdk", () => {
 	return { default: FakeAnthropic };
 });
 
-const PHI_USER_AGENT = `pi (${platform()} ${release()}; ${arch()})`;
+const PHI_USER_AGENT = `phi (${platform()} ${release()}; ${arch()})`;
 const neverAbortedSignal = new AbortController().signal;
 
 const context: Context = {

@@ -17,7 +17,7 @@ import { AssistantMessageEventStream } from "../utils/event-stream.ts";
 import { shortHash } from "../utils/hash.ts";
 import { headersToRecord } from "../utils/headers.ts";
 import { parseStreamingJson } from "../utils/json-parse.ts";
-import { getPiUserAgent } from "../utils/pi-user-agent.ts";
+import { getPhiUserAgent } from "../utils/phi-user-agent.ts";
 import { sanitizeSurrogates } from "../utils/sanitize-unicode.ts";
 import { getJsonSchemaToolParameters, resolveJsonSchemaStrictSampling } from "./constrained-sampling.ts";
 import { buildBaseOptions } from "./simple-options.ts";
@@ -330,7 +330,7 @@ class MistralHttpError extends Error {
 
 function buildMistralHeaders(model: Model<"mistral-conversations">, apiKey: string, options?: MistralOptions): Headers {
 	const headers = new Headers({
-		"User-Agent": getPiUserAgent(),
+		"User-Agent": getPhiUserAgent(),
 		accept: "text/event-stream",
 		authorization: `Bearer ${apiKey}`,
 		"content-type": "application/json",
