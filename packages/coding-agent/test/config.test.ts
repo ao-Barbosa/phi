@@ -52,7 +52,7 @@ afterEach(() => {
 function createNpmPrefixInstall(template = "pi-prefix-"): { prefix: string; packageDir: string } {
 	const prefix = mkdtempSync(join(tmpdir(), template));
 	const root = join(prefix, "lib", "node_modules");
-	const scopeDir = join(root, "@earendil-works");
+	const scopeDir = join(root, "@ao-barbosa");
 	const packageDir = join(scopeDir, "pi-coding-agent");
 	mkdirSync(packageDir, { recursive: true });
 	tempDir = prefix;
@@ -62,7 +62,7 @@ function createNpmPrefixInstall(template = "pi-prefix-"): { prefix: string; pack
 }
 
 function createPnpmGlobalInstall(): { root: string; packageDir: string } {
-	const temp = mkdtempSync(join(tmpdir(), "pi-pnpm-"));
+	const temp = mkdtempSync(join(tmpdir(), "phi-pnpm-"));
 	const binDir = join(temp, "bin");
 	const root = join(temp, "pnpm", "global", "5", "node_modules");
 	const packageDir = join(root, "@mariozechner", "pi-coding-agent");
@@ -89,7 +89,7 @@ function createPnpmGlobalInstall(): { root: string; packageDir: string } {
 }
 
 function createYarnGlobalInstall(): { globalDir: string; packageDir: string } {
-	const temp = mkdtempSync(join(tmpdir(), "pi-yarn-"));
+	const temp = mkdtempSync(join(tmpdir(), "phi-yarn-"));
 	const binDir = join(temp, "bin");
 	const globalDir = join(temp, "yarn", "global");
 	const packageDir = join(globalDir, "node_modules", "@mariozechner", "pi-coding-agent");
@@ -105,11 +105,11 @@ function createYarnGlobalInstall(): { globalDir: string; packageDir: string } {
 }
 
 function createBunGlobalInstall(): { packageDir: string } {
-	const temp = mkdtempSync(join(tmpdir(), "pi-bun-"));
+	const temp = mkdtempSync(join(tmpdir(), "phi-bun-"));
 	const prefix = join(temp, ".bun");
 	const bunBin = join(prefix, "bin");
 	const root = join(prefix, "install", "global", "node_modules");
-	const scopeDir = join(root, "@earendil-works");
+	const scopeDir = join(root, "@ao-barbosa");
 	const packageDir = join(scopeDir, "pi-coding-agent");
 	mkdirSync(packageDir, { recursive: true });
 	mkdirSync(bunBin, { recursive: true });
@@ -148,7 +148,7 @@ function createFakeBunScript(bunBin: string): string {
 
 describe("findNodePackageDir", () => {
 	test("skips binary metadata copied into dist", () => {
-		tempDir = mkdtempSync(join(tmpdir(), "pi-package-dir-"));
+		tempDir = mkdtempSync(join(tmpdir(), "phi-package-dir-"));
 		const distDir = join(tempDir, "dist");
 		const bundleDir = join(distDir, "bundle");
 		mkdirSync(bundleDir, { recursive: true });
@@ -162,7 +162,7 @@ describe("findNodePackageDir", () => {
 describe("detectInstallMethod", () => {
 	test("detects pnpm from Windows .pnpm install paths", () => {
 		setExecPath(
-			"C:\\Users\\Admin\\Documents\\pnpm-repository\\global\\5\\.pnpm\\@earendil-works+pi-coding-agent@0.67.68\\node_modules\\@earendil-works\\pi-coding-agent\\dist\\cli.js",
+			"C:\\Users\\Admin\\Documents\\pnpm-repository\\global\\5\\.pnpm\\@ao-barbosa+pi-coding-agent@0.67.68\\node_modules\\@ao-barbosa\\pi-coding-agent\\dist\\cli.js",
 		);
 
 		expect(detectInstallMethod()).toBe("pnpm");
@@ -296,7 +296,7 @@ describe("detectInstallMethod", () => {
 	});
 
 	test("does not infer Windows npm custom prefixes from package paths", () => {
-		const packageDir = "C:\\Users\\Admin\\npm prefix\\node_modules\\@earendil-works\\pi-coding-agent";
+		const packageDir = "C:\\Users\\Admin\\npm prefix\\node_modules\\@ao-barbosa\\pi-coding-agent";
 		process.env.PI_PACKAGE_DIR = packageDir;
 		setExecPath(`${packageDir}\\dist\\cli.js`);
 
@@ -346,11 +346,11 @@ describe("detectInstallMethod", () => {
 	});
 
 	test("self-updates pnpm v11 global installs resolved through the store", () => {
-		const temp = mkdtempSync(join(tmpdir(), "pi-pnpm11-"));
+		const temp = mkdtempSync(join(tmpdir(), "phi-pnpm11-"));
 		const binDir = join(temp, "bin");
 		const root = join(temp, "Library", "pnpm", "global", "v11");
 		const packageName = "@ao-barbosa/phi-coding-agent";
-		const globalPackageDir = join(root, "11e9a", "node_modules", "@earendil-works", "pi-coding-agent");
+		const globalPackageDir = join(root, "11e9a", "node_modules", "@ao-barbosa", "phi-coding-agent");
 		const storePackageDir = join(
 			temp,
 			"Library",
@@ -358,12 +358,12 @@ describe("detectInstallMethod", () => {
 			"store",
 			"v11",
 			"links",
-			"@earendil-works",
+			"@ao-barbosa",
 			"pi-coding-agent",
 			"0.75.0",
 			"hash",
 			"node_modules",
-			"@earendil-works",
+			"@ao-barbosa",
 			"pi-coding-agent",
 		);
 		mkdirSync(globalPackageDir, { recursive: true });

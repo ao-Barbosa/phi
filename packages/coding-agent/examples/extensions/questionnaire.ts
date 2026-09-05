@@ -6,15 +6,7 @@
  */
 
 import type { ExtensionAPI } from "@ao-barbosa/phi-coding-agent";
-import {
-	Editor,
-	type EditorTheme,
-	Key,
-	matchesKey,
-	Text,
-	visibleWidth,
-	wrapTextWithAnsi,
-} from "@ao-barbosa/phi-tui";
+import { Editor, type EditorTheme, Key, matchesKey, Text, visibleWidth, wrapTextWithAnsi } from "@ao-barbosa/phi-tui";
 import { Type } from "typebox";
 
 // Types

@@ -1,5 +1,5 @@
-import { defineFacet, type Facet, type JsonValue } from "@ao-barbosa/phi-chord";
 import type { ThinkingLevel } from "@ao-barbosa/phi-agent-core";
+import { defineFacet, type Facet, type JsonValue } from "@ao-barbosa/phi-chord";
 import { AgentController } from "./agent-controller.ts";
 import { type ModelSummary, Models, type Models as ModelsService } from "./models.ts";
 import { PresentationPlugins, SessionPlugins } from "./plugins.ts";

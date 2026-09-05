@@ -23,7 +23,7 @@ export interface SessionDirectory {
 	readonly state: ReplicatedState<SessionDirectoryState>;
 }
 
-export const SessionDirectory = defineService<SessionDirectory>("pi.session-directory");
+export const SessionDirectory = defineService<SessionDirectory>("phi.session-directory");
 
 export interface SessionManagement {
 	create(options: SessionCreateOptions, context: Context): Promise<SessionSummary>;
@@ -32,4 +32,4 @@ export interface SessionManagement {
 	detach(context: Context): Promise<void>;
 }
 
-export const SessionManagement = defineService<SessionManagement>("pi.session-management");
+export const SessionManagement = defineService<SessionManagement>("phi.session-management");

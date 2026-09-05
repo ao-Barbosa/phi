@@ -1,6 +1,6 @@
 import { expect } from "vitest";
 import { describeEval } from "vitest-evals";
-import { createPiCodingAgentHarness } from "./pi-harness.ts";
+import { createPiCodingAgentHarness } from "./phi-harness.ts";
 
 const piCodingAgentHarness = createPiCodingAgentHarness({ noTools: "all" });
 

@@ -2,8 +2,6 @@ import { randomUUID } from "node:crypto";
 import { chmod, lstat, mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { isAbsolute, join } from "node:path";
-import type { Context } from "@ao-barbosa/phi-chord";
-import type { FacetBundleArtifact } from "@ao-barbosa/phi-chord/node";
 import {
 	BACKGROUND_CONTEXT,
 	type JsonlSessionMetadata,
@@ -11,6 +9,8 @@ import {
 	TODO_CONTEXT,
 } from "@ao-barbosa/phi-agent-core";
 import { NodeExecutionEnv } from "@ao-barbosa/phi-agent-core/node";
+import type { Context } from "@ao-barbosa/phi-chord";
+import type { FacetBundleArtifact } from "@ao-barbosa/phi-chord/node";
 import { Client, ServerError as ClientServerError, DisconnectedError } from "@ao-barbosa/phi-client";
 import { createUnixTransportFactory, type UnixServerRoute } from "@ao-barbosa/phi-client/unix";
 import { isServerId, type ServerId } from "@ao-barbosa/phi-protocol";

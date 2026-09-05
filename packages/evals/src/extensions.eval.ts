@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect } from "vitest";
 import { createJudge, describeEval } from "vitest-evals";
-import { createPiCodingAgentHarness, type PiCodingAgentInput } from "./pi-harness.ts";
+import { createPiCodingAgentHarness, type PiCodingAgentInput } from "./phi-harness.ts";
 import { recordEvalSourceArtifact } from "./vitest-evals/artifacts.ts";
 import { evalHarnessTable } from "./vitest-evals/harness-table.ts";
 
@@ -21,7 +21,7 @@ function createExtensionAuthoringHarness(name: string, transformSystemPrompt?: (
 		...(transformSystemPrompt ? { transformSystemPrompt } : {}),
 		output: ({ response, session }) => {
 			const extensions = session.resourceLoader.getExtensions();
-			const extensionPath = join(session.sessionManager.getCwd(), ".pi", "extensions", "hello.ts");
+			const extensionPath = join(session.sessionManager.getCwd(), ".phi", "extensions", "hello.ts");
 			const extensionSource = existsSync(extensionPath) ? readFileSync(extensionPath, "utf8") : null;
 			return {
 				response,

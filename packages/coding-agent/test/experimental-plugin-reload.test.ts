@@ -1,5 +1,5 @@
-import { defineFacet, type FacetLoader } from "@ao-barbosa/phi-chord";
 import { type AgentLane, BACKGROUND_CONTEXT, type LaneSnapshot } from "@ao-barbosa/phi-agent-core";
+import { defineFacet, type FacetLoader } from "@ao-barbosa/phi-chord";
 import { describe, expect, test, vi } from "vitest";
 import { SessionPlugins } from "../src/experimental/services/plugins.ts";
 import { createSessionWorkerServices } from "../src/experimental/services/worker.ts";

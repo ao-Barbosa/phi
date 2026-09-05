@@ -1,5 +1,5 @@
-import { type Context, defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
 import type { ThinkingLevel } from "@ao-barbosa/phi-agent-core";
+import { type Context, defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
 
 export interface ModelRef {
 	provider: string;
@@ -32,4 +32,4 @@ export interface Models {
 	selectThinking(level: ThinkingLevel, context: Context): Promise<void>;
 }
 
-export const Models = defineService<Models>("pi.models");
+export const Models = defineService<Models>("phi.models");

@@ -1,10 +1,4 @@
-import {
-	ProcessTerminal,
-	setCapabilityOverrides,
-	setKeybindings,
-	type TUI,
-	TuiMainScreen,
-} from "@ao-barbosa/phi-tui";
+import { ProcessTerminal, setCapabilityOverrides, setKeybindings, type TUI, TuiMainScreen } from "@ao-barbosa/phi-tui";
 import { existsSync } from "fs";
 import { APP_NAME, CONFIG_DIR_NAME, ENV_AGENT_DIR, getAgentDir, getSettingsPath, PACKAGE_NAME } from "../config.ts";
 import { areExperimentalFeaturesEnabled } from "../core/experimental.ts";
@@ -30,8 +24,8 @@ import {
 } from "../modes/interactive/theme/theme.ts";
 
 const OFFICIAL_PACKAGE_NAME = "@ao-barbosa/phi-coding-agent";
-const OFFICIAL_APP_NAME = "pi";
-const OFFICIAL_CONFIG_DIR_NAME = ".pi";
+const OFFICIAL_APP_NAME = "phi";
+const OFFICIAL_CONFIG_DIR_NAME = ".phi";
 
 interface DistributionMetadata {
 	packageName: string;

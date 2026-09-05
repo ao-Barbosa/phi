@@ -1,4 +1,3 @@
-import { createFacetHost, defineFacet } from "@ao-barbosa/phi-chord";
 import {
 	type AgentLane,
 	BACKGROUND_CONTEXT,
@@ -9,6 +8,7 @@ import {
 	UnknownSkill,
 	UnknownTemplate,
 } from "@ao-barbosa/phi-agent-core";
+import { createFacetHost, defineFacet } from "@ao-barbosa/phi-chord";
 import { describe, expect, test, vi } from "vitest";
 import { AgentController } from "../src/experimental/services/agent-controller.ts";
 import { createAgentController } from "../src/experimental/services/agent-controller-provider.ts";

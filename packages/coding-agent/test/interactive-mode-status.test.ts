@@ -1164,7 +1164,7 @@ describe("InteractiveMode.showLoadedResources", () => {
 		const fakeThis = createShowLoadedResourcesThis({
 			quietStartup: false,
 			cwd,
-			contextFiles: [{ path: path.join(home, ".pi", "agent", "AGENTS.md") }, { path: path.join(cwd, "AGENTS.md") }],
+			contextFiles: [{ path: path.join(home, ".phi", "agent", "AGENTS.md") }, { path: path.join(cwd, "AGENTS.md") }],
 		});
 
 		(InteractiveMode as any).prototype.showLoadedResources.call(fakeThis, {
@@ -1182,8 +1182,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 		const fakeThis = createShowLoadedResourcesThis({
 			quietStartup: false,
 			cwd,
-			systemPromptSource: { path: path.join(cwd, ".pi", "SYSTEM.md") },
-			appendSystemPromptSources: [{ path: path.join(cwd, ".pi", "APPEND_SYSTEM.md") }],
+			systemPromptSource: { path: path.join(cwd, ".phi", "SYSTEM.md") },
+			appendSystemPromptSources: [{ path: path.join(cwd, ".phi", "APPEND_SYSTEM.md") }],
 			contextFiles: [{ path: path.join(cwd, "AGENTS.md") }],
 		});
 
@@ -1203,7 +1203,7 @@ describe("InteractiveMode.showLoadedResources", () => {
 			quietStartup: false,
 			toolOutputExpanded: true,
 			cwd,
-			contextFiles: [{ path: path.join(home, ".pi", "agent", "AGENTS.md") }, { path: path.join(cwd, "AGENTS.md") }],
+			contextFiles: [{ path: path.join(home, ".phi", "agent", "AGENTS.md") }, { path: path.join(cwd, "AGENTS.md") }],
 		});
 
 		(InteractiveMode as any).prototype.showLoadedResources.call(fakeThis, {

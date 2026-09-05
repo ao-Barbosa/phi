@@ -18,7 +18,7 @@ async function runExternalEditor(fixtureFlag?: "--fail" | "--empty"): Promise<{
 	result: ExternalEditorResult;
 	capture: EditorCapture;
 }> {
-	const testDirectory = mkdtempSync(join(tmpdir(), "pi-external-editor-test-"));
+	const testDirectory = mkdtempSync(join(tmpdir(), "phi-external-editor-test-"));
 	const capturePath = join(testDirectory, "capture.json");
 	try {
 		const result = await editInExternalEditor({

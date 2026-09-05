@@ -48,7 +48,7 @@ class FrameBlockingMemoryStorage extends MemoryStorage {
 			this.blockNextFrame &&
 			writes.some(
 				(write) =>
-					write.kind === "list" && write.op === "append" && write.namespace === "pi.pending.assistant_frame",
+					write.kind === "list" && write.op === "append" && write.namespace === "phi.pending.assistant_frame",
 			)
 		) {
 			this.blockNextFrame = false;
@@ -183,7 +183,7 @@ function writesOperationState(writes: readonly Write[], status: string): boolean
 		(write) =>
 			write.kind === "value" &&
 			write.op === "set" &&
-			write.namespace === "pi.op.state" &&
+			write.namespace === "phi.op.state" &&
 			typeof write.value === "object" &&
 			write.value !== null &&
 			"at" in write.value &&
@@ -525,7 +525,7 @@ describe("runtime assistant generation", () => {
 			.getCommitAttempts()
 			.flatMap((writes) =>
 				writes.flatMap((write) =>
-					write.kind === "list" && write.op === "append" && write.namespace === "pi.pending.assistant_frame"
+					write.kind === "list" && write.op === "append" && write.namespace === "phi.pending.assistant_frame"
 						? [write.value]
 						: [],
 				),

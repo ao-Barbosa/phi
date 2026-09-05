@@ -251,7 +251,7 @@ export function createPiCodingAgentHarness<TOutput extends JsonValue>(
 	options: PiCodingAgentHarnessOptions | PiCodingAgentHarnessWithOutput<TOutput> = {},
 ) {
 	return createHarness<PiCodingAgentInput, string | TOutput>({
-		name: options.name ?? "pi-coding-agent",
+		name: options.name ?? "phi-coding-agent",
 		run: ({ input, signal, setArtifact }) => runPiCodingAgent(input, signal, setArtifact, options),
 	});
 }

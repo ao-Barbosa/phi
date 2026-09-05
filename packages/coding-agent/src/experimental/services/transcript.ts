@@ -1,5 +1,5 @@
-import { defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
 import type { LaneTranscriptSnapshot, LaneWatchEvent } from "@ao-barbosa/phi-agent-core";
+import { defineService, type ReplicatedState } from "@ao-barbosa/phi-chord";
 
 export interface TranscriptState {
 	snapshot: LaneTranscriptSnapshot | null;
@@ -12,4 +12,4 @@ export interface Transcript {
 	readonly state: ReplicatedState<TranscriptState>;
 }
 
-export const Transcript = defineService<Transcript>("pi.transcript");
+export const Transcript = defineService<Transcript>("phi.transcript");

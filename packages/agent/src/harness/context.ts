@@ -24,7 +24,7 @@ export {
 	withoutAbortSignal,
 };
 
-const TELEMETRY_CONTEXT_KEY = createContextKey<TelemetryContext>("pi.telemetryContext");
+const TELEMETRY_CONTEXT_KEY = createContextKey<TelemetryContext>("phi.telemetryContext");
 
 /** Return the telemetry parent attached to a context, or the shared no-op parent. */
 export function getTelemetryContext(context: Context): TelemetryContext {

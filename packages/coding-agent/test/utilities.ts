@@ -35,7 +35,7 @@ export const API_KEY = process.env.ANTHROPIC_OAUTH_TOKEN || process.env.ANTHROPI
 // OAuth API key resolution from ~/.pi/agent/auth.json
 // ============================================================================
 
-const AUTH_PATH = join(homedir(), ".pi", "agent", "auth.json");
+const AUTH_PATH = join(homedir(), ".phi", "agent", "auth.json");
 
 type ApiKeyCredential = {
 	type: "api_key";
@@ -112,7 +112,7 @@ export function hasAuthForProvider(provider: string): boolean {
 }
 
 /** Path to the real pi agent config directory */
-export const PI_AGENT_DIR = join(homedir(), ".pi", "agent");
+export const PI_AGENT_DIR = join(homedir(), ".phi", "agent");
 
 /**
  * Get an AuthStorage instance backed by ~/.pi/agent/auth.json

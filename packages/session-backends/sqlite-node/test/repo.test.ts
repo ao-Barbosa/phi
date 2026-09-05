@@ -20,7 +20,7 @@ const IDLE_LANE_STATE = {
 } satisfies storedValues.LaneState;
 
 async function withTempDir<T>(run: (directory: string) => Promise<T>): Promise<T> {
-	const directory = await mkdtemp(join(tmpdir(), "pi-sqlite-session-"));
+	const directory = await mkdtemp(join(tmpdir(), "phi-sqlite-session-"));
 	try {
 		return await run(directory);
 	} finally {

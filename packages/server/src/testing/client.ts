@@ -63,7 +63,7 @@ export class ProtocolTestClient {
 	attach(serverId: string, sessionId: string): Promise<ResponseEnvelope> {
 		return this.requestService(
 			{ serverId },
-			{ serviceId: "pi.session-management", member: "attach", args: [sessionId] },
+			{ serviceId: "phi.session-management", member: "attach", args: [sessionId] },
 		);
 	}
 

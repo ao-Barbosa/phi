@@ -13,19 +13,19 @@ export function classifyForkAddress(
 	isEntryCopied: (entryId: string) => boolean,
 ): ForkDisposition {
 	switch (address.namespace) {
-		case "pi.session.name":
+		case "phi.session.name":
 			return "copy";
-		case "pi.entry.label":
+		case "phi.entry.label":
 			return isEntryCopied(address.key) ? "copy" : "exclude";
-		case "pi.branch.tip":
-		case "pi.lane.config":
-		case "pi.lane.state":
+		case "phi.branch.tip":
+		case "phi.lane.config":
+		case "phi.lane.state":
 			return "reconstruct";
-		case "pi.result":
+		case "phi.result":
 			return "exclude";
 	}
-	if (address.namespace.startsWith("pi.op.") || address.namespace.startsWith("pi.pending.")) return "exclude";
-	if (address.namespace === "pi" || address.namespace.startsWith("pi.")) {
+	if (address.namespace.startsWith("phi.op.") || address.namespace.startsWith("phi.pending.")) return "exclude";
+	if (address.namespace === "phi" || address.namespace.startsWith("phi.")) {
 		throw new Error(`Unknown reserved fork namespace: ${address.namespace}`);
 	}
 	return scope === "tree" ? "copy" : "exclude";

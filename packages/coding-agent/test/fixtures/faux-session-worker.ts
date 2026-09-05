@@ -1,8 +1,8 @@
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createStaticFacetLoader, defineFacet } from "@ao-barbosa/phi-chord";
 import { AgentHarness, BACKGROUND_CONTEXT } from "@ao-barbosa/phi-agent-core";
 import { createModels, fauxAssistantMessage, fauxProvider } from "@ao-barbosa/phi-ai";
+import { createStaticFacetLoader, defineFacet } from "@ao-barbosa/phi-chord";
 import { consumeInternalProcessRole } from "../../src/experimental/process.ts";
 import { runSessionWorkerWithHarness } from "../../src/experimental/session-worker.ts";
 import { KeyedProbe } from "./keyed-service.ts";

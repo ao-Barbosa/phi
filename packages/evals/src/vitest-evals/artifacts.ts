@@ -92,8 +92,7 @@ export async function persistEvalArtifactReferences(
 	const references: Array<{ name: string; path: string }> = [];
 	for (const artifact of artifacts) {
 		if (
-			(artifact.type !== "@ao-barbosa/phi-evals:session" &&
-				artifact.type !== "@ao-barbosa/phi-evals:source") ||
+			(artifact.type !== "@ao-barbosa/phi-evals:session" && artifact.type !== "@ao-barbosa/phi-evals:source") ||
 			artifact.runId !== runId
 		) {
 			continue;

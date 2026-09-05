@@ -1,5 +1,3 @@
-import { defineFacet, type Facet, type MutableReplicatedState } from "@ao-barbosa/phi-chord";
-import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import {
 	type AgentLane,
 	type HarnessEvent,
@@ -9,6 +7,8 @@ import {
 	reduceLaneSnapshot,
 	type WatchHandle,
 } from "@ao-barbosa/phi-agent-core";
+import { defineFacet, type Facet, type MutableReplicatedState } from "@ao-barbosa/phi-chord";
+import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import { Transcript, type Transcript as TranscriptService, type TranscriptState } from "./transcript.ts";
 
 interface TranscriptRuntime {

@@ -15,7 +15,7 @@ const sockets = new Set<Socket>();
 async function makeSocketPath(): Promise<string> {
 	const directory = await mkdtemp(join("/tmp", "pi-client-transport-"));
 	tempDirectories.add(directory);
-	return join(directory, "pi.sock");
+	return join(directory, "phi.sock");
 }
 
 async function listen(server: Server, path: string): Promise<void> {

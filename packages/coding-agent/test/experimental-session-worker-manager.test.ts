@@ -1,5 +1,5 @@
-import type { ServiceCall } from "@ao-barbosa/phi-chord";
 import { BACKGROUND_CONTEXT, type JsonlSessionMetadata } from "@ao-barbosa/phi-agent-core";
+import type { ServiceCall } from "@ao-barbosa/phi-chord";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import type { CoordinatorConnectionEvent } from "../src/experimental/coordinator.ts";
 import { SessionWorkerManager } from "../src/experimental/session-worker-manager.ts";

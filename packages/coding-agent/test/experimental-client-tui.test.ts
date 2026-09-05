@@ -1,6 +1,13 @@
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 import {
+	type AgentLane,
+	type LaneSnapshot,
+	type LaneTranscriptSnapshot,
+	type LaneWatchEvent,
+	reduceLaneSnapshot,
+} from "@ao-barbosa/phi-agent-core";
+import {
 	createRemoteServiceBinding,
 	type MutableReplicatedState,
 	RemoteServiceProvider,
@@ -13,13 +20,6 @@ import {
 	FACET_BUNDLE_ARTIFACT_FORMAT_VERSION,
 	type FacetBundleArtifact,
 } from "@ao-barbosa/phi-chord/node";
-import {
-	type AgentLane,
-	type LaneSnapshot,
-	type LaneTranscriptSnapshot,
-	type LaneWatchEvent,
-	reduceLaneSnapshot,
-} from "@ao-barbosa/phi-agent-core";
 import { ProcessTerminal, TuiMainScreen } from "@ao-barbosa/phi-tui";
 import { beforeAll, describe, expect, test, vi } from "vitest";
 import { type ClientTuiServer, ExperimentalClientTui } from "../src/experimental/client-tui.ts";
@@ -220,7 +220,7 @@ describe("experimental client TUI", () => {
 			});
 
 			const reloadSource =
-				'"use strict";\nconst { defineFacet, defineService } = require("@ao-barbosa/phi-chord");\nconst Models = defineService("pi.models");\nmodule.exports = { __esModule: true, default: defineFacet({ id: "test-tui-facet", setup(env) { env.use(Models); } }) };\n';
+				'"use strict";\nconst { defineFacet, defineService } = require("@ao-barbosa/phi-chord");\nconst Models = defineService("phi.models");\nmodule.exports = { __esModule: true, default: defineFacet({ id: "test-tui-facet", setup(env) { env.use(Models); } }) };\n';
 			const reloadArtifact: FacetBundleArtifact = {
 				format: FACET_BUNDLE_ARTIFACT_FORMAT,
 				formatVersion: FACET_BUNDLE_ARTIFACT_FORMAT_VERSION,

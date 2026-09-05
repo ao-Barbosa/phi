@@ -1,6 +1,7 @@
 import type { ChildProcess } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { isAbsolute } from "node:path";
+import { BACKGROUND_CONTEXT, type Context, type JsonlSessionMetadata, TODO_CONTEXT } from "@ao-barbosa/phi-agent-core";
 import {
 	createServiceUnsubscribeCall,
 	decodeServiceControlCall,
@@ -9,12 +10,6 @@ import {
 	type ServiceCall,
 	type ServiceProviderUpdate,
 } from "@ao-barbosa/phi-chord";
-import {
-	BACKGROUND_CONTEXT,
-	type Context,
-	type JsonlSessionMetadata,
-	TODO_CONTEXT,
-} from "@ao-barbosa/phi-agent-core";
 import { type RoutedSessionAttachment, type RoutedSessionHandle, ServerError } from "@ao-barbosa/phi-server";
 import { Check } from "typebox/value";
 import type { CoordinatorConnection, CoordinatorConnectionEvent } from "./coordinator.ts";

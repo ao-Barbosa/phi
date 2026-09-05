@@ -26,7 +26,7 @@ function setStdoutIsTTY(value: boolean): void {
 }
 
 function createTempFile(): string {
-	const dir = mkdtempSync(join(tmpdir(), "pi-format-resume-command-"));
+	const dir = mkdtempSync(join(tmpdir(), "phi-format-resume-command-"));
 	tempDirs.push(dir);
 	const file = join(dir, "session.jsonl");
 	writeFileSync(file, "\n");

@@ -57,7 +57,7 @@ describe("bound value addresses", () => {
 		expect(() => value<unknown>("")).toThrow("must not be empty");
 		expect(() => value<unknown>("app\0state")).toThrow("must not contain");
 		expect(() => list<unknown>("app.events", "bad\0key")).toThrow("must not contain");
-		expect(value<unknown>("pi.application")).toEqual({ kind: "value", namespace: "pi.application", key: "" });
+		expect(value<unknown>("phi.application")).toEqual({ kind: "value", namespace: "phi.application", key: "" });
 	});
 
 	it("preserves invariant address and helper types", () => {
@@ -144,20 +144,20 @@ describe("built-in durable addresses", () => {
 			sessionName,
 			entryLabel("entry"),
 		]).toEqual([
-			{ kind: "value", namespace: "pi.branch.tip", key: "review" },
-			{ kind: "value", namespace: "pi.lane.config", key: "review" },
-			{ kind: "value", namespace: "pi.lane.state", key: "review" },
-			{ kind: "value", namespace: "pi.result", key: "operation" },
-			{ kind: "value", namespace: "pi.op.meta", key: "operation" },
-			{ kind: "value", namespace: "pi.op.state", key: "operation" },
-			{ kind: "value", namespace: "pi.op.tool_args", key: "operation:step:2" },
-			{ kind: "value", namespace: "pi.op.tool_memo", key: "operation:invocation:name" },
-			{ kind: "value", namespace: "pi.op.preparation", key: "operation:task" },
-			{ kind: "value", namespace: "pi.pending.entry", key: "entry" },
-			{ kind: "value", namespace: "pi.pending.tool_output", key: "operation:invocation" },
-			{ kind: "list", namespace: "pi.pending.assistant_frame", key: "operation:response" },
-			{ kind: "value", namespace: "pi.session.name", key: "" },
-			{ kind: "value", namespace: "pi.entry.label", key: "entry" },
+			{ kind: "value", namespace: "phi.branch.tip", key: "review" },
+			{ kind: "value", namespace: "phi.lane.config", key: "review" },
+			{ kind: "value", namespace: "phi.lane.state", key: "review" },
+			{ kind: "value", namespace: "phi.result", key: "operation" },
+			{ kind: "value", namespace: "phi.op.meta", key: "operation" },
+			{ kind: "value", namespace: "phi.op.state", key: "operation" },
+			{ kind: "value", namespace: "phi.op.tool_args", key: "operation:step:2" },
+			{ kind: "value", namespace: "phi.op.tool_memo", key: "operation:invocation:name" },
+			{ kind: "value", namespace: "phi.op.preparation", key: "operation:task" },
+			{ kind: "value", namespace: "phi.pending.entry", key: "entry" },
+			{ kind: "value", namespace: "phi.pending.tool_output", key: "operation:invocation" },
+			{ kind: "list", namespace: "phi.pending.assistant_frame", key: "operation:response" },
+			{ kind: "value", namespace: "phi.session.name", key: "" },
+			{ kind: "value", namespace: "phi.entry.label", key: "entry" },
 		]);
 	});
 
@@ -171,11 +171,11 @@ describe("built-in durable addresses", () => {
 		];
 		expect(prefixes).toHaveLength(5);
 		expect(prefixes).toEqual([
-			{ kind: "value", namespace: "pi.branch.tip", key: "" },
-			{ kind: "value", namespace: "pi.op.tool_args", key: "operation:" },
-			{ kind: "value", namespace: "pi.op.tool_memo", key: "operation:invocation:" },
-			{ kind: "value", namespace: "pi.op.preparation", key: "operation:" },
-			{ kind: "value", namespace: "pi.pending.tool_output", key: "operation:" },
+			{ kind: "value", namespace: "phi.branch.tip", key: "" },
+			{ kind: "value", namespace: "phi.op.tool_args", key: "operation:" },
+			{ kind: "value", namespace: "phi.op.tool_memo", key: "operation:invocation:" },
+			{ kind: "value", namespace: "phi.op.preparation", key: "operation:" },
+			{ kind: "value", namespace: "phi.pending.tool_output", key: "operation:" },
 		]);
 		expect(operationToolArgsPrefix("operation", "step").key).toBe("operation:step:");
 		expect(operationToolMemoPrefix("operation").key).toBe("operation:");

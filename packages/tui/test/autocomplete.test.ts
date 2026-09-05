@@ -120,7 +120,7 @@ describe("CombinedAutocompleteProvider", () => {
 		let outsideDir = "";
 
 		beforeEach(() => {
-			rootDir = mkdtempSync(join(tmpdir(), "pi-autocomplete-root-"));
+			rootDir = mkdtempSync(join(tmpdir(), "phi-autocomplete-root-"));
 			baseDir = join(rootDir, "cwd");
 			outsideDir = join(rootDir, "outside");
 			mkdirSync(baseDir, { recursive: true });
@@ -318,7 +318,7 @@ describe("CombinedAutocompleteProvider", () => {
 
 		test("includes hidden paths but excludes .git", async () => {
 			setupFolder(baseDir, {
-				dirs: [".pi", ".github", ".git"],
+				dirs: [".phi", ".github", ".git"],
 				files: {
 					".pi/config.json": "{}",
 					".github/workflows/ci.yml": "name: ci",
@@ -467,7 +467,7 @@ describe("CombinedAutocompleteProvider", () => {
 		let baseDir = "";
 
 		beforeEach(() => {
-			baseDir = mkdtempSync(join(tmpdir(), "pi-autocomplete-"));
+			baseDir = mkdtempSync(join(tmpdir(), "phi-autocomplete-"));
 		});
 
 		afterEach(() => {
@@ -513,7 +513,7 @@ describe("CombinedAutocompleteProvider", () => {
 		let baseDir = "";
 
 		beforeEach(() => {
-			baseDir = mkdtempSync(join(tmpdir(), "pi-autocomplete-"));
+			baseDir = mkdtempSync(join(tmpdir(), "phi-autocomplete-"));
 		});
 
 		afterEach(() => {

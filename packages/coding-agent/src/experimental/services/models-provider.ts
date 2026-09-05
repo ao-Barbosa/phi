@@ -1,7 +1,7 @@
-import { type Context, defineFacet, type Facet, type MutableReplicatedState } from "@ao-barbosa/phi-chord";
-import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import type { AgentLane, ThinkingLevel } from "@ao-barbosa/phi-agent-core";
 import { getSupportedThinkingLevels } from "@ao-barbosa/phi-ai";
+import { type Context, defineFacet, type Facet, type MutableReplicatedState } from "@ao-barbosa/phi-chord";
+import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import type { ModelRuntime } from "../../core/model-runtime.ts";
 import type { SettingsManager } from "../../core/settings-manager.ts";
 import { Models, type Models as ModelsService, type ModelsState } from "./models.ts";

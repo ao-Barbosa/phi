@@ -360,7 +360,7 @@ function collectFiles(
 	return files;
 }
 
-type SkillDiscoveryMode = "pi" | "agents";
+type SkillDiscoveryMode = "phi" | "agents";
 
 function collectSkillEntries(
 	dir: string,
@@ -423,7 +423,7 @@ function collectSkillEntries(
 				isFile &&
 				entry.name.endsWith(".md") &&
 				!ig.ignores(relPath) &&
-				((mode === "pi" && dir === root) || (mode === "agents" && dir !== root));
+				((mode === "phi" && dir === root) || (mode === "agents" && dir !== root));
 			if (shouldIncludeMarkdownFile) {
 				entries.push(fullPath);
 				continue;
@@ -644,7 +644,7 @@ function collectAutoExtensionEntries(dir: string): string[] {
  */
 function collectResourceFiles(dir: string, resourceType: ResourceType): string[] {
 	if (resourceType === "skills") {
-		return collectSkillEntries(dir, "pi");
+		return collectSkillEntries(dir, "phi");
 	}
 	if (resourceType === "extensions") {
 		return collectAutoExtensionEntries(dir);
@@ -1909,7 +1909,7 @@ export class DefaultPackageManager implements PackageManager {
 	}
 
 	private getGitUpdateMarkerPath(targetDir: string): string {
-		return join(dirname(targetDir), `.${basename(targetDir)}.pi-update-incomplete`);
+		return join(dirname(targetDir), `.${basename(targetDir)}.phi-update-incomplete`);
 	}
 
 	private async cleanAndInstallGitDependencies(targetDir: string, markerPath: string): Promise<void> {
@@ -2415,7 +2415,7 @@ export class DefaultPackageManager implements PackageManager {
 		};
 
 		if (projectTrusted) {
-			// Project extensions from .pi/
+			// Project extensions from .phi/
 			addResources(
 				"extensions",
 				collectAutoExtensionEntries(projectDirs.extensions),
@@ -2424,10 +2424,10 @@ export class DefaultPackageManager implements PackageManager {
 				projectBaseDir,
 			);
 
-			// Project skills from .pi/
+			// Project skills from .phi/
 			addResources(
 				"skills",
-				collectAutoSkillEntries(projectDirs.skills, "pi"),
+				collectAutoSkillEntries(projectDirs.skills, "phi"),
 				projectMetadata,
 				projectOverrides.skills,
 				projectBaseDir,
@@ -2467,7 +2467,7 @@ export class DefaultPackageManager implements PackageManager {
 			);
 		}
 
-		// User extensions from ~/.pi/agent/
+		// User extensions from ~/.phi/agent/
 		addResources(
 			"extensions",
 			collectAutoExtensionEntries(userDirs.extensions),
@@ -2476,10 +2476,10 @@ export class DefaultPackageManager implements PackageManager {
 			globalBaseDir,
 		);
 
-		// User skills from ~/.pi/agent/
+		// User skills from ~/.phi/agent/
 		addResources(
 			"skills",
-			collectAutoSkillEntries(userDirs.skills, "pi"),
+			collectAutoSkillEntries(userDirs.skills, "phi"),
 			userMetadata,
 			userOverrides.skills,
 			globalBaseDir,

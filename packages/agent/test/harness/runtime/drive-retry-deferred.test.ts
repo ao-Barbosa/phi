@@ -536,7 +536,7 @@ describe("runtime deferred polling", () => {
 					(write) =>
 						write.kind === "list" &&
 						write.op === "delete" &&
-						write.namespace === "pi.pending.assistant_frame" &&
+						write.namespace === "phi.pending.assistant_frame" &&
 						write.key.endsWith(unknown.responseEntryId),
 				),
 			);
@@ -545,7 +545,7 @@ describe("runtime deferred polling", () => {
 			"value:set",
 		]);
 		const intentState = intent?.find(
-			(write) => write.kind === "value" && write.op === "set" && write.namespace === "pi.op.state",
+			(write) => write.kind === "value" && write.op === "set" && write.namespace === "phi.op.state",
 		);
 		expect(intentState).toMatchObject({
 			value: {

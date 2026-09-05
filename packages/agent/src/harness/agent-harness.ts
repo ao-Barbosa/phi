@@ -1,4 +1,3 @@
-import type { JsonRepresentation } from "@ao-barbosa/phi-chord";
 import type {
 	Api,
 	AssistantMessage,
@@ -13,6 +12,7 @@ import type {
 	ToolResultMessage,
 	Usage,
 } from "@ao-barbosa/phi-ai";
+import type { JsonRepresentation } from "@ao-barbosa/phi-chord";
 import type { AgentMessage, AgentToolResult, QueueMode, ThinkingLevel } from "../types.ts";
 import type { BranchPreparation, BranchSummaryResult } from "./compaction/branch-summarization.ts";
 import type { CompactionPreparation, CompactionSettings, CompactResult } from "./compaction/compaction.ts";

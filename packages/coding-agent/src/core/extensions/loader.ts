@@ -113,10 +113,7 @@ function getAliases(): Record<string, string> {
 	// global API keep working at runtime until compat is removed.
 	const piAiCompatEntry = resolveWorkspaceOrImport("ai/dist/compat.js", "@ao-barbosa/phi-ai/compat");
 	const piAiOauthEntry = resolveWorkspaceOrImport("ai/dist/oauth.js", "@ao-barbosa/phi-ai/oauth");
-	const piAiProvidersEntry = resolveWorkspaceOrImport(
-		"ai/dist/providers/all.js",
-		"@ao-barbosa/phi-ai/providers/all",
-	);
+	const piAiProvidersEntry = resolveWorkspaceOrImport("ai/dist/providers/all.js", "@ao-barbosa/phi-ai/providers/all");
 
 	_aliases = {
 		"@ao-barbosa/phi-coding-agent": piCodingAgentEntry,
@@ -669,7 +666,7 @@ function isExtensionFile(name: string): boolean {
  * Resolve extension entry points from a directory.
  *
  * Checks for:
- * 1. package.json with "pi.extensions" field -> returns declared paths
+ * 1. package.json with "phi.extensions" field -> returns declared paths
  * 2. index.ts or index.js -> returns the index file
  *
  * Returns resolved paths or null if no entry points found.
