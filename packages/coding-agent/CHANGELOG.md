@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-07
+
+### Changed
+
+- Renamed to `@ao-barbosa/phi-coding-agent` with `phi`/`phi-ai` binaries as part of the phi fork: config dir (`.phi`), `PHI_*` env vars, and share URLs moved from `pi` to `phi`; bun-only runtime with no Node/npm fallback.
+
 ### Fixed
 
 - Fixed configurable save keybindings in the model and thinking selectors ([#8797](https://github.com/earendil-works/pi/issues/8797)).

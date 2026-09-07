@@ -1,6 +1,6 @@
 {
 	"name": "@ao-barbosa/phi-evals",
-	"version": "0.85.0",
+	"version": "1.0.0",
 	"engines": {
 		"bun": ">=1.4.2"
 	},
@@ -13,8 +13,8 @@
 		"test": "bun test --isolate --preload ../../test-support/setup.ts --timeout 30000 test/"
 	},
 	"devDependencies": {
-		"@ao-barbosa/phi-ai": "^0.85.0",
-		"@ao-barbosa/phi-coding-agent": "^0.85.0",
+		"@ao-barbosa/phi-ai": "^1.0.0",
+		"@ao-barbosa/phi-coding-agent": "^1.0.0",
 		"@types/node": "22.19.19",
 		"typescript": "5.9.3",
 		"vitest-evals": "0.15.0",

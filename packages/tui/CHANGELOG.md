@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-07
+
+### Changed
+
+- Renamed to `@ao-barbosa/phi-tui` as part of the phi fork (`pi` to `phi`, bun-only runtime).
+
 ## [0.85.0] - 2026-09-04
 
 ### Breaking Changes

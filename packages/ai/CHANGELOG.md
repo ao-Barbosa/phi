@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-07
+
+### Changed
+
+- Renamed to `@ao-barbosa/phi-ai` as part of the phi fork: user agent, env vars, and identifiers moved from `pi` to `phi`, and the runtime is bun-only.
+
 ## [0.85.0] - 2026-09-04
 
 ### Breaking Changes

@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-07
+
+### Changed
+
+- Renamed to `@ao-barbosa/phi-agent-core` as part of the phi fork: `pi` config, env vars, and directories are now `phi`, and the runtime is bun-only.
+
 ## [0.85.0] - 2026-09-04
 
 ### Fixed
