@@ -1,7 +1,7 @@
 import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { acquireServerProfile } from "../src/experimental/server.ts";
 
 const directories = new Set<string>();

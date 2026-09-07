@@ -1,6 +1,6 @@
 import type { Component, Terminal, TUI } from "@ao-barbosa/phi-tui";
 import { Container, getKeybindings, isViewportTUI, ScrollView, setKeybindings, Text } from "@ao-barbosa/phi-tui";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { VirtualTerminal } from "../../tui/test/virtual-terminal.ts";
 import { KeybindingsManager } from "../src/core/keybindings.ts";
 import type { FullscreenExitOutput, TuiMode } from "../src/core/settings-manager.ts";
@@ -16,7 +16,7 @@ const clipboardMocks = vi.hoisted(() => ({
 	readClipboardText: vi.fn<() => Promise<string | null>>(),
 }));
 
-vi.mock("../src/utils/clipboard.ts", () => clipboardMocks);
+mock.module("../src/utils/clipboard.ts", () => clipboardMocks);
 
 class RecordingTerminal extends VirtualTerminal implements Terminal {
 	readonly writes: string[] = [];
@@ -178,7 +178,7 @@ describe("InteractiveMode right-click paste", () => {
 		await prototype.handleRightClickPaste.call(context);
 
 		expect(handleInput).toHaveBeenCalledWith("\x1b[200~clipboard text\x1b[201~");
-		expect(requestRender).toHaveBeenCalledOnce();
+		expect(requestRender).toHaveBeenCalledTimes(1);
 	});
 });
 
@@ -235,7 +235,7 @@ describe("InteractiveMode copy confirmation", () => {
 			await copyCommandPrototype.handleCopyCommand.call(context, { flashConfirmation: true, preferSelection: true });
 			await terminal.waitForRender();
 
-			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledOnce();
+			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledTimes(1);
 			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledWith("alpha\nbeta");
 			expect(getLastAssistantText).not.toHaveBeenCalled();
 			expect(showStatus).not.toHaveBeenCalled();
@@ -277,9 +277,9 @@ describe("InteractiveMode copy confirmation", () => {
 			await copyCommandPrototype.handleCopyCommand.call(context, { flashConfirmation: true, preferSelection: true });
 			await terminal.waitForRender();
 
-			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledOnce();
+			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledTimes(1);
 			expect(clipboardMocks.copyToClipboard).toHaveBeenCalledWith("assistant response");
-			expect(getLastAssistantText).toHaveBeenCalledOnce();
+			expect(getLastAssistantText).toHaveBeenCalledTimes(1);
 			expect(showStatus).not.toHaveBeenCalled();
 			expect(showError).not.toHaveBeenCalled();
 			expect(terminal.getViewport().some((line) => line.includes("Copied!"))).toBe(true);
@@ -385,7 +385,7 @@ describe("clear-on-shrink status spacing", () => {
 
 		interactiveModePrototype.clearStatusIndicator.call(context);
 
-		expect(dispose).toHaveBeenCalledOnce();
+		expect(dispose).toHaveBeenCalledTimes(1);
 		expect(editor.setWorkingStatusIndicator).toHaveBeenCalledWith(undefined);
 		expect(context.statusContainer.children).toHaveLength(0);
 	});

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import {
 	type ClientHello,
 	type ClientMessage,

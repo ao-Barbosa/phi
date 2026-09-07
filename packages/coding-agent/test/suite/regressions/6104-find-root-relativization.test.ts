@@ -1,5 +1,5 @@
 import { posix, win32 } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createFindToolDefinition, relativizeFindResultPath } from "../../../src/core/tools/find.ts";
 
 /**

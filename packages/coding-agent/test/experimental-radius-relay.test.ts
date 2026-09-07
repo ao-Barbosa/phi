@@ -1,6 +1,6 @@
 import type { Client } from "@ao-barbosa/phi-client";
 import type { Server } from "@ao-barbosa/phi-server";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { RadiusRelayAuthResolver } from "../src/experimental/radius-auth.ts";
 import {
 	createRadiusClientTransportFactory,
@@ -156,7 +156,7 @@ describe("experimental Radius relay", () => {
 		expect([...new Uint8Array(outbound!.payload)]).toEqual([4, 5, 6]);
 
 		socket.message(JSON.stringify({ version: 1, type: "connection_close", connection_id: connectionId }));
-		expect(onClose).toHaveBeenCalledOnce();
+		expect(onClose).toHaveBeenCalledTimes(1);
 		await host.close();
 	});
 
@@ -201,10 +201,10 @@ describe("experimental Radius relay", () => {
 		await transport.send(Uint8Array.from([1, 2, 3]));
 		expect([...new Uint8Array(socket.sent[0] as ArrayBuffer)]).toEqual([1, 2, 3]);
 		socket.message(Uint8Array.from([4, 5, 6]).buffer);
-		expect(onData).toHaveBeenCalledOnce();
+		expect(onData).toHaveBeenCalledTimes(1);
 		expect([...onData.mock.calls[0]![0]]).toEqual([4, 5, 6]);
 		socket.remoteClose();
-		expect(onClose).toHaveBeenCalledOnce();
+		expect(onClose).toHaveBeenCalledTimes(1);
 		expect(onError).not.toHaveBeenCalled();
 	});
 
@@ -223,7 +223,7 @@ describe("experimental Radius relay", () => {
 		await transportPromise;
 
 		expect(() => socket.abnormalClose(new Error("network lost"))).not.toThrow();
-		expect(onError).toHaveBeenCalledOnce();
+		expect(onError).toHaveBeenCalledTimes(1);
 		expect(onError).toHaveBeenCalledWith(expect.objectContaining({ message: "network lost" }));
 		expect(onClose).not.toHaveBeenCalled();
 	});

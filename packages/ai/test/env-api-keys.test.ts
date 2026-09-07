@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { findEnvKeys, getEnvApiKey } from "../src/env-api-keys.ts";
 
 const originalCopilotGitHubToken = process.env.COPILOT_GITHUB_TOKEN;

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { DEFAULT_COMPACTION_SETTINGS } from "../../../src/harness/compaction/compaction.ts";
 import { BACKGROUND_CONTEXT } from "../../../src/harness/context.ts";
 import { restoreLane, restoreSession } from "../../../src/harness/runtime/restore.ts";
@@ -298,7 +298,9 @@ describe("runtime lane restore", () => {
 		const session = await createSession();
 		await session.mutate((mutator) => mutator.commit([write], BACKGROUND_CONTEXT), BACKGROUND_CONTEXT);
 
-		await expect(restoreLane(session, "main", BACKGROUND_CONTEXT)).rejects.toThrow(`missing ${namespace.slice(3)}`);
+		await expect(restoreLane(session, "main", BACKGROUND_CONTEXT)).rejects.toThrow(
+			`missing ${namespace.slice(namespace.indexOf(".") + 1)}`,
+		);
 	});
 
 	it.each([storedValues.operationMeta("").namespace, storedValues.operationState("").namespace] as const)(
@@ -336,7 +338,7 @@ describe("runtime lane restore", () => {
 			);
 
 			await expect(restoreLane(session, "main", BACKGROUND_CONTEXT)).rejects.toThrow(
-				`missing ${namespace.slice(3)}`,
+				`missing ${namespace.slice(namespace.indexOf(".") + 1)}`,
 			);
 		},
 	);

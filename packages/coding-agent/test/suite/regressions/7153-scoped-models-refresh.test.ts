@@ -1,6 +1,6 @@
 import type { Api, Model, ModelsRefreshResult } from "@ao-barbosa/phi-ai";
 import { setKeybindings, type TUI } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { KeybindingsManager } from "../../../src/core/keybindings.ts";
 import type { ScopedModelsSelectorComponent } from "../../../src/modes/interactive/components/scoped-models-selector.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";
@@ -102,6 +102,6 @@ describe("issue #7153 scoped models refresh", () => {
 		expect(refresh.refreshSignal).toBeDefined();
 		refresh.selector.handleInput("\x1b");
 		await vi.waitFor(() => expect(refresh.refreshSignal?.aborted).toBe(true));
-		expect(refresh.done).toHaveBeenCalledOnce();
+		expect(refresh.done).toHaveBeenCalledTimes(1);
 	});
 });

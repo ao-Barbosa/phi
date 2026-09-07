@@ -1,16 +1,24 @@
 import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import { basename, join, relative } from "node:path";
-import {
-	type RunnerTestCase,
-	recordArtifact,
-	type TestArtifact,
-	type TestArtifactBase,
-	type TestAttachment,
-} from "vitest";
+import type { RunnerTestCase, TestArtifact, TestArtifactBase, TestAttachment } from "vitest";
 import type { HarnessRun } from "vitest-evals/harness";
 
 export const PHI_SESSION_SNAPSHOT_ARTIFACT = "piSessionJsonl";
+
+/**
+ * Lazily resolve vitest's recordArtifact. A static import breaks bun's module
+ * linking (bun aliases "vitest" to bun:test, which has no recordArtifact);
+ * dynamic import keeps this module loadable under bun and lets tests stub it.
+ */
+async function loadRecordArtifact(): Promise<
+	(task: Readonly<RunnerTestCase>, artifact: Record<string, unknown>) => Promise<void>
+> {
+	const vitest = (await import("vitest")) as unknown as {
+		recordArtifact: (task: Readonly<RunnerTestCase>, artifact: Record<string, unknown>) => Promise<void>;
+	};
+	return vitest.recordArtifact;
+}
 
 const evalSessionArtifactKey = Symbol("phi-evals-session-artifact");
 const evalSourceArtifactKey = Symbol("phi-evals-source-artifact");
@@ -48,9 +56,12 @@ declare module "vitest" {
 	}
 }
 
+export type RecordArtifactFn = (task: Readonly<RunnerTestCase>, artifact: Record<string, unknown>) => Promise<void>;
+
 export async function recordEvalSessionArtifact(
 	task: Readonly<RunnerTestCase>,
 	run: Pick<HarnessRun, "artifacts">,
+	record: RecordArtifactFn = (task, artifact) => loadRecordArtifact().then((recorder) => recorder(task, artifact)),
 ): Promise<void> {
 	const runId = run.artifacts?.runId;
 	const session = run.artifacts?.[PHI_SESSION_SNAPSHOT_ARTIFACT];
@@ -58,7 +69,7 @@ export async function recordEvalSessionArtifact(
 	if (typeof runId !== "string" || typeof session !== "string") {
 		throw new TypeError("Pi eval session artifact metadata is invalid.");
 	}
-	await recordArtifact(task, {
+	await record(task, {
 		type: "@ao-barbosa/phi-evals:session",
 		runId,
 		attachments: [
@@ -76,8 +87,9 @@ export async function recordEvalSourceArtifact(
 	task: Readonly<RunnerTestCase>,
 	runId: string,
 	attachment: SourceAttachment,
+	record: RecordArtifactFn = (task, artifact) => loadRecordArtifact().then((recorder) => recorder(task, artifact)),
 ): Promise<void> {
-	await recordArtifact(task, {
+	await record(task, {
 		type: "@ao-barbosa/phi-evals:source",
 		runId,
 		attachments: [attachment],

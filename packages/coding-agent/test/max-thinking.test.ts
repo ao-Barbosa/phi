@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { isValidThinkingLevel } from "../src/cli/args.ts";
 import { SettingsManager } from "../src/core/settings-manager.ts";
 import { loadThemeFromPath } from "../src/modes/interactive/theme/theme.ts";

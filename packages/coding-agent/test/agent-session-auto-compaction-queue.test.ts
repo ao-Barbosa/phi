@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { Agent } from "@ao-barbosa/phi-agent-core";
 import { type AssistantMessage, createAssistantMessageEventStream, fauxAssistantMessage } from "@ao-barbosa/phi-ai";
 import { getModel, streamSimple } from "@ao-barbosa/phi-ai/compat";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { AgentSession } from "../src/core/agent-session.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { SessionManager } from "../src/core/session-manager.ts";

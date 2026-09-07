@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { RpcClient } from "../src/modes/rpc/rpc-client.ts";
 
 const tempDirs: string[] = [];

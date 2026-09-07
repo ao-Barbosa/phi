@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { RpcClient } from "../src/modes/rpc/rpc-client.ts";
 
 type RpcClientPrivate = {

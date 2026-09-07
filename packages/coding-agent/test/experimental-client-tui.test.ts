@@ -21,7 +21,7 @@ import {
 	type FacetBundleArtifact,
 } from "@ao-barbosa/phi-chord/node";
 import { ProcessTerminal, TuiMainScreen } from "@ao-barbosa/phi-tui";
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { type ClientTuiServer, ExperimentalClientTui } from "../src/experimental/client-tui.ts";
 import { createPresentationFacetData } from "../src/experimental/plugins/bundled.ts";
 import { AgentController } from "../src/experimental/services/agent-controller.ts";
@@ -380,8 +380,8 @@ describe("experimental client TUI", () => {
 				component.handleInput("\u001b");
 				component.handleInput("\r");
 				await vi.waitFor(() => {
-					expect(reloadPresentationPlugins).toHaveBeenCalledOnce();
-					expect(reloadSessionPlugins).toHaveBeenCalledOnce();
+					expect(reloadPresentationPlugins).toHaveBeenCalledTimes(1);
+					expect(reloadSessionPlugins).toHaveBeenCalledTimes(1);
 				});
 				await vi.waitFor(() => expect(component.render(80).join("\n")).toContain("Reloaded plugins."));
 

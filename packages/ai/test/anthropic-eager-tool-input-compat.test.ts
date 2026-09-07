@@ -1,7 +1,7 @@
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { stream as streamAnthropic } from "../src/api/anthropic-messages.ts";
 import type { Context, Model, Tool } from "../src/types.ts";
 

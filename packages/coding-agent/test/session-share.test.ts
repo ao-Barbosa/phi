@@ -1,14 +1,14 @@
 import { EventEmitter } from "node:events";
 import { readFileSync, writeFileSync } from "node:fs";
 import { PassThrough } from "node:stream";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 const childProcessMocks = vi.hoisted(() => ({
 	spawn: vi.fn(),
 	spawnSync: vi.fn(() => ({ status: 0 })),
 }));
 
-vi.mock("node:child_process", () => childProcessMocks);
+mock.module("node:child_process", () => childProcessMocks);
 
 import { shareSession } from "../src/modes/interactive/session-share.ts";
 import { initTheme } from "../src/modes/interactive/theme/theme.ts";

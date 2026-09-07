@@ -1,6 +1,6 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
 import { stripVTControlCharacters } from "node:util";
+import { describe, it } from "../../../test-support/vi.ts";
 import { type AutocompleteProvider, CombinedAutocompleteProvider } from "../src/autocomplete.ts";
 import { Editor, wordWrapLine } from "../src/components/editor.ts";
 import type { TUI } from "../src/tui.ts";

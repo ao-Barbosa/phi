@@ -52,10 +52,10 @@
 		"bench:session:timing": "bun benchmark/session/session-repo.bench.ts && bun benchmark/session/storage.bench.ts",
 		"bench:session:memory": "bun benchmark/session/loaded-footprint.ts",
 		"bench:session:allocations": "bun benchmark/session/allocation-profile.ts",
-		"test": "vitest --run",
-		"test:harness": "vitest --run --config vitest.harness.config.ts",
-		"test:session:conformance": "vitest --run --config vitest.harness.config.ts test/harness/memory-conformance.test.ts",
-		"coverage:harness": "vitest --run --config vitest.harness.config.ts --coverage",
+		"test": "bun test --isolate --preload ../../test-support/setup.ts --timeout 30000",
+		"test:harness": "bun test --preload ../../test-support/setup.ts --timeout 30000 test/harness/",
+		"test:session:conformance": "bun test --preload ../../test-support/setup.ts --timeout 30000 test/harness/memory-conformance.test.ts",
+		"coverage:harness": "bun test --preload ../../test-support/setup.ts --timeout 30000 --coverage test/harness/",
 		"prepublishOnly": "bun run build"
 	},
 	"dependencies": {

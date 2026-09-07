@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { stream as streamAnthropic } from "../src/api/anthropic-messages.ts";
 import { getModel } from "../src/compat.ts";
 import { getSupportedThinkingLevels } from "../src/models.ts";
@@ -9,7 +9,7 @@ const mockState = vi.hoisted(() => ({
 	createParams: undefined as Record<string, unknown> | undefined,
 }));
 
-vi.mock("@anthropic-ai/sdk", () => {
+mock.module("@anthropic-ai/sdk", () => {
 	function createSseResponse(): Response {
 		const body = [
 			`event: message_start\ndata: ${JSON.stringify({

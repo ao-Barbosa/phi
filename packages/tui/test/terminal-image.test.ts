@@ -5,7 +5,7 @@
 import assert from "node:assert";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import { Image } from "../src/components/image.ts";
 import {
 	cropKittyImageLine,

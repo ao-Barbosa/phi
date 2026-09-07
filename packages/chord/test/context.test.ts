@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import {
 	awaitWithContext,
 	BACKGROUND_CONTEXT,
@@ -51,7 +51,7 @@ describe("Context", () => {
 		expect(child.context.abortSignal?.reason).toBe("child");
 		expect(sibling.context.abortSignal?.aborted).toBe(false);
 		expect(parent.abortSignal?.aborted).toBe(false);
-		expect(childListener).toHaveBeenCalledOnce();
+		expect(childListener).toHaveBeenCalledTimes(1);
 
 		parentController.abort("parent");
 		expect(sibling.context.abortSignal?.aborted).toBe(true);

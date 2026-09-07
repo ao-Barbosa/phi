@@ -1,9 +1,10 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { createServer, type Server, type Socket } from "node:net";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseServiceCall } from "@ao-barbosa/phi-chord";
 import { ClientMessageDecoder, encodeServerMessage, PROTOCOL_VERSION } from "@ao-barbosa/phi-protocol";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { Client } from "../src/index.ts";
 import { createUnixTransportFactory } from "../src/unix.ts";
 
@@ -13,7 +14,7 @@ const servers = new Set<Server>();
 const sockets = new Set<Socket>();
 
 async function makeSocketPath(): Promise<string> {
-	const directory = await mkdtemp(join("/tmp", "phi-client-transport-"));
+	const directory = await mkdtemp(join(tmpdir(), "phi-client-transport-"));
 	tempDirectories.add(directory);
 	return join(directory, "phi.sock");
 }

@@ -1,6 +1,6 @@
 import { BACKGROUND_CONTEXT, type SessionMetadata } from "@ao-barbosa/phi-agent-core";
 import type { ServiceCall } from "@ao-barbosa/phi-chord";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import type { ByteConnection, ByteConnectionHandler } from "../src/connection.ts";
 import { SessionAmbiguousError } from "../src/errors.ts";
 import { Server } from "../src/server.ts";

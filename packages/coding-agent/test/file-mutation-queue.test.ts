@@ -1,7 +1,7 @@
 import { access, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { createEditTool } from "../src/core/tools/edit.ts";
 import { withFileMutationQueue } from "../src/core/tools/file-mutation-queue.ts";
 import { createWriteTool } from "../src/core/tools/write.ts";
@@ -74,7 +74,7 @@ describe("withFileMutationQueue", () => {
 		expect(order.indexOf("b:start")).toBeLessThan(order.indexOf("a:end"));
 	});
 
-	it("uses the same queue for symlink aliases", async () => {
+	it.skipIf(process.platform === "win32")("uses the same queue for symlink aliases", async () => {
 		const dir = await createTempDir();
 		const targetPath = join(dir, "target.txt");
 		const symlinkPath = join(dir, "alias.txt");

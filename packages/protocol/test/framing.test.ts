@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { DEFAULT_MAX_FRAME_LENGTH, encodeFrame, FrameDecoder, FrameError } from "../src/index.ts";
 
 function concatenate(...chunks: Uint8Array[]): Uint8Array {

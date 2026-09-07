@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { MutationLine } from "../../src/harness/session/mutation-line.ts";
 
 function deferred(): { promise: Promise<void>; resolve(): void } {

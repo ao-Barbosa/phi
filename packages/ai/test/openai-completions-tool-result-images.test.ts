@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { convertMessages } from "../src/api/openai-completions.ts";
 import { getModel } from "../src/compat.ts";
 import type {

@@ -1,5 +1,5 @@
 import { type AssistantMessageFrame, createModels } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import type { WatchHandle } from "../../../src/harness/agent-harness.ts";
 import { DEFAULT_COMPACTION_SETTINGS } from "../../../src/harness/compaction/compaction.ts";
 import { BACKGROUND_CONTEXT, type Context, withAbortSignal } from "../../../src/harness/context.ts";

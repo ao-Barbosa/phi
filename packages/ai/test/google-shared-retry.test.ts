@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { retryGoogleRequest } from "../src/api/google-shared.ts";
 
 /** Shaped like @google/genai's ApiError: has `status`, but no `headers`. */

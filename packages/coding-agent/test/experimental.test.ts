@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { areExperimentalFeaturesEnabled } from "../src/core/experimental.ts";
 
 describe("areExperimentalFeaturesEnabled", () => {

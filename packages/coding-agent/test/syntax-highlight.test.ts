@@ -1,5 +1,5 @@
 import { resetCapabilitiesCache, setCapabilities } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { highlightCode, initTheme } from "../src/modes/interactive/theme/theme.ts";
 import {
 	highlight,

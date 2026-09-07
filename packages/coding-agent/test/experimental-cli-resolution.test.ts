@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { cli } from "../src/cli/experimental/cli.ts";
 
 describe("experimental CLI command composition", () => {

@@ -498,7 +498,7 @@ export class NodeExecutionEnv implements ExecutionEnv {
 				if (spillStart !== undefined) return;
 				pauseOutput();
 				spillStart = (async () => {
-					const created = await this.createTempFile({ prefix: "pi-output-", suffix: ".log" }, context);
+					const created = await this.createTempFile({ prefix: "phi-output-", suffix: ".log" }, context);
 					if (!created.ok) throw created.error;
 					spillPath = created.value;
 					capture.setSpillPath(spillPath);

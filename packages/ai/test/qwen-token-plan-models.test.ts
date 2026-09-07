@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "../../../test-support/vi.ts";
 import { getModels, streamSimple } from "../src/compat.ts";
 import { findEnvKeys } from "../src/env-api-keys.ts";
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		chat = {
 			completions: {

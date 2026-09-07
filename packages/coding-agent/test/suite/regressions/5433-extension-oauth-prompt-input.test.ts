@@ -1,11 +1,11 @@
 import { setKeybindings, type TUI } from "@ao-barbosa/phi-tui";
-import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeAll, beforeEach, describe, expect, mock, test, vi } from "../../../../../test-support/vi.ts";
 import { KeybindingsManager } from "../../../src/core/keybindings.ts";
 import { LoginDialogComponent } from "../../../src/modes/interactive/components/login-dialog.ts";
 import { initTheme } from "../../../src/modes/interactive/theme/theme.ts";
 import { stripAnsi } from "../../../src/utils/ansi.ts";
 
-vi.mock("../../../src/utils/open-browser.ts", () => ({
+mock.module("../../../src/utils/open-browser.ts", () => ({
 	openBrowser: vi.fn(),
 }));
 

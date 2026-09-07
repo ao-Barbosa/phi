@@ -1,6 +1,6 @@
 import type { Usage } from "@ao-barbosa/phi-ai";
 import { Container } from "@ao-barbosa/phi-tui";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import type { SessionEntry } from "../src/core/session-manager.ts";
 import { InteractiveMode } from "../src/modes/interactive/interactive-mode.ts";
 import { initTheme } from "../src/modes/interactive/theme/theme.ts";

@@ -1,15 +1,16 @@
-import { access, mkdtemp, rm } from "node:fs/promises";
+import { access, mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { createNodeSqliteFactory } from "../src/index.ts";
+import { removeSqliteTestDir } from "./sqlite-test-utils.ts";
 
 async function withTempDir<T>(run: (directory: string) => Promise<T>): Promise<T> {
 	const directory = await mkdtemp(join(tmpdir(), "phi-sqlite-adapter-"));
 	try {
 		return await run(directory);
 	} finally {
-		await rm(directory, { recursive: true, force: true });
+		await removeSqliteTestDir(directory);
 	}
 }
 

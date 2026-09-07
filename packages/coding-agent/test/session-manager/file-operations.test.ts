@@ -2,7 +2,7 @@ import { constants as bufferConstants } from "buffer";
 import { appendFileSync, closeSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync, writeSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import { findMostRecentSession, loadEntriesFromFile, SessionManager } from "../../src/core/session-manager.ts";
 
 const HEADER_SCAN_LIMIT_BYTES = 1024 * 1024;

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { createNodeSqliteFactory, joinSqlFragments, sql } from "../src/index.ts";
 
 describe("sql", () => {

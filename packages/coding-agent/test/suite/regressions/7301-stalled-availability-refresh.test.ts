@@ -1,5 +1,5 @@
 import type { Models } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { createHarness, type Harness } from "../harness.ts";
 
 interface Deferred {

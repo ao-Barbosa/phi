@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { Model } from "@ao-barbosa/phi-ai";
 import lockfile from "proper-lockfile";
-import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { FileModelsStore } from "../src/core/models-store.ts";
 
 const sharedTempDir = join(tmpdir(), `phi-models-store-shared-${Date.now()}-${Math.random().toString(36).slice(2)}`);

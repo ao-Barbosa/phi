@@ -1267,12 +1267,13 @@ export class InteractiveMode {
 	// =========================================================================
 
 	private formatDisplayPath(p: string): string {
-		const home = os.homedir();
+		// homedir() can contain forward slashes (e.g. from $HOME) while p uses native separators.
+		const nativeHome = os.homedir().replaceAll("/", path.sep);
 		let result = p;
 
 		// Replace home directory with ~
-		if (result.startsWith(home)) {
-			result = `~${result.slice(home.length)}`;
+		if (result.startsWith(nativeHome)) {
+			result = `~${result.slice(nativeHome.length)}`;
 		}
 
 		return result;

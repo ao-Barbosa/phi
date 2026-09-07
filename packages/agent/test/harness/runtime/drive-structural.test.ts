@@ -1,5 +1,5 @@
 import { createModels, fauxAssistantMessage, fauxProvider, type MutableModels } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import type { HarnessEvent, WatchHandle } from "../../../src/harness/agent-harness.ts";
 import { DEFAULT_COMPACTION_SETTINGS } from "../../../src/harness/compaction/compaction.ts";
 import { BACKGROUND_CONTEXT } from "../../../src/harness/context.ts";
@@ -560,8 +560,11 @@ describe("runtime structural drive", () => {
 					await fixture.session.getValue(storedValues.pendingEntry("queued"), BACKGROUND_CONTEXT),
 				).toBeUndefined();
 				const entry = await fixture.session.getEntry("queued", BACKGROUND_CONTEXT);
+				// Capture first: bun's toMatchObject replaces matched values with the
+				// asymmetric matchers in place.
+				const parentId = entry!.parentId!;
 				expect(entry).toMatchObject({ parentId: expect.any(String), type: "message" });
-				expect((await fixture.session.getEntry(entry!.parentId!, BACKGROUND_CONTEXT))?.type).toBe("compaction");
+				expect((await fixture.session.getEntry(parentId, BACKGROUND_CONTEXT))?.type).toBe("compaction");
 			} else {
 				if (routed.at !== "checkpoint") throw new Error("follow-up did not reach the finish checkpoint");
 				expect(fixture.lane.state.inbox).toEqual([{ entryId: "queued", kind: "followUp" }]);

@@ -1,12 +1,13 @@
-import { access, mkdtemp, realpath, rm, writeFile } from "node:fs/promises";
+import { access, mkdtemp, realpath, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join, relative } from "node:path";
 import * as storedValues from "@ao-barbosa/phi-agent-core";
 import * as sessionWrites from "@ao-barbosa/phi-agent-core";
 import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-agent-core";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import type { SqliteDatabase, SqliteDatabaseFactory, SqliteStatement } from "../src/index.ts";
 import { createNodeSqliteFactory, SqliteSessionRepo, sql } from "../src/index.ts";
+import { removeSqliteTestDir, skipSqliteFileDeletion } from "./sqlite-test-utils.ts";
 
 const TEST_LANE_CONFIGURATION = {
 	model: { provider: "test", modelId: "test" },
@@ -24,7 +25,7 @@ async function withTempDir<T>(run: (directory: string) => Promise<T>): Promise<T
 	try {
 		return await run(directory);
 	} finally {
-		await rm(directory, { recursive: true, force: true });
+		await removeSqliteTestDir(directory);
 	}
 }
 
@@ -431,11 +432,11 @@ describe("SqliteSessionRepo", () => {
 			await writeFile(path, "not a sqlite database");
 
 			await expect(repo.create({ id: "session" }, BACKGROUND_CONTEXT)).rejects.toThrow();
-			await expect(access(path)).resolves.toBeUndefined();
+			await access(path);
 		});
 	});
 
-	it("rejects delete for missing files and deletes a closed session", async () => {
+	it.skipIf(skipSqliteFileDeletion)("rejects delete for missing files and deletes a closed session", async () => {
 		await withTempDir(async (directory) => {
 			const repo = new SqliteSessionRepo({
 				directory,
@@ -630,29 +631,32 @@ describe("SqliteSessionRepo", () => {
 		});
 	});
 
-	it("reserves deletion against local create, open, and fork destinations", async () => {
-		await withTempDir(async (directory) => {
-			const databaseFactory = new GatedOpenExistingFactory();
-			const repo = new SqliteSessionRepo({ directory, databaseFactory, now: () => 1 });
-			const target = await repo.create({ id: "target" }, BACKGROUND_CONTEXT);
-			const source = await repo.create({ id: "source" }, BACKGROUND_CONTEXT);
-			await expect(repo.delete(target.metadata, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
-			// The host closes a worker before deletion; only same-repository exclusion is promised here.
-			await target.close(BACKGROUND_CONTEXT);
-			databaseFactory.arm();
+	it.skipIf(skipSqliteFileDeletion)(
+		"reserves deletion against local create, open, and fork destinations",
+		async () => {
+			await withTempDir(async (directory) => {
+				const databaseFactory = new GatedOpenExistingFactory();
+				const repo = new SqliteSessionRepo({ directory, databaseFactory, now: () => 1 });
+				const target = await repo.create({ id: "target" }, BACKGROUND_CONTEXT);
+				const source = await repo.create({ id: "source" }, BACKGROUND_CONTEXT);
+				await expect(repo.delete(target.metadata, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
+				// The host closes a worker before deletion; only same-repository exclusion is promised here.
+				await target.close(BACKGROUND_CONTEXT);
+				databaseFactory.arm();
 
-			const deleting = repo.delete(target.metadata, BACKGROUND_CONTEXT);
-			await databaseFactory.entered.promise;
-			await expect(repo.create({ id: "target" }, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
-			await expect(repo.open(target.metadata, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
-			await expect(repo.fork(source.metadata, { id: "target", scope: "tree" }, BACKGROUND_CONTEXT)).rejects.toThrow(
-				"already open",
-			);
-			databaseFactory.release.resolve();
-			await deleting;
-			await source.close(BACKGROUND_CONTEXT);
-		});
-	});
+				const deleting = repo.delete(target.metadata, BACKGROUND_CONTEXT);
+				await databaseFactory.entered.promise;
+				await expect(repo.create({ id: "target" }, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
+				await expect(repo.open(target.metadata, BACKGROUND_CONTEXT)).rejects.toThrow("already open");
+				await expect(
+					repo.fork(source.metadata, { id: "target", scope: "tree" }, BACKGROUND_CONTEXT),
+				).rejects.toThrow("already open");
+				databaseFactory.release.resolve();
+				await deleting;
+				await source.close(BACKGROUND_CONTEXT);
+			});
+		},
+	);
 
 	it("deletes only the selected Session from a shared container", async () => {
 		await withTempDir(async (directory) => {
@@ -678,7 +682,7 @@ describe("SqliteSessionRepo", () => {
 		});
 	});
 
-	it("removes per-file WAL and SHM sidecars", async () => {
+	it.skipIf(skipSqliteFileDeletion)("removes per-file WAL and SHM sidecars", async () => {
 		await withTempDir(async (directory) => {
 			const repo = new SqliteSessionRepo({
 				directory,

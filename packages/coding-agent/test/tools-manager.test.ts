@@ -1,22 +1,20 @@
-import type * as ChildProcess from "node:child_process";
-import type * as Fs from "node:fs";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import * as childProcessOriginal from "node:child_process";
+import * as fsOriginal from "node:fs";
+import { afterEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { ensureTool, getLatestVersion, type ToolStatus } from "../src/utils/tools-manager.ts";
 
 const originalOffline = process.env.PHI_OFFLINE;
 
-vi.mock("fs", async (importOriginal) => {
-	const actual = await importOriginal<typeof Fs>();
+mock.module("fs", async () => {
 	return {
-		...actual,
+		...fsOriginal,
 		existsSync: vi.fn(() => false),
 	};
 });
 
-vi.mock("child_process", async (importOriginal) => {
-	const actual = await importOriginal<typeof ChildProcess>();
+mock.module("child_process", async () => {
 	return {
-		...actual,
+		...childProcessOriginal,
 		spawnSync: vi.fn(() => ({ error: new Error("not found") })),
 	};
 });

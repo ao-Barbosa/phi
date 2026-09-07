@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Agent } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, registerFauxProvider, streamSimple } from "@ao-barbosa/phi-ai/compat";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { AgentSession } from "../../../src/core/agent-session.ts";
 import { AuthStorage } from "../../../src/core/auth-storage.ts";
 import { convertToLlm } from "../../../src/core/messages.ts";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createEventBus } from "../../../src/core/event-bus.ts";
 import { createExtensionRuntime, loadExtensionFromFactory } from "../../../src/core/extensions/loader.ts";
 import type { ExtensionAPI, ProviderConfig } from "../../../src/core/extensions/types.ts";

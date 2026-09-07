@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { createPowerShellTool } from "../src/core/tools/powershell.ts";
 import { getPowerShellConfig, POWERSHELL_ARGS } from "../src/utils/shell.ts";
 

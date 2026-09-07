@@ -1,9 +1,9 @@
-import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { type CredentialStore, createModels, type Provider } from "@ao-barbosa/phi-ai";
 import lockfile from "proper-lockfile";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { AuthStorage, FileAuthStorageBackend } from "../src/core/auth-storage.ts";
 
 describe("AuthStorage", () => {
@@ -117,6 +117,9 @@ describe("AuthStorage", () => {
 		writeAuthJson({ anthropic: { type: "api_key", key: "old" } });
 		const storage = AuthStorage.create(authJsonPath);
 		writeAuthJson({ anthropic: { type: "api_key", key: "new" } });
+		// Force a distinct mtime: rapid overwrites can share a timestamp tick on
+		// coarse filesystems, which the revision check would treat as unchanged.
+		utimesSync(authJsonPath, new Date(), new Date(Date.now() + 2000));
 		let grantLock: (() => void) | undefined;
 		const lockGranted = new Promise<void>((resolve) => {
 			grantLock = resolve;

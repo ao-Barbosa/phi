@@ -1,11 +1,11 @@
 import { arch, platform, release } from "node:os";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 const googleGenAiMock = vi.hoisted(() => ({
 	constructorCalls: [] as Array<Record<string, unknown>>,
 }));
 
-vi.mock("@google/genai", () => {
+mock.module("@google/genai", () => {
 	class GoogleGenAI {
 		models = {
 			generateContentStream: async function* () {

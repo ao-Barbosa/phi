@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 
 describe("export HTML skill block rendering", () => {
 	const templateJs = readFileSync(new URL("../src/core/export-html/template.js", import.meta.url), "utf-8");

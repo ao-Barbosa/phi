@@ -6,7 +6,7 @@ import {
 	type ToolResultMessage,
 } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import type { HarnessEvent, WatchHandle } from "../../../src/harness/agent-harness.ts";
 import { DEFAULT_COMPACTION_SETTINGS } from "../../../src/harness/compaction/compaction.ts";
 import { BACKGROUND_CONTEXT, type Context } from "../../../src/harness/context.ts";
@@ -453,7 +453,7 @@ describe("durable tool batch", () => {
 		});
 
 		await driveTools(fixture);
-		expect(safeExecute).toHaveBeenCalledOnce();
+		expect(safeExecute).toHaveBeenCalledTimes(1);
 		expect(safeExecute.mock.calls[0]?.[0]).toBe("persisted");
 		expect(unsafeExecute).not.toHaveBeenCalled();
 		expect(

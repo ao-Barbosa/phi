@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../../test-support/vi.ts";
 import {
 	CborError,
 	DEFAULT_MAX_CBOR_BYTE_LENGTH,

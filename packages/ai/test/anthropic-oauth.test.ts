@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { anthropicOAuth } from "../src/auth/oauth/anthropic.ts";
 import type { AuthEvent, AuthPrompt } from "../src/auth/types.ts";
 
@@ -33,7 +33,7 @@ function getJsonBody(init?: RequestInit): Record<string, string> {
 	return JSON.parse(init.body) as Record<string, string>;
 }
 
-describe.sequential("Anthropic OAuth", () => {
+describe("Anthropic OAuth", () => {
 	afterEach(() => {
 		vi.unstubAllGlobals();
 	});
@@ -72,7 +72,7 @@ describe.sequential("Anthropic OAuth", () => {
 
 		expect(credentials.access).toBe("access-token");
 		expect(credentials.refresh).toBe("refresh-token");
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 
 	it("omits scope from refresh token requests", async () => {
@@ -104,7 +104,7 @@ describe.sequential("Anthropic OAuth", () => {
 
 		expect(credentials.access).toBe("new-access-token");
 		expect(credentials.refresh).toBe("new-refresh-token");
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 
 	it("anthropicOAuth.login resolves through the manual_code prompt and aborts it after settling", async () => {

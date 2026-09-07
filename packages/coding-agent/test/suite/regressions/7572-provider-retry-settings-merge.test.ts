@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../../test-support/vi.ts";
 import { InMemorySettingsStorage, SettingsManager } from "../../../src/core/settings-manager.ts";
 
 describe("regression #7572: nested provider retry settings merge", () => {

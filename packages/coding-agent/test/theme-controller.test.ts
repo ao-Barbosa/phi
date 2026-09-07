@@ -1,5 +1,5 @@
 import type { TUI } from "@ao-barbosa/phi-tui";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { SettingsManager } from "../src/core/settings-manager.ts";
 import { initTheme, type TerminalTheme, theme } from "../src/modes/interactive/theme/theme.ts";
 import { InteractiveThemeController } from "../src/modes/interactive/theme/theme-controller.ts";
@@ -89,7 +89,7 @@ describe("InteractiveThemeController", () => {
 		controller.dispose();
 
 		expect(setTerminalColorSchemeNotifications).toHaveBeenLastCalledWith(false);
-		expect(unsubscribeTerminalColorScheme).toHaveBeenCalledOnce();
+		expect(unsubscribeTerminalColorScheme).toHaveBeenCalledTimes(1);
 	});
 
 	it("detects the current terminal appearance when selecting a theme pair", async () => {
@@ -102,7 +102,7 @@ describe("InteractiveThemeController", () => {
 		expect(theme.name).toBe("dark");
 		await controller.setThemeSetting("light/dark");
 		expect(theme.name).toBe("light");
-		expect(queryTerminalColorScheme).toHaveBeenCalledOnce();
+		expect(queryTerminalColorScheme).toHaveBeenCalledTimes(1);
 	});
 
 	it("lets an explicit selection replace the initial theme", async () => {

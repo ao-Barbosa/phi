@@ -1,5 +1,5 @@
 import { NOOP_TELEMETRY_CONTEXT, type TelemetryContext } from "@ao-barbosa/phi-telemetry";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { buildBaseOptions } from "../src/api/simple-options.ts";
 import { generateImages } from "../src/images.ts";
 import { registerImagesApiProvider } from "../src/images-api-registry.ts";

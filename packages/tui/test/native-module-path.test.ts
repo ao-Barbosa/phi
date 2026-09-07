@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { dirname, join, resolve } from "node:path";
-import { describe, it } from "node:test";
 import { pathToFileURL } from "node:url";
+import { describe, it } from "../../../test-support/vi.ts";
 import { getNativeModuleCandidates } from "../src/native-module-path.ts";
 
 describe("getNativeModuleCandidates", () => {

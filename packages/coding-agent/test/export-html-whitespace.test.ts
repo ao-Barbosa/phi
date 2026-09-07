@@ -1,6 +1,6 @@
 import type { Component } from "@ao-barbosa/phi-tui";
 import { readFileSync } from "fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { ansiLinesToHtml } from "../src/core/export-html/ansi-to-html.ts";
 import { createToolHtmlRenderer } from "../src/core/export-html/tool-renderer.ts";
 import type { ToolDefinition } from "../src/core/extensions/types.ts";

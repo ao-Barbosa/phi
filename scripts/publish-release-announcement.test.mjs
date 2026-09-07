@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import test from "node:test";
+import { test } from "../test-support/vi.ts";
 import { advanceLatestRelease, compareReleaseVersions } from "./publish-release-announcement.mjs";
 
 test("compares stable release versions numerically", () => {

@@ -1,4 +1,4 @@
-import { expect, expectTypeOf, it } from "vitest";
+import { expect, expectTypeOf, it } from "../../../test-support/vi.ts";
 import { GITHUB_COPILOT_MODELS } from "../src/providers/github-copilot.models.ts";
 import { XAI_MODELS } from "../src/providers/xai.models.ts";
 

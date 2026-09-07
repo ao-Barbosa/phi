@@ -32,7 +32,7 @@
 		"clean": "rm -rf dist",
 		"dev": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput",
 		"build": "tsgo -p tsconfig.build.json",
-		"test": "vitest --run",
+		"test": "bun test --isolate --preload ../../test-support/setup.ts --timeout 30000",
 		"typecheck": "tsgo -p tsconfig.test.json",
 		"prepublishOnly": "bun run clean && bun run build"
 	},

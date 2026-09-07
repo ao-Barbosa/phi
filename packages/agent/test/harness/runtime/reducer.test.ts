@@ -1,5 +1,5 @@
 import { createModels, fauxAssistantMessage, fauxProvider } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { AgentHarness, type HarnessEvent, type LaneSnapshot } from "../../../src/harness/agent-harness.ts";
 import { BACKGROUND_CONTEXT } from "../../../src/harness/context.ts";
 import { reduceLaneSnapshot } from "../../../src/harness/runtime/reducer.ts";

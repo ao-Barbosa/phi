@@ -1,6 +1,7 @@
 import { symlink } from "node:fs/promises";
 import { applyPatch } from "diff";
-import { describe, expect, it, vi } from "vitest";
+import { normalizeShellPath, toPosixPath } from "../../../../test-support/paths.ts";
+import { describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT, type Context, withAbortSignal } from "../../src/harness/context.ts";
 import { NodeExecutionEnv } from "../../src/harness/env/nodejs.ts";
 import { type BashToolDetails, createBashTool } from "../../src/harness/tools/bash.ts";
@@ -503,35 +504,38 @@ describe("AgentHarness tools", () => {
 			expect(getOrThrow(await env.readTextFile("file.txt", BACKGROUND_CONTEXT))).toBe("ALPHA\nBETA\n");
 		});
 
-		it("serializes concurrent edits through canonical and symlink paths", async () => {
-			const env = new SlowReadExecutionEnv({ cwd: createTempDir() });
-			getOrThrow(await env.writeFile("target.txt", "alpha\nbeta\ngamma\n", BACKGROUND_CONTEXT));
-			await symlink("target.txt", `${env.cwd}/link.txt`);
-			const tool = createEditTool();
+		it.skipIf(process.platform === "win32")(
+			"serializes concurrent edits through canonical and symlink paths",
+			async () => {
+				const env = new SlowReadExecutionEnv({ cwd: createTempDir() });
+				getOrThrow(await env.writeFile("target.txt", "alpha\nbeta\ngamma\n", BACKGROUND_CONTEXT));
+				await symlink("target.txt", `${env.cwd}/link.txt`);
+				const tool = createEditTool();
 
-			await Promise.all([
-				tool.execute(
-					"edit-target",
-					{ path: "target.txt", edits: [{ oldText: "alpha", newText: "ALPHA" }] },
-					noUpdate,
-					{ env },
-					invocation,
-					BACKGROUND_CONTEXT,
-				),
-				tool.execute(
-					"edit-link",
-					{ path: "link.txt", edits: [{ oldText: "beta", newText: "BETA" }] },
-					noUpdate,
-					{ env },
-					invocation,
-					BACKGROUND_CONTEXT,
-				),
-			]);
+				await Promise.all([
+					tool.execute(
+						"edit-target",
+						{ path: "target.txt", edits: [{ oldText: "alpha", newText: "ALPHA" }] },
+						noUpdate,
+						{ env },
+						invocation,
+						BACKGROUND_CONTEXT,
+					),
+					tool.execute(
+						"edit-link",
+						{ path: "link.txt", edits: [{ oldText: "beta", newText: "BETA" }] },
+						noUpdate,
+						{ env },
+						invocation,
+						BACKGROUND_CONTEXT,
+					),
+				]);
 
-			expect(getOrThrow(await env.readTextFile("target.txt", BACKGROUND_CONTEXT))).toBe("ALPHA\nBETA\ngamma\n");
-		});
+				expect(getOrThrow(await env.readTextFile("target.txt", BACKGROUND_CONTEXT))).toBe("ALPHA\nBETA\ngamma\n");
+			},
+		);
 
-		it("edits regular files through symlinks", async () => {
+		it.skipIf(process.platform === "win32")("edits regular files through symlinks", async () => {
 			const context = createContext();
 			getOrThrow(await context.env.writeFile("target.txt", "before\n", BACKGROUND_CONTEXT));
 			await symlink("target.txt", `${context.env.cwd}/link.txt`);
@@ -699,9 +703,13 @@ describe("AgentHarness tools", () => {
 
 			expect(receivedContext).toBe(context);
 			expect(receivedSignal).toBe(controller.signal);
-			expect(textOutput(result)).toBe(
-				`ready::explicit:${getOrThrow(await env.canonicalPath(context.workspace, BACKGROUND_CONTEXT))}`,
-			);
+			const workspace = getOrThrow(await env.canonicalPath(context.workspace, BACKGROUND_CONTEXT));
+			// Split off the trailing $PWD: it may itself contain colons (drive letter),
+			// and MSYS shells report the temp tree as /tmp/... with forward slashes.
+			const outputParts = textOutput(result).split(":");
+			const reportedPwd = outputParts.slice(3).join(":");
+			expect(outputParts.slice(0, 3).join(":")).toBe("ready::explicit");
+			expect(normalizeShellPath(reportedPwd)).toBe(toPosixPath(workspace));
 		});
 
 		it("supports command prefixes", async () => {

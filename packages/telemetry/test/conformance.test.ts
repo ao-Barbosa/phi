@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { InMemoryTelemetryContext, type SpanAttributes } from "../src/index.ts";
 import { createTelemetryAdapterConformance, type TelemetryAdapterFixture } from "../src/testing/index.ts";
 

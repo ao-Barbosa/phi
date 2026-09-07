@@ -1,5 +1,5 @@
 import type { Usage } from "@ao-barbosa/phi-ai";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT, type Context } from "../../src/harness/context.ts";
 import { NodeExecutionEnv } from "../../src/harness/env/nodejs.ts";
 import {
@@ -13,7 +13,7 @@ import type { Entry, Session } from "../../src/harness/session/types.ts";
 import * as storedValues from "../../src/harness/session/values.ts";
 import { err, FileError, getOrThrow, type Result } from "../../src/harness/types.ts";
 import type { AgentMessage } from "../../src/types.ts";
-import { createTempDir } from "./session-test-utils.ts";
+import { createTempDir, TEST_CWD, TEST_SESSION_DIR } from "./session-test-utils.ts";
 
 const NOW = 1_700_000_000_000;
 
@@ -67,7 +67,7 @@ describe("JSONL v3 migration", () => {
 		records: readonly unknown[],
 		headerOptions: { parentSession?: string } = {},
 	): Promise<{ path: string; content: string }> {
-		const directory = getOrThrow(await fileSystem.joinPath(["sessions", "--workspace--"], BACKGROUND_CONTEXT));
+		const directory = getOrThrow(await fileSystem.joinPath(["sessions", TEST_SESSION_DIR], BACKGROUND_CONTEXT));
 		getOrThrow(await fileSystem.createDir(directory, undefined, BACKGROUND_CONTEXT));
 		const relativePath = getOrThrow(await fileSystem.joinPath([directory, "legacy.jsonl"], BACKGROUND_CONTEXT));
 		const path = getOrThrow(await fileSystem.absolutePath(relativePath, BACKGROUND_CONTEXT));
@@ -77,7 +77,7 @@ describe("JSONL v3 migration", () => {
 				version: 3,
 				id: "legacy",
 				timestamp: new Date(NOW).toISOString(),
-				cwd: "/workspace",
+				cwd: TEST_CWD,
 				...headerOptions,
 			},
 			...records,
@@ -93,14 +93,14 @@ describe("JSONL v3 migration", () => {
 			parentSession: "/old-session.jsonl",
 		});
 
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		const after = getOrThrow(await fileSystem.readTextFile(path, BACKGROUND_CONTEXT));
 
 		expect(metadata).toMatchObject({
 			id: "legacy",
 			createdAt: NOW,
 			storageVersion: JSONL_STORAGE_VERSION,
-			cwd: "/workspace",
+			cwd: TEST_CWD,
 			path,
 			legacyParentSessionPath: "/old-session.jsonl",
 		});
@@ -117,7 +117,7 @@ describe("JSONL v3 migration", () => {
 				version: 3,
 				id: "legacy-parent",
 				timestamp: new Date(NOW - 1_000).toISOString(),
-				cwd: "/workspace",
+				cwd: TEST_CWD,
 			},
 		},
 		{
@@ -129,7 +129,7 @@ describe("JSONL v3 migration", () => {
 				id: "current-parent",
 				storageVersion: JSONL_STORAGE_VERSION,
 				createdAt: NOW - 1_000,
-				cwd: "/workspace",
+				cwd: TEST_CWD,
 			},
 		},
 	])("resolves an available $format parent path to its session id", async ({ format, parentId, header }) => {
@@ -137,7 +137,7 @@ describe("JSONL v3 migration", () => {
 		getOrThrow(await fileSystem.writeFile(parentPath, `${JSON.stringify(header)}\n`, BACKGROUND_CONTEXT));
 		await writeLegacyV3Fixture([], { parentSession: parentPath });
 
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		expect(metadata).toMatchObject({
@@ -156,7 +156,7 @@ describe("JSONL v3 migration", () => {
 		getOrThrow(await fileSystem.writeFile(parentPath, '{"not":"a session header"}\n', BACKGROUND_CONTEXT));
 		await writeLegacyV3Fixture([], { parentSession: parentPath });
 
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 
 		expect(metadata).toMatchObject({
 			id: "legacy",
@@ -228,7 +228,7 @@ describe("JSONL v3 migration", () => {
 					message: secondMessage,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 			return { ...fixture, metadata };
 		}
@@ -324,7 +324,7 @@ describe("JSONL v3 migration", () => {
 
 	it("opens an empty legacy session with a data-only main Branch", async () => {
 		await writeLegacyV3Fixture([]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -531,7 +531,7 @@ describe("JSONL v3 migration", () => {
 				id: "legacy",
 				storageVersion: JSONL_STORAGE_VERSION,
 				createdAt: NOW,
-				cwd: "/workspace",
+				cwd: TEST_CWD,
 			});
 			expect(JSON.parse(transactionLine)).toEqual([
 				{ kind: "usage", ...adjustment },
@@ -672,7 +672,7 @@ describe("JSONL v3 migration", () => {
 					message: secondMessage,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -747,7 +747,7 @@ describe("JSONL v3 migration", () => {
 					message: secondMessage,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -797,7 +797,7 @@ describe("JSONL v3 migration", () => {
 					message: secondMessage,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -870,7 +870,7 @@ describe("JSONL v3 migration", () => {
 					message: secondMessage,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -904,7 +904,7 @@ describe("JSONL v3 migration", () => {
 					activeToolNames: ["read", 42],
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -932,7 +932,7 @@ describe("JSONL v3 migration", () => {
 				},
 				...configurationChanges,
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -965,7 +965,7 @@ describe("JSONL v3 migration", () => {
 				name: "Imported session",
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1016,7 +1016,7 @@ describe("JSONL v3 migration", () => {
 				name: "Latest name",
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1047,7 +1047,7 @@ describe("JSONL v3 migration", () => {
 				...(name === undefined ? {} : { name }),
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1078,7 +1078,7 @@ describe("JSONL v3 migration", () => {
 				label: "Important",
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1120,7 +1120,7 @@ describe("JSONL v3 migration", () => {
 				message,
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1183,7 +1183,7 @@ describe("JSONL v3 migration", () => {
 				message: secondMessage,
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1228,7 +1228,7 @@ describe("JSONL v3 migration", () => {
 				...(label === undefined ? {} : { label }),
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1269,7 +1269,7 @@ describe("JSONL v3 migration", () => {
 				data,
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1323,7 +1323,7 @@ describe("JSONL v3 migration", () => {
 				display: false,
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1431,7 +1431,7 @@ describe("JSONL v3 migration", () => {
 					...(fromHook === undefined ? {} : { fromHook }),
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1486,7 +1486,7 @@ describe("JSONL v3 migration", () => {
 					summary: "Summary from the root",
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1510,7 +1510,7 @@ describe("JSONL v3 migration", () => {
 					summary: "Summary from a missing source",
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			await expect(repo.open(metadata, BACKGROUND_CONTEXT)).rejects.toThrow(
@@ -1537,7 +1537,7 @@ describe("JSONL v3 migration", () => {
 					summary: "Summary from the root",
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1611,7 +1611,7 @@ describe("JSONL v3 migration", () => {
 					...(fromHook === undefined ? {} : { fromHook }),
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1707,7 +1707,7 @@ describe("JSONL v3 migration", () => {
 					tokensBefore: 8_000,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1788,7 +1788,7 @@ describe("JSONL v3 migration", () => {
 					tokensBefore: 8_000,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1863,7 +1863,7 @@ describe("JSONL v3 migration", () => {
 					tokensBefore: 8_000,
 				},
 			]);
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 			await expect(repo.open(metadata, BACKGROUND_CONTEXT)).rejects.toThrow(
@@ -1908,7 +1908,7 @@ describe("JSONL v3 migration", () => {
 				message: secondMessage,
 			},
 		]);
-		const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+		const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 		if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 
 		const session = await repo.open(metadata, BACKGROUND_CONTEXT);
@@ -1961,7 +1961,7 @@ describe("JSONL v3 migration", () => {
 				},
 			]));
 			beforeMtime = getOrThrow(await fileSystem.fileInfo(path, BACKGROUND_CONTEXT)).mtimeMs;
-			const [metadata] = await repo.list({ cwd: "/workspace" }, BACKGROUND_CONTEXT);
+			const [metadata] = await repo.list({ cwd: TEST_CWD }, BACKGROUND_CONTEXT);
 			if (metadata === undefined) throw new Error("Legacy fixture was not discovered");
 			session = await repo.open(metadata, BACKGROUND_CONTEXT);
 		});

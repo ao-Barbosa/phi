@@ -6,7 +6,7 @@ import {
 	PROTOCOL_VERSION,
 	ProtocolValidationError,
 } from "@ao-barbosa/phi-protocol";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import {
 	type ByteTransportFactory,
 	Client,

@@ -1,5 +1,5 @@
 import type { AgentMessage } from "@ao-barbosa/phi-agent-core";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { collectEntriesForBranchSummary } from "../../src/harness/compaction/branch-summarization.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import type { Branch, Entry, MessageEntry, Session } from "../../src/harness/session/index.ts";

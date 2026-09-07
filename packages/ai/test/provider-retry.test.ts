@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { retryProviderRequest } from "../src/utils/provider-retry.ts";
 
 function providerError(status: number | undefined, headers?: Record<string, string>): Error {

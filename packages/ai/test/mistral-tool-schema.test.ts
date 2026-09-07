@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { complete, getModel } from "../src/compat.ts";
 import type { Context, Model } from "../src/types.ts";
 

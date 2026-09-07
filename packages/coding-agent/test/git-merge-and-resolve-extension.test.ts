@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import mergeAndResolve from "../examples/extensions/git-merge-and-resolve.ts";
 import type { ExecResult, ExtensionAPI, ExtensionContext } from "../src/core/extensions/index.ts";
 

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { InMemoryCredentialStore } from "../src/auth/credential-store.ts";
 import { anthropicOAuth } from "../src/auth/oauth/anthropic.ts";
 import { githubCopilotOAuth } from "../src/auth/oauth/github-copilot.ts";
@@ -17,7 +17,7 @@ function jsonResponse(body: unknown, status = 200): Response {
 	return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 }
 
-describe.sequential("OAuthAuth adapters", () => {
+describe("OAuthAuth adapters", () => {
 	it("keeps the extension OAuth barrel free of built-in flow implementations", () => {
 		expect(extensionOAuthCompatibility).not.toHaveProperty("loginAnthropic");
 		expect(extensionOAuthCompatibility).not.toHaveProperty("anthropicOAuth");

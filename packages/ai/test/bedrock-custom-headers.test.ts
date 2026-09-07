@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 type MiddlewareHandler = (next: (args: unknown) => Promise<unknown>) => (args: unknown) => Promise<unknown>;
 
@@ -9,7 +9,7 @@ const bedrockMock = vi.hoisted(() => ({
 	}>,
 }));
 
-vi.mock("@aws-sdk/client-bedrock-runtime", () => {
+mock.module("@aws-sdk/client-bedrock-runtime", () => {
 	class BedrockRuntimeServiceException extends Error {}
 
 	class BedrockRuntimeClient {

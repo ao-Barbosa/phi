@@ -1,6 +1,6 @@
 import { arch, platform, release } from "node:os";
 import { Type } from "typebox";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { stream as streamAzureOpenAIResponses } from "../src/api/azure-openai-responses.ts";
 import { getModel } from "../src/compat.ts";
 import type { Context, Model } from "../src/types.ts";
@@ -24,7 +24,7 @@ const azureMock = vi.hoisted(() => ({
 	lastParams: undefined as CapturedAzureResponsesPayload | undefined,
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class AzureOpenAI {
 		responses = {
 			create: (params: CapturedAzureResponsesPayload) => {

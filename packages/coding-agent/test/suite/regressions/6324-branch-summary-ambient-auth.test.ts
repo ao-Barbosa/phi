@@ -1,5 +1,5 @@
 import { createAssistantMessageEventStream } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { assistantMsg, userMsg } from "../../utilities.ts";
 import { createHarness, type Harness } from "../harness.ts";
 

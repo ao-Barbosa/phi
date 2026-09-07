@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { KEYBINDINGS, useWindowsKeybindings } from "../src/core/keybindings.ts";
 
 describe("Windows keybinding defaults", () => {

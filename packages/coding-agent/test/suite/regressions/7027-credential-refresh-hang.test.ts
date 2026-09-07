@@ -1,5 +1,5 @@
 import type { Api, Model, Provider } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { AuthStorage } from "../../../src/core/auth-storage.ts";
 import { ModelRuntime } from "../../../src/core/model-runtime.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";

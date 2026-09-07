@@ -6,7 +6,7 @@
 import type { AgentTool } from "@ao-barbosa/phi-agent-core";
 import type { AssistantMessage } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { createHarness, createHarnessWithExtensions, type Harness } from "./test-harness.ts";
 
 describe("test harness", () => {

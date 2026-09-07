@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { completeSimple, getModel } from "../src/compat.ts";
 
 function createLongSystemPrompt(): string {

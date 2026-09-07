@@ -1,12 +1,12 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../../../test-support/vi.ts";
 import subagentExtension from "../../../examples/extensions/subagent/index.ts";
 import type { ExtensionUIContext } from "../../../src/core/extensions/index.ts";
 import { createHarness, getMessageText } from "../harness.ts";
 
-vi.mock("@ao-barbosa/phi-coding-agent", () => ({
+mock.module("@ao-barbosa/phi-coding-agent", () => ({
 	CONFIG_DIR_NAME: ".phi",
 	getAgentDir: () => "/missing-user-agent-dir",
 	getMarkdownTheme: () => ({}),

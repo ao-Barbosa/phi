@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { AssistantMessage, ToolResultMessage } from "@ao-barbosa/phi-ai/compat";
 import { getModel } from "@ao-barbosa/phi-ai/compat";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { defineTool } from "../src/core/extensions/types.ts";
 import { createAgentSession } from "../src/core/sdk.ts";
 import { SessionManager } from "../src/core/session-manager.ts";

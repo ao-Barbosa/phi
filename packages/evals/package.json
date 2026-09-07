@@ -10,7 +10,7 @@
 	"scripts": {
 		"clean": "rm -rf .eval",
 		"eval": "bun scripts/run-evals.mjs",
-		"test": "vitest run --config vitest.test.config.ts"
+		"test": "bun test --isolate --preload ../../test-support/setup.ts --timeout 30000 test/"
 	},
 	"devDependencies": {
 		"@ao-barbosa/phi-ai": "^0.85.0",

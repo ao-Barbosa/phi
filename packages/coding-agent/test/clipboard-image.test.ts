@@ -1,6 +1,6 @@
 import type { SpawnSyncReturns } from "child_process";
 import { writeFileSync } from "fs";
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, mock, test, vi } from "../../../test-support/vi.ts";
 
 const mocks = vi.hoisted(() => {
 	return {
@@ -12,13 +12,13 @@ const mocks = vi.hoisted(() => {
 	};
 });
 
-vi.mock("child_process", () => {
+mock.module("child_process", () => {
 	return {
 		spawnSync: mocks.spawnSync,
 	};
 });
 
-vi.mock("../src/utils/clipboard-native.js", () => {
+mock.module("../src/utils/clipboard-native.js", () => {
 	return {
 		clipboard: mocks.clipboard,
 	};

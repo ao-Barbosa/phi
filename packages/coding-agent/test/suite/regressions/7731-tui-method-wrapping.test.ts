@@ -1,5 +1,5 @@
 import type { TUI } from "@ao-barbosa/phi-tui";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { createInteractiveTuiReference } from "../../../src/modes/interactive/interactive-mode.ts";
 
 describe("TUI method wrapping", () => {
@@ -25,7 +25,7 @@ describe("TUI method wrapping", () => {
 		renderer = { requestRender: fullscreenRequestRender } as unknown as TUI;
 		requestRender();
 
-		expect(regularRequestRender).toHaveBeenCalledOnce();
-		expect(fullscreenRequestRender).toHaveBeenCalledOnce();
+		expect(regularRequestRender).toHaveBeenCalledTimes(1);
+		expect(fullscreenRequestRender).toHaveBeenCalledTimes(1);
 	});
 });

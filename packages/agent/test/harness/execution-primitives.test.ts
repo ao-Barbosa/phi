@@ -1,5 +1,5 @@
 import { fauxProvider } from "@ao-barbosa/phi-ai";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import {
 	BACKGROUND_CONTEXT,
 	createContextKey,
@@ -82,7 +82,7 @@ describe("HookRegistry", () => {
 				{ role: "user", content: "second" },
 			],
 		});
-		expect(second).toHaveBeenCalledOnce();
+		expect(second).toHaveBeenCalledTimes(1);
 		expect(errors).toEqual([]);
 	});
 

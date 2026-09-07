@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { convertMessages } from "../src/api/openai-completions.ts";
 import { getModel, streamSimple } from "../src/compat.ts";
 import type { Api, AssistantMessage, Context, Model, Tool, ToolResultMessage, UserMessage } from "../src/types.ts";

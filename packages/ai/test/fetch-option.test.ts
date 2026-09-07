@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { streamSimple as streamAnthropic } from "../src/api/anthropic-messages.ts";
 import { streamSimple as streamAzureOpenAIResponses } from "../src/api/azure-openai-responses.ts";
 import { streamSimple as streamGoogleGenerativeAI } from "../src/api/google-generative-ai.ts";
@@ -152,7 +152,7 @@ describe("fetch stream option", () => {
 			fetch: ambient,
 		}).result();
 
-		expect(ambient).toHaveBeenCalledOnce();
+		expect(ambient).toHaveBeenCalledTimes(1);
 		expect(result.errorMessage).not.toContain("Custom fetch is not supported");
 		expect(globalThis.fetch).toBe(ambient);
 	});

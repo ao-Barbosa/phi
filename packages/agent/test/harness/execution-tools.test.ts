@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import { AbortRequested, createGate, type Gate } from "../../src/harness/execution/effect-gate.ts";
 import {
@@ -140,7 +140,7 @@ describe("tool execution primitives", () => {
 		);
 		lateUpdate?.({ content: [{ type: "text", text: "late" }], details: { value: "late" } });
 
-		expect(vi.mocked(execute)).toHaveBeenCalledOnce();
+		expect(vi.mocked(execute)).toHaveBeenCalledTimes(1);
 		expect(result.isError).toBe(false);
 		expect(text(result.result)).toBe("done");
 		expect(updates).toHaveLength(1);

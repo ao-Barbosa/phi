@@ -1,5 +1,5 @@
 import { createFacetHost, defineFacet } from "@ao-barbosa/phi-chord";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { SlashCommands } from "../src/experimental/services/slash-commands.ts";
 import {
 	createSlashCommandsRuntimeFacet,

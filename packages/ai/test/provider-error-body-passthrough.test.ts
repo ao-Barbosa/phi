@@ -12,7 +12,7 @@
 // errorMessage contains both the status and the body reason. It is EXPECTED TO
 // FAIL until the provider catch blocks read the SDK error body.
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock } from "../../../test-support/vi.ts";
 import { generateImages } from "../src/images.ts";
 import type { ImagesContext, ImagesModel } from "../src/types.ts";
 
@@ -30,7 +30,7 @@ class FakeAPIError extends Error {
 	}
 }
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		chat = {
 			completions: {

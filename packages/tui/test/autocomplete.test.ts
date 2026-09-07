@@ -3,7 +3,7 @@ import { spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { afterEach, beforeEach, describe, it, test } from "node:test";
+import { afterEach, beforeEach, describe, it, test } from "../../../test-support/vi.ts";
 import { CombinedAutocompleteProvider } from "../src/autocomplete.ts";
 
 const resolveFdPath = (): string | null => {
@@ -347,7 +347,7 @@ describe("CombinedAutocompleteProvider", () => {
 					"some_file.txt": "symlinked",
 				},
 			});
-			symlinkSync("../outside", join(baseDir, "symlinked_dir"));
+			symlinkSync("../outside", join(baseDir, "symlinked_dir"), process.platform === "win32" ? "junction" : "dir");
 
 			const provider = new CombinedAutocompleteProvider([], baseDir, requireFdPath());
 			const line = "@some";
@@ -364,7 +364,7 @@ describe("CombinedAutocompleteProvider", () => {
 					"nested/file.txt": "symlinked",
 				},
 			});
-			symlinkSync("../outside", join(baseDir, "symlinked_dir"));
+			symlinkSync("../outside", join(baseDir, "symlinked_dir"), process.platform === "win32" ? "junction" : "dir");
 
 			const provider = new CombinedAutocompleteProvider([], baseDir, requireFdPath());
 			const line = "@symlinked";
@@ -374,7 +374,7 @@ describe("CombinedAutocompleteProvider", () => {
 			assert.ok(values.includes("@symlinked_dir/"));
 		});
 
-		test("returns symlinked files without requiring type l", async () => {
+		test.skipIf(process.platform === "win32")("returns symlinked files without requiring type l", async () => {
 			setupFolder(baseDir, {
 				files: {
 					"original.txt": "content",

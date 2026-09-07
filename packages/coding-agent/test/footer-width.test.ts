@@ -1,5 +1,6 @@
+import { sep } from "node:path";
 import { visibleWidth } from "@ao-barbosa/phi-tui";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "../../../test-support/vi.ts";
 import type { AgentSession } from "../src/core/agent-session.ts";
 import type { ReadonlyFooterDataProvider } from "../src/core/footer-data-provider.ts";
 import { FooterComponent, formatCwdForFooter } from "../src/modes/interactive/components/footer.ts";
@@ -108,7 +109,7 @@ describe("formatCwdForFooter", () => {
 
 	it("abbreviates the home directory and descendants", () => {
 		expect(formatCwdForFooter("/home/user", "/home/user")).toBe("~");
-		expect(formatCwdForFooter("/home/user/project", "/home/user")).toBe("~/project");
+		expect(formatCwdForFooter("/home/user/project", "/home/user")).toBe(`~${sep}project`);
 	});
 });
 

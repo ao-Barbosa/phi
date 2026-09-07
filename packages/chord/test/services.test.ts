@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../src/context/index.ts";
 import {
 	type Context,
@@ -291,7 +291,7 @@ describe("remote services", () => {
 		expect(models.state).toBe(state);
 		expect(state.value?.revision).toBe(2);
 		await select({ provider: "test", modelId: "replacement" }, BACKGROUND_CONTEXT);
-		expect(replacementSelect).toHaveBeenCalledOnce();
+		expect(replacementSelect).toHaveBeenCalledTimes(1);
 		expect(() =>
 			provider.replace(Models, {
 				async select() {},

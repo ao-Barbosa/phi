@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it, mock } from "node:test";
+import { describe, it, vi } from "../../../test-support/vi.ts";
 import { setKittyProtocolActive } from "../src/keys.ts";
 import {
 	normalizeAppleTerminalInput,
@@ -200,11 +200,11 @@ describe("ProcessTerminal Kitty keyboard protocol negotiation", () => {
 	});
 
 	it("tracks split Kitty confirmation", () => {
-		mock.timers.enable({ apis: ["setTimeout"] });
+		vi.useFakeTimers();
 		const harness = setupNegotiation();
 		try {
 			harness.send("\x1b[?7");
-			mock.timers.tick(10);
+			vi.advanceTimersByTime(10);
 
 			assert.equal(harness.getInput(), undefined);
 
@@ -214,25 +214,25 @@ describe("ProcessTerminal Kitty keyboard protocol negotiation", () => {
 			assert.equal(harness.writes.includes("\x1b[>4;2m"), false);
 		} finally {
 			harness.cleanup();
-			mock.timers.reset();
+			vi.useRealTimers();
 		}
 	});
 
 	it("replays buffered CSI-prefix input when it is not a Kitty response", () => {
-		mock.timers.enable({ apis: ["setTimeout"] });
+		vi.useFakeTimers();
 		const harness = setupNegotiation();
 		try {
 			harness.send("\x1b[");
-			mock.timers.tick(50); // StdinBuffer sequence timeout, not the lone-ESC timeout
+			vi.advanceTimersByTime(50); // StdinBuffer sequence timeout, not the lone-ESC timeout
 
 			assert.equal(harness.getInput(), undefined);
 
-			mock.timers.tick(150);
+			vi.advanceTimersByTime(150);
 
 			assert.equal(harness.getInput(), "\x1b[");
 		} finally {
 			harness.cleanup();
-			mock.timers.reset();
+			vi.useRealTimers();
 		}
 	});
 });

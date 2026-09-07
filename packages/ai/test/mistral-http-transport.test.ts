@@ -1,6 +1,6 @@
 import { arch, platform, release } from "node:os";
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { stream as streamMistral } from "../src/api/mistral-conversations.ts";
 import { getModel } from "../src/compat.ts";
 import type { Context, FetchFunction, ProviderResponse } from "../src/types.ts";
@@ -412,7 +412,9 @@ describe("Mistral HTTP transport", () => {
 		}).result();
 
 		expect(message.stopReason).toBe("error");
-		expect(message.errorMessage).toMatch(/timeout/i);
+		// Node reports "The operation was aborted due to timeout"; bun reports
+		// "The operation timed out.". Accept both wordings.
+		expect(message.errorMessage).toMatch(/timeout|timed out/i);
 	});
 
 	it("preserves HTTP status and response bodies in errors", async () => {

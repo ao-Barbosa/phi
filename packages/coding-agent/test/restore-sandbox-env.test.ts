@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 const readFileSync = vi.fn();
 
-vi.mock("node:fs", () => ({
+mock.module("node:fs", () => ({
 	readFileSync,
 }));
 

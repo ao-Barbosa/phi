@@ -2,8 +2,9 @@ import { type ChildProcess, fork } from "node:child_process";
 import { once } from "node:events";
 import { lstat, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { createServer, type Server, type Socket } from "node:net";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { Server as RuntimeServer } from "../../server/src/server.ts";
 import { createTestServerServices } from "../../server/src/testing/host.ts";
 import { createUnixListener } from "../../server/src/transports/unix/listener.ts";
@@ -16,7 +17,7 @@ const rawSockets = new Set<Socket>();
 const children = new Set<ChildProcess>();
 
 async function makeDirectory(): Promise<string> {
-	const directory = await mkdtemp(join("/tmp", "pc-"));
+	const directory = await mkdtemp(join(tmpdir(), "pc-"));
 	tempDirectories.add(directory);
 	return directory;
 }
@@ -90,7 +91,7 @@ afterEach(async () => {
 	tempDirectories.clear();
 });
 
-describe("discoverUnixServers", () => {
+describe.skipIf(process.platform === "win32")("discoverUnixServers", () => {
 	test("returns no routes when the server directory is missing", async () => {
 		const directory = join(await makeDirectory(), "missing");
 		await expect(discoverUnixServers({ directory })).resolves.toEqual([]);

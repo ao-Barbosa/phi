@@ -28,8 +28,8 @@
 		"check:model-catalog": "bun scripts/publish-model-catalog.mjs --input .artifacts/model-catalog --dry-run",
 		"profile:tui": "bun scripts/profile-coding-agent-bun.mjs --mode tui",
 		"profile:rpc": "bun scripts/profile-coding-agent-bun.mjs --mode rpc",
-		"test": "npm run test:scripts && npm run test --workspaces --if-present",
-		"test:scripts": "node --test scripts/*.test.mjs",
+		"test": "bun run test:scripts && bun run --filter '@ao-barbosa/*' test",
+		"test:scripts": "bun test --preload ./test-support/setup.ts --timeout 30000 scripts/",
 		"version:patch": "bun scripts/sync-versions.js patch && bun install --ignore-scripts",
 		"version:minor": "bun scripts/sync-versions.js minor && bun install --ignore-scripts",
 		"version:major": "bun scripts/sync-versions.js major && bun install --ignore-scripts",
@@ -46,6 +46,7 @@
 	},
 	"devDependencies": {
 		"@anthropic-ai/sandbox-runtime": "0.0.26",
+		"bun-types": "1.4.0",
 		"@biomejs/biome": "2.3.5",
 		"@types/node": "22.19.19",
 		"@typescript/native-preview": "7.0.0-dev.20260120.1",

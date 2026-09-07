@@ -9,7 +9,7 @@ import {
 	type SimpleStreamOptions,
 } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import { estimateTokens } from "../../src/core/compaction/index.ts";
 import { createHarness, getUserTexts, type Harness } from "./harness.ts";
 

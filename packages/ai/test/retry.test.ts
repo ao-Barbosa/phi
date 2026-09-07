@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { fauxAssistantMessage } from "../src/providers/faux.ts";
 import { isRetryableAssistantError, type RetryPolicy, retryAssistantCall } from "../src/utils/retry.ts";
 

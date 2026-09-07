@@ -1,5 +1,5 @@
 import { fauxAssistantMessage } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { parseArgs } from "../../../src/cli/args.ts";
 import { createHarness, getUserTexts, type Harness } from "../harness.ts";
 

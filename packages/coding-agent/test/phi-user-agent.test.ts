@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { getPhiUserAgent } from "../src/utils/phi-user-agent.ts";
 
 describe("getPhiUserAgent", () => {

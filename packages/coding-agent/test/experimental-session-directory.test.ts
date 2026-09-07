@@ -1,6 +1,6 @@
 import { homedir } from "node:os";
 import { resolve } from "node:path";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { resolveSessionDirectory } from "../src/experimental/server.ts";
 
 afterEach(() => vi.unstubAllEnvs());
@@ -9,7 +9,7 @@ describe("experimental server session directory", () => {
 	test("uses the experimental directory under the configured agent directory by default", () => {
 		vi.stubEnv("PHI_CODING_AGENT_DIR", "/tmp/phi-agent-config");
 
-		expect(resolveSessionDirectory()).toBe("/tmp/phi-agent-config/experimental/sessions");
+		expect(resolveSessionDirectory()).toBe(resolve("/tmp/phi-agent-config/experimental/sessions"));
 	});
 
 	test("resolves an explicit relative directory from the current working directory", () => {

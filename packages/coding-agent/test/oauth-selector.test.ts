@@ -1,5 +1,5 @@
 import { setKeybindings } from "@ao-barbosa/phi-tui";
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { KeybindingsManager } from "../src/core/keybindings.ts";
 import { OAuthSelectorComponent } from "../src/modes/interactive/components/oauth-selector.ts";
 import { InteractiveMode } from "../src/modes/interactive/interactive-mode.ts";

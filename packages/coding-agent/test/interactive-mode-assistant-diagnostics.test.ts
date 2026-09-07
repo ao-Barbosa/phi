@@ -1,6 +1,6 @@
 import type { AssistantMessage } from "@ao-barbosa/phi-ai";
 import { Container } from "@ao-barbosa/phi-tui";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { InteractiveMode } from "../src/modes/interactive/interactive-mode.ts";
 import { initTheme } from "../src/modes/interactive/theme/theme.ts";
 import { stripAnsi } from "../src/utils/ansi.ts";

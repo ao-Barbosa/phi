@@ -1,5 +1,5 @@
 import { arch, platform, release } from "node:os";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { stream as streamAnthropic } from "../src/api/anthropic-messages.ts";
 import { ANTHROPIC_AUTH_TOKEN_ENV, ANTHROPIC_OAUTH_TOKEN_ENV } from "../src/env-api-keys.ts";
 import { createModels } from "../src/models.ts";
@@ -11,7 +11,7 @@ const mockState = vi.hoisted(() => ({
 	createParams: undefined as Record<string, unknown> | undefined,
 }));
 
-vi.mock("@anthropic-ai/sdk", () => {
+mock.module("@anthropic-ai/sdk", () => {
 	function createSseResponse(): Response {
 		const body = [
 			`event: message_start\ndata: ${JSON.stringify({

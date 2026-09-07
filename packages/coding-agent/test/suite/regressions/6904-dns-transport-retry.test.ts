@@ -1,5 +1,5 @@
 import { fauxAssistantMessage } from "@ao-barbosa/phi-ai";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createHarness } from "../harness.ts";
 
 const wrappedDnsLookupError =

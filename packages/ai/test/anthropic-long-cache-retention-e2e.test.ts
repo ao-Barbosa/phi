@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { type BuiltinProvider, complete, getModels, getProviders } from "../src/compat.ts";
 import { getEnvApiKey } from "../src/env-api-keys.ts";
 import type { Api, KnownProvider, Model, ProviderStreamOptions } from "../src/types.ts";

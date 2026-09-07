@@ -1,6 +1,6 @@
 import { symlink } from "node:fs/promises";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import { NodeExecutionEnv } from "../../src/harness/env/nodejs.ts";
 import { loadSkills, loadSourcedSkills } from "../../src/harness/skills.ts";
@@ -46,7 +46,7 @@ Use this skill.
 			"---\nname: example\ndescription: Example skill\n---\nUse this skill.",
 			BACKGROUND_CONTEXT,
 		);
-		await symlink(join(root, "actual"), join(root, "skills-link"));
+		await symlink(join(root, "actual"), join(root, "skills-link"), process.platform === "win32" ? "junction" : "dir");
 
 		const { skills } = await loadSkills(env, "skills-link", BACKGROUND_CONTEXT);
 

@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import { fuzzyFilter, fuzzyMatch } from "../src/fuzzy.ts";
 
 describe("fuzzyMatch", () => {

@@ -1,6 +1,6 @@
 import type { AgentMessage } from "@ao-barbosa/phi-agent-core";
 import type { AssistantMessage, Context, Model } from "@ao-barbosa/phi-ai";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import {
 	type CompactionPreparation,
 	compact,
@@ -13,10 +13,11 @@ const { completeSimpleMock } = vi.hoisted(() => ({
 	completeSimpleMock: vi.fn(),
 }));
 
-vi.mock("@ao-barbosa/phi-ai/compat", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("@ao-barbosa/phi-ai/compat")>();
+import * as phiAiCompatOriginal from "@ao-barbosa/phi-ai/compat";
+
+mock.module("@ao-barbosa/phi-ai/compat", async () => {
 	return {
-		...actual,
+		...phiAiCompatOriginal,
 		completeSimple: completeSimpleMock,
 	};
 });

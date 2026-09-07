@@ -2,7 +2,7 @@ import type { AgentTool } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
 import type { ExtensionAPI } from "@ao-barbosa/phi-coding-agent";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createHarness, getAssistantTexts, getUserTexts, type Harness } from "../harness.ts";
 
 describe("issue #2023 queued slash-command follow-up", () => {

@@ -11,7 +11,7 @@ import {
 	type ToolResultMessage,
 	type UserMessage,
 } from "@ao-barbosa/phi-ai/compat";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { Agent, type AgentEvent } from "../src/index.ts";
 import { calculateTool } from "./utils/calculate.ts";
 

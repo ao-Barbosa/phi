@@ -1,7 +1,7 @@
 import * as storedValues from "@ao-barbosa/phi-agent-core";
 import * as sessionWrites from "@ao-barbosa/phi-agent-core";
 import { BACKGROUND_CONTEXT, prepareStorageCommit } from "@ao-barbosa/phi-agent-core";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import {
 	createNodeSqliteFactory,
 	type SqliteDatabase,

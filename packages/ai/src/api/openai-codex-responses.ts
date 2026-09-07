@@ -957,13 +957,16 @@ type WebSocketConstructor = new (
 ) => WebSocketLike;
 
 let _cachedWebsocket: WebSocketConstructor | null = null;
+let _cachedWebsocketBase: unknown;
 async function getWebSocketConstructor(env?: ProviderEnv): Promise<WebSocketConstructor | null> {
-	if (!env && _cachedWebsocket) return _cachedWebsocket;
+	const globalWebSocket = (globalThis as { WebSocket?: unknown }).WebSocket;
+	if (!env && _cachedWebsocket && _cachedWebsocketBase === globalWebSocket) return _cachedWebsocket;
 
 	// bun doesn't respect http proxy envs, ref: https://github.com/oven-sh/bun/issues/15489
 	// TODO: remove this when bun supports proxy envs in websocket.
-	if (typeof process !== "undefined" && process.versions?.bun) {
-		const WebSocketWithProxy = class extends WebSocket {
+	if (typeof process !== "undefined" && process.versions?.bun && typeof globalWebSocket === "function") {
+		const BaseWebSocket = globalWebSocket as new (url: string | URL, options?: unknown) => WebSocketLike;
+		const WebSocketWithProxy = class extends BaseWebSocket {
 			constructor(url: string | URL, options?: string | string[] | Record<string, unknown>) {
 				let _opts: Record<string, unknown> = {};
 				if (Array.isArray(options) || typeof options === "string") {
@@ -981,6 +984,7 @@ async function getWebSocketConstructor(env?: ProviderEnv): Promise<WebSocketCons
 		};
 		if (!env) {
 			_cachedWebsocket = WebSocketWithProxy;
+			_cachedWebsocketBase = globalWebSocket;
 		}
 		return WebSocketWithProxy;
 	}

@@ -49,6 +49,6 @@
 			"@ao-barbosa/phi-agent-old/*": ["./packages/agent-old/src/*"]
 		}
 	},
-	"include": ["packages/*/src/**/*", "packages/*/test/**/*", "packages/session-backends/*/src/**/*", "packages/session-backends/*/test/**/*", "packages/coding-agent/examples/**/*"],
+	"include": ["packages/*/src/**/*", "packages/*/test/**/*", "packages/session-backends/*/src/**/*", "packages/session-backends/*/test/**/*", "packages/coding-agent/examples/**/*", "test-support/**/*"],
 	"exclude": ["**/dist/**", "packages/coding-agent/examples/extensions/gondolin/**"]
 }

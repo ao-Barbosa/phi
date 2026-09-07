@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { cli } from "../src/cli/experimental/cli.ts";
 
 const UNSUPPORTED_SERVER_OPTIONS = "The experimental server command does not support existing CLI options yet";

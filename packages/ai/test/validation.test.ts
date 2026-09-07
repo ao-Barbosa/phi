@@ -1,6 +1,6 @@
 import { Type } from "typebox";
 import { Compile } from "typebox/compile";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import type { Tool, ToolCall } from "../src/types.ts";
 import { validateToolArguments } from "../src/utils/validation.ts";
 

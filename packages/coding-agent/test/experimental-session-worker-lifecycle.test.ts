@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { WorkerLifecycle } from "../src/experimental/session-worker.ts";
 
 const GENERATION = "generation-1";
@@ -29,7 +29,7 @@ describe("Session worker lifecycle", () => {
 
 		lifecycle.operationStopped("run", "main", "operation-1");
 		await vi.runAllTicks();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -41,7 +41,7 @@ describe("Session worker lifecycle", () => {
 		lifecycle.setDemand(GENERATION, "attachment-1", false);
 		expect(retire).not.toHaveBeenCalled();
 		lifecycle.setDemand(GENERATION, "attachment-2", false);
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -56,7 +56,7 @@ describe("Session worker lifecycle", () => {
 		lifecycle.operationStopped("compaction", "main", "operation-1");
 		expect(retire).not.toHaveBeenCalled();
 		lifecycle.operationStopped("run", "main", "operation-1");
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -68,7 +68,7 @@ describe("Session worker lifecycle", () => {
 		lifecycle.setDemand(GENERATION, "attachment-1", false);
 
 		lifecycle.operationStopped(kind, "main", "operation-1");
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -80,7 +80,7 @@ describe("Session worker lifecycle", () => {
 		lifecycle.setDemand(GENERATION, "attachment-1", false);
 		expect(retire).not.toHaveBeenCalled();
 		release();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -92,7 +92,7 @@ describe("Session worker lifecycle", () => {
 		lifecycle.setDemand(GENERATION, "attachment-1", false);
 		expect(retire).not.toHaveBeenCalled();
 		release();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		expect(() => lifecycle.beginRequest(GENERATION, "attachment-1")).toThrow(/retiring/);
 		lifecycle.close();
 	});
@@ -116,7 +116,7 @@ describe("Session worker lifecycle", () => {
 		expect(retire).not.toHaveBeenCalled();
 		vi.advanceTimersByTime(1);
 		await vi.runAllTicks();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -132,7 +132,7 @@ describe("Session worker lifecycle", () => {
 		expect(retire).not.toHaveBeenCalled();
 		lifecycle.setDemand("generation-2", "attachment-2", false);
 		await vi.runAllTicks();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 
@@ -141,7 +141,7 @@ describe("Session worker lifecycle", () => {
 		const { lifecycle, retire } = createLifecycle();
 		vi.advanceTimersByTime(100);
 		await vi.runAllTicks();
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifecycle.close();
 	});
 

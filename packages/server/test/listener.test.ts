@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import type { ByteConnectionAcceptor } from "../src/connection.ts";
 import type { ServerListener } from "../src/listener.ts";
 import { createTestServer } from "../src/testing/index.ts";

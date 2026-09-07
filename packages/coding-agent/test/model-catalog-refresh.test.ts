@@ -1,5 +1,5 @@
 import type { ModelsRefreshOptions, ModelsRefreshResult } from "@ao-barbosa/phi-ai";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { refreshModelCatalogs } from "../src/modes/interactive/model-catalog-refresh.ts";
 
 interface Deferred<T> {
@@ -29,7 +29,7 @@ describe("interactive model catalog refresh", () => {
 		const first = refreshModelCatalogs(runtime, firstController.signal);
 		const second = refreshModelCatalogs(runtime, secondController.signal);
 
-		expect(runtime.refresh).toHaveBeenCalledOnce();
+		expect(runtime.refresh).toHaveBeenCalledTimes(1);
 		deferred.resolve(successfulRefresh());
 		await expect(first).resolves.toEqual(successfulRefresh());
 		await expect(second).resolves.toEqual(successfulRefresh());

@@ -9,7 +9,7 @@
 // (no double body / no duplicated status) is asserted via the shared helper in
 // error-body.test.ts.
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { streamSimple as streamSimpleBedrock } from "../src/api/bedrock-converse-stream.ts";
 import { stream as streamOpenAICompletions } from "../src/api/openai-completions.ts";
 import { stream as streamOpenAIResponses } from "../src/api/openai-responses.ts";
@@ -37,7 +37,7 @@ const openaiMock = vi.hoisted(() => ({
 	parsedBody: { error: "blocked by gateway WAF" } as unknown,
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	function throwingCreate() {
 		const promise = Promise.resolve(undefined) as unknown as { withResponse: () => Promise<never> };
 		promise.withResponse = async () => {
@@ -52,7 +52,7 @@ vi.mock("openai", () => {
 	return { default: FakeOpenAI };
 });
 
-vi.mock("@aws-sdk/client-bedrock-runtime", () => {
+mock.module("@aws-sdk/client-bedrock-runtime", () => {
 	class BedrockRuntimeServiceException extends Error {}
 
 	class BedrockRuntimeClient {

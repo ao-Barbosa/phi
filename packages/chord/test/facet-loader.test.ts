@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../src/context/index.ts";
 import {
 	type Context,
@@ -72,7 +72,7 @@ describe("facet loader", () => {
 		};
 
 		await expect(combineFacetLoaders([first, second]).load()).rejects.toBe(failure);
-		expect(dispose).toHaveBeenCalledOnce();
+		expect(dispose).toHaveBeenCalledTimes(1);
 	});
 
 	test("keeps local and RPC service handles stable when their provider facet reloads", async () => {

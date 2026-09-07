@@ -3,7 +3,7 @@ import type { AssistantMessage, Usage } from "@ao-barbosa/phi-ai/compat";
 import { getModel } from "@ao-barbosa/phi-ai/compat";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "../../../test-support/vi.ts";
 import {
 	type CompactionSettings,
 	calculateContextTokens,

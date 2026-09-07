@@ -1,5 +1,5 @@
 import { type AuthType, type CredentialStore, InMemoryCredentialStore } from "@ao-barbosa/phi-ai";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { ModelRuntime } from "../src/core/model-runtime.ts";
 

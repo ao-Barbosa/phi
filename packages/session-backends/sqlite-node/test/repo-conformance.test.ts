@@ -1,9 +1,10 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { type ConformanceCase, createSessionRepoConformance } from "@ao-barbosa/phi-agent-core/harness/session/testing";
-import { describe, it } from "vitest";
+import { describe, it } from "../../../../test-support/vi.ts";
 import { createNodeSqliteFactory, SqliteSessionRepo } from "../src/index.ts";
+import { removeSqliteTestDir, skipSqliteFileDeletion } from "./sqlite-test-utils.ts";
 
 const NOW = 1_700_000_000_000;
 
@@ -43,19 +44,26 @@ async function createSharedContainerConformanceRepo() {
 
 async function cleanupConformanceRepo() {
 	if (currentDirectory === undefined) return;
-	await rm(currentDirectory, { recursive: true, force: true });
+	await removeSqliteTestDir(currentDirectory);
 	currentDirectory = undefined;
 }
 
 async function cleanupSharedContainerConformanceRepo() {
 	if (currentSharedDirectory === undefined) return;
-	await rm(currentSharedDirectory, { recursive: true, force: true });
+	await removeSqliteTestDir(currentSharedDirectory);
 	currentSharedDirectory = undefined;
 }
 
 registerConformance(
 	"SqliteSessionRepo conformance",
-	createSessionRepoConformance(createConformanceRepo, cleanupConformanceRepo),
+	createSessionRepoConformance(createConformanceRepo, cleanupConformanceRepo).filter(
+		(testCase) =>
+			!skipSqliteFileDeletion ||
+			!(
+				testCase.group === "lifecycle" &&
+				testCase.name === "deletes closed sessions without affecting other sessions"
+			),
+	),
 );
 
 registerConformance(

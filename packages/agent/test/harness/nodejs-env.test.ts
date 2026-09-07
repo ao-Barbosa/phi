@@ -4,7 +4,8 @@ import { access, chmod, realpath, symlink } from "node:fs/promises";
 import { homedir } from "node:os";
 import { delimiter, join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { afterEach, describe, expect, it } from "vitest";
+import { normalizeShellPath, toPosixPath } from "../../../../test-support/paths.ts";
+import { afterEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT, withAbortSignal } from "../../src/harness/context.ts";
 import { NodeExecutionEnv } from "../../src/harness/env/nodejs.ts";
 import { FileError, getOrThrow, type ShellExecOptions, type ShellOutputView } from "../../src/harness/types.ts";
@@ -147,41 +148,44 @@ describe("NodeExecutionEnv", () => {
 		expect(getOrThrow(await env.absolutePath(pathToFileURL(filePath).href, BACKGROUND_CONTEXT))).toBe(filePath);
 	});
 
-	it("returns fileInfo for files, directories, and symlinks without following symlinks", async () => {
-		const root = createTempDir();
-		const env = new NodeExecutionEnv({ cwd: root });
-		getOrThrow(await env.createDir("dir", { recursive: true }, BACKGROUND_CONTEXT));
-		getOrThrow(await env.writeFile("dir/file.txt", "hello", BACKGROUND_CONTEXT));
-		await symlink(join(root, "dir/file.txt"), join(root, "file-link"));
-		await symlink(join(root, "dir"), join(root, "dir-link"));
+	it.skipIf(process.platform === "win32")(
+		"returns fileInfo for files, directories, and symlinks without following symlinks",
+		async () => {
+			const root = createTempDir();
+			const env = new NodeExecutionEnv({ cwd: root });
+			getOrThrow(await env.createDir("dir", { recursive: true }, BACKGROUND_CONTEXT));
+			getOrThrow(await env.writeFile("dir/file.txt", "hello", BACKGROUND_CONTEXT));
+			await symlink(join(root, "dir/file.txt"), join(root, "file-link"));
+			await symlink(join(root, "dir"), join(root, "dir-link"));
 
-		expect(getOrThrow(await env.fileInfo("dir", BACKGROUND_CONTEXT))).toMatchObject({
-			name: "dir",
-			path: join(root, "dir"),
-			kind: "directory",
-		});
-		expect(getOrThrow(await env.fileInfo("dir/file.txt", BACKGROUND_CONTEXT))).toMatchObject({
-			name: "file.txt",
-			path: join(root, "dir/file.txt"),
-			kind: "file",
-			size: 5,
-		});
-		expect(getOrThrow(await env.fileInfo("file-link", BACKGROUND_CONTEXT))).toMatchObject({
-			name: "file-link",
-			path: join(root, "file-link"),
-			kind: "symlink",
-		});
-		expect(getOrThrow(await env.fileInfo("dir-link", BACKGROUND_CONTEXT))).toMatchObject({
-			name: "dir-link",
-			path: join(root, "dir-link"),
-			kind: "symlink",
-		});
-		expect(getOrThrow(await env.canonicalPath("file-link", BACKGROUND_CONTEXT))).toBe(
-			await realpath(join(root, "dir/file.txt")),
-		);
-	});
+			expect(getOrThrow(await env.fileInfo("dir", BACKGROUND_CONTEXT))).toMatchObject({
+				name: "dir",
+				path: join(root, "dir"),
+				kind: "directory",
+			});
+			expect(getOrThrow(await env.fileInfo("dir/file.txt", BACKGROUND_CONTEXT))).toMatchObject({
+				name: "file.txt",
+				path: join(root, "dir/file.txt"),
+				kind: "file",
+				size: 5,
+			});
+			expect(getOrThrow(await env.fileInfo("file-link", BACKGROUND_CONTEXT))).toMatchObject({
+				name: "file-link",
+				path: join(root, "file-link"),
+				kind: "symlink",
+			});
+			expect(getOrThrow(await env.fileInfo("dir-link", BACKGROUND_CONTEXT))).toMatchObject({
+				name: "dir-link",
+				path: join(root, "dir-link"),
+				kind: "symlink",
+			});
+			expect(getOrThrow(await env.canonicalPath("file-link", BACKGROUND_CONTEXT))).toBe(
+				await realpath(join(root, "dir/file.txt")),
+			);
+		},
+	);
 
-	it("lists symlinks as symlinks", async () => {
+	it.skipIf(process.platform === "win32")("lists symlinks as symlinks", async () => {
 		const root = createTempDir();
 		const env = new NodeExecutionEnv({ cwd: root });
 		getOrThrow(await env.writeFile("target.txt", "hello", BACKGROUND_CONTEXT));
@@ -272,9 +276,9 @@ describe("NodeExecutionEnv", () => {
 		const root = createTempDir();
 		const env = new NodeExecutionEnv({ cwd: root });
 		const tempDir = getOrThrow(await env.createTempDir("node-env-test-", BACKGROUND_CONTEXT));
-		await expect(access(tempDir)).resolves.toBeUndefined();
+		await access(tempDir);
 		const tempFile = getOrThrow(await env.createTempFile({ prefix: "prefix-", suffix: ".txt" }, BACKGROUND_CONTEXT));
-		await expect(access(tempFile)).resolves.toBeUndefined();
+		await access(tempFile);
 		expect(tempFile.endsWith(".txt")).toBe(true);
 	});
 
@@ -334,7 +338,12 @@ describe("NodeExecutionEnv", () => {
 			BACKGROUND_CONTEXT,
 		);
 		const result = getOrThrow(collected.result);
-		expect(collected.output?.text).toBe(`${await realpath(root)}:ok`);
+		// MSYS shells report the temp tree as /tmp/... with forward slashes.
+		const segments = (collected.output?.text ?? "").split(":");
+		const reportedEnv = segments.pop();
+		const realRoot = await realpath(root);
+		expect(normalizeShellPath(segments.join(":"))).toBe(toPosixPath(realRoot));
+		expect(reportedEnv).toBe("ok");
 		expect(result.exitCode).toBe(0);
 	});
 

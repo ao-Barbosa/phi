@@ -1,11 +1,11 @@
 import type { AgentTool } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, mock, vi } from "../../../../test-support/vi.ts";
 import { createHarness, type Harness } from "./harness.ts";
 
 const normalizeToolResultImages = vi.hoisted(() => vi.fn(async (content: unknown[]) => content));
-vi.mock("../../src/utils/tool-result-images.ts", () => ({ normalizeToolResultImages }));
+mock.module("../../src/utils/tool-result-images.ts", () => ({ normalizeToolResultImages }));
 
 const TINY_PNG_BASE64 =
 	"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==";

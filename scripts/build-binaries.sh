@@ -26,6 +26,7 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
+REPO_ROOT="$(pwd)"
 
 SKIP_INSTALL=false
 SKIP_DEPS=false
@@ -128,6 +129,7 @@ if [[ "$SKIP_DEPS" == "false" ]]; then
     done
     cleanup_native_deps
     trap - EXIT
+else
     echo "==> Skipping cross-platform native bindings (--skip-deps)"
 fi
 
@@ -224,10 +226,10 @@ for platform in "${PLATFORMS[@]}"; do
 
     set_clipboard_target "$platform"
     mkdir -p "$OUTPUT_DIR/$platform/node_modules/@mariozechner"
-    cp -rL node_modules/@mariozechner/clipboard "$OUTPUT_DIR/$platform/node_modules/@mariozechner/"
-    cp "node_modules/@mariozechner/$clipboard_native_package/$clipboard_native_file" \
+    # Root tree: this loop runs inside packages/coding-agent.
+    cp -rL "$REPO_ROOT/node_modules/@mariozechner/clipboard" "$OUTPUT_DIR/$platform/node_modules/@mariozechner/"
+    cp "$REPO_ROOT/node_modules/@mariozechner/$clipboard_native_package/$clipboard_native_file" \
         "$OUTPUT_DIR/$platform/node_modules/@mariozechner/clipboard/"
-
     # Copy terminal input native helpers next to compiled binaries.
     if [[ "$platform" == darwin-* ]]; then
         mkdir -p "$OUTPUT_DIR/$platform/native/darwin/prebuilds/$platform"
@@ -251,7 +253,12 @@ for platform in "${PLATFORMS[@]}"; do
     if [[ "$platform" == windows-* ]]; then
         # Windows (zip)
         echo "Creating phi-$platform.zip..."
-        (cd "$platform" && zip -r ../phi-$platform.zip .)
+        if command -v zip >/dev/null 2>&1; then
+            (cd "$platform" && zip -r ../phi-$platform.zip .)
+        else
+            # Git Bash on Windows has no zip; 7z is bundled with Windows.
+            (cd "$platform" && 7z a -tzip ../phi-$platform.zip .)
+        fi
     else
         # Unix platforms (tar.gz) - use wrapper directory for mise compatibility
         echo "Creating phi-$platform.tar.gz..."

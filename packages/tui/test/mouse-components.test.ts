@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import { Editor, type EditorTheme } from "../src/components/editor.ts";
 import { Input } from "../src/components/input.ts";
 import { SelectList, type SelectListTheme } from "../src/components/select-list.ts";

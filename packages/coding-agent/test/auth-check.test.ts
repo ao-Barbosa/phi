@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { InMemoryModelsStore } from "@ao-barbosa/phi-ai";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { parseArgs } from "../src/cli/args.ts";
 import { checkProviderAuth, createAuthCheckModelRuntime, getProviderCredential } from "../src/cli/auth-check.ts";
 import { parseAuthCommand } from "../src/cli/auth-command.ts";
@@ -96,7 +96,7 @@ describe("auth check command", () => {
 		).resolves.toMatchObject({
 			status: "ready",
 		});
-		expect(refresh).toHaveBeenCalledOnce();
+		expect(refresh).toHaveBeenCalledTimes(1);
 	});
 
 	test("reports an unknown provider as not ready", async () => {

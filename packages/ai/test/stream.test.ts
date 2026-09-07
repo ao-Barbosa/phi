@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { dirname, join } from "path";
 import { Type } from "typebox";
 import { fileURLToPath } from "url";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "../../../test-support/vi.ts";
 import { complete, getModel, stream } from "../src/compat.ts";
 import type { Api, Context, ImageContent, Model, StreamOptions, Tool, ToolResultMessage } from "../src/types.ts";
 

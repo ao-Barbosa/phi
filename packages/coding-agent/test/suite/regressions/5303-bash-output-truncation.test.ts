@@ -1,7 +1,7 @@
 import type { ChildProcessByStdio } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { waitForChildProcess } from "../../../src/utils/child-process.ts";
 
 /**

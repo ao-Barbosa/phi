@@ -1,5 +1,5 @@
 import type { ApiKeyCredential, Credential, CredentialStore, Model, Provider } from "@ao-barbosa/phi-ai";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { CredentialSynchronizationError, ModelRuntime } from "../src/core/model-runtime.ts";
 

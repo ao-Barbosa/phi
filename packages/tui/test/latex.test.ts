@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import { renderLatex } from "../src/index.ts";
 
 type LatexCase = readonly [source: string, expected: string];

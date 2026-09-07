@@ -1,6 +1,6 @@
 import { fauxAssistantMessage } from "@ao-barbosa/phi-ai";
 import { Container, Text } from "@ao-barbosa/phi-tui";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import type { AgentSessionEvent } from "../../../src/core/agent-session.ts";
 import type { ExtensionUIContext } from "../../../src/core/extensions/index.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";

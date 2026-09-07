@@ -1,5 +1,5 @@
 import { setKeybindings } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { KeybindingsManager } from "../src/core/keybindings.ts";
 import {
 	type SettingsCallbacks,

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { complete } from "../src/compat.ts";
 import type { Model } from "../src/types.ts";
 
@@ -9,7 +9,7 @@ const mockState = vi.hoisted(() => ({
 	chunks: [] as unknown[],
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		chat = {
 			completions: {

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { ServerLifetime } from "../src/experimental/server.ts";
 
 afterEach(() => {
@@ -24,7 +24,7 @@ describe("server lifecycle", () => {
 		vi.advanceTimersByTime(10_999);
 		expect(retire).not.toHaveBeenCalled();
 		vi.advanceTimersByTime(1);
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifetime.stop();
 	});
 
@@ -43,7 +43,7 @@ describe("server lifecycle", () => {
 		vi.advanceTimersByTime(999);
 		expect(retire).not.toHaveBeenCalled();
 		vi.advanceTimersByTime(1);
-		expect(retire).toHaveBeenCalledOnce();
+		expect(retire).toHaveBeenCalledTimes(1);
 		lifetime.stop();
 	});
 });

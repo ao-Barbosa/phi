@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../../src/harness/context.ts";
 import { operationCleanupWrites, operationResultRecord } from "../../../src/harness/runtime/drive/terminal.ts";
 import { MemoryStorage } from "../../../src/harness/session/memory.ts";

@@ -4,7 +4,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { createConnection } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { spawnInternalProcess, terminateInternalProcess } from "../src/experimental/process.ts";
 
 const children = new Set<ChildProcess>();

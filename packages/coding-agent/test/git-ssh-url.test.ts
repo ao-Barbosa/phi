@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { parseGitUrl } from "../src/utils/git.ts";
 
 describe("Git URL Parsing", () => {

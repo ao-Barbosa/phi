@@ -1,5 +1,5 @@
 import type { Usage } from "@ao-barbosa/phi-ai/compat";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { createHarness, type Harness } from "./suite/harness.ts";
 import { assistantMsg, userMsg } from "./utilities.ts";
 

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { createRadiusOAuth } from "../src/auth/oauth/radius.ts";
 import type { AuthEvent, ProviderAuthInteraction } from "../src/auth/types.ts";
 
@@ -112,7 +112,7 @@ describe("Radius OAuth", () => {
 				new AbortController().signal,
 			),
 		).resolves.toMatchObject({ access: "new-access", refresh: "new-refresh" });
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 
 	it("discovers only the interactive browser authorization endpoint", async () => {
@@ -124,6 +124,6 @@ describe("Radius OAuth", () => {
 
 		const oauth = createRadiusOAuth({ name: "Radius", gateway: GATEWAY });
 		await expect(oauth.login(interaction("browser"))).rejects.toThrow(`Invalid Radius OAuth config from ${GATEWAY}`);
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 });

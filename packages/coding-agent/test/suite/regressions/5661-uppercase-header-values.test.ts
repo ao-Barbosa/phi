@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { ENV_AGENT_DIR } from "../../../src/config.ts";
 import { AuthStorage } from "../../../src/core/auth-storage.ts";
 import { runMigrations } from "../../../src/migrations.ts";

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { getEffortThinkingLevelMap } from "../scripts/models-dev-reasoning-options.ts";
 
 describe("getEffortThinkingLevelMap", () => {

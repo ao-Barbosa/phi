@@ -1,5 +1,5 @@
 import { createModels, fauxAssistantMessage, fauxProvider } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { type HarnessEvent, HarnessFault, type OperationRequest } from "../../../src/harness/agent-harness.ts";
 import { DEFAULT_COMPACTION_SETTINGS } from "../../../src/harness/compaction/compaction.ts";
 import { BACKGROUND_CONTEXT, createContextKey, withContextValue } from "../../../src/harness/context.ts";
@@ -159,14 +159,17 @@ describe("runtime atomic run acceptance", () => {
 		).toEqual(["entry", "entry", "value:set", "value:set", "value:set", "value:set"]);
 		const operation = lane.state.operation;
 		if (operation?.meta.intent.kind !== "run") throw new Error("Expected run metadata");
+		// Capture the array first: bun's toMatchObject replaces matched values with
+		// the asymmetric matchers in place, corrupting later reads of the same object.
+		const promptEntryIds = operation.meta.intent.promptEntryIds;
 		expect(operation.meta).toMatchObject({
 			operationId: "operation",
 			lane: "main",
 			sourceTipId: null,
 			intent: { promptEntryIds: expect.any(Array) },
 		});
-		expect(operation.meta.intent.promptEntryIds).toHaveLength(2);
-		expect(await lane.getTipId(BACKGROUND_CONTEXT)).toBe(operation.meta.intent.promptEntryIds[1]);
+		expect(promptEntryIds).toHaveLength(2);
+		expect(await lane.getTipId(BACKGROUND_CONTEXT)).toBe(promptEntryIds[1]);
 		expect(seen.map(({ event }) => event.type)).toEqual([
 			"run_start",
 			"message_start",

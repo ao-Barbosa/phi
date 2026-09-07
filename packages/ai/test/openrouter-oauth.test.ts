@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { InMemoryCredentialStore } from "../src/auth/credential-store.ts";
 import { openRouterOAuth } from "../src/auth/oauth/openrouter.ts";
 import { createImagesModels } from "../src/images-models.ts";
@@ -20,7 +20,7 @@ function base64url(bytes: Uint8Array): string {
 	return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
 }
 
-describe.sequential("OpenRouter OAuth", () => {
+describe("OpenRouter OAuth", () => {
 	afterEach(() => {
 		vi.unstubAllGlobals();
 		vi.unstubAllEnvs();

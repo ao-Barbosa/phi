@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AgentEvent } from "@ao-barbosa/phi-agent-core";
-import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import { afterEach, beforeEach, describe, expect, test } from "../../../test-support/vi.ts";
 import { RpcClient } from "../src/modes/rpc/rpc-client.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

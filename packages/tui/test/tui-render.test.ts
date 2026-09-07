@@ -2,8 +2,8 @@ import assert from "node:assert";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { describe, it } from "node:test";
 import type { Terminal as XtermTerminalType } from "@xterm/headless";
+import { describe, it } from "../../../test-support/vi.ts";
 import { Image } from "../src/components/image.ts";
 import type { Terminal } from "../src/terminal.ts";
 import {

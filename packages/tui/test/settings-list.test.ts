@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import { SettingsList, type SettingsListTheme } from "../src/components/settings-list.ts";
 
 const testTheme: SettingsListTheme = {

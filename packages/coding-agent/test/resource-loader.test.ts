@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { ExtensionRunner } from "../src/core/extensions/runner.ts";
 import { DefaultResourceLoader, loadProjectContextFiles } from "../src/core/resource-loader.ts";
@@ -173,8 +173,8 @@ Project skill`,
 
 			mkdirSync(agentDir, { recursive: true });
 			mkdirSync(join(cwd, ".phi"), { recursive: true });
-			symlinkSync(sharedExtDir, join(agentDir, "extensions"), "dir");
-			symlinkSync(sharedExtDir, join(cwd, ".phi", "extensions"), "dir");
+			symlinkSync(sharedExtDir, join(agentDir, "extensions"), process.platform === "win32" ? "junction" : "dir");
+			symlinkSync(sharedExtDir, join(cwd, ".phi", "extensions"), process.platform === "win32" ? "junction" : "dir");
 
 			const loader = new DefaultResourceLoader({ cwd, agentDir });
 			await loader.reload();

@@ -2,7 +2,7 @@ import http from "node:http";
 import net from "node:net";
 import tls from "node:tls";
 import * as undici from "undici";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { applyHttpProxySettings, configureHttpDispatcher } from "../src/core/http-dispatcher.ts";
 
 const PROXY_ENV_KEYS = ["HTTP_PROXY", "HTTPS_PROXY"] as const;
@@ -57,7 +57,8 @@ describe("http proxy settings", () => {
 	});
 });
 
-describe("http dispatcher", () => {
+// Undici global-dispatcher wiring is node-stack only; bun serves fetch itself.
+describe.skipIf(!!process.versions.bun)("http dispatcher", () => {
 	const originalDispatcher = undici.getGlobalDispatcher();
 	const originalFetch = globalThis.fetch;
 	let savedProxyEnv: Record<(typeof DISPATCHER_PROXY_ENV_KEYS)[number], string | undefined>;
@@ -75,7 +76,9 @@ describe("http dispatcher", () => {
 	afterEach(async () => {
 		const dispatcher = undici.getGlobalDispatcher();
 		if (dispatcher !== originalDispatcher) {
-			await dispatcher.close();
+			if (typeof (dispatcher as { close?: unknown }).close === "function") {
+				await (dispatcher as unknown as { close: () => Promise<void> }).close();
+			}
 			undici.setGlobalDispatcher(originalDispatcher);
 		}
 		for (const key of DISPATCHER_PROXY_ENV_KEYS) {

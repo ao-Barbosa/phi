@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { convertMessages } from "../src/api/openai-completions.ts";
 import { getModel, stream, streamSimple } from "../src/compat.ts";
 import type { AssistantMessage, Model, SimpleStreamOptions, Tool, ToolResultMessage } from "../src/types.ts";
@@ -20,7 +20,7 @@ const mockState = vi.hoisted(() => ({
 		| undefined,
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		chat = {
 			completions: {

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { isThinkingPart, retainThoughtSignature } from "../src/api/google-shared.ts";
 
 describe("Google thinking detection (thoughtSignature)", () => {

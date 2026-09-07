@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../../test-support/vi.ts";
 import { DefaultPackageManager } from "../../../src/core/package-manager.ts";
 import { SettingsManager } from "../../../src/core/settings-manager.ts";
 import { createHarness } from "../harness.ts";

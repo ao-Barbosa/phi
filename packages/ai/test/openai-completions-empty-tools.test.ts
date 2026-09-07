@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { getModel, streamSimple } from "../src/compat.ts";
 
 // Empty tools arrays must NOT be serialized as `tools: []` — some OpenAI-compatible
@@ -11,7 +11,7 @@ const mockState = vi.hoisted(() => ({
 	lastClientOptions: undefined as unknown,
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		constructor(options: unknown) {
 			mockState.lastClientOptions = options;

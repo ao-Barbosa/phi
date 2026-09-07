@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { InMemoryCredentialStore } from "../src/auth/credential-store.ts";
 import { githubCopilotOAuth } from "../src/auth/oauth/github-copilot.ts";
 import { createModels } from "../src/models.ts";

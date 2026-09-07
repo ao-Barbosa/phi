@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import { describe, it } from "node:test";
+import { describe, it } from "../../../test-support/vi.ts";
 import type { Component, Focusable } from "../src/tui.ts";
 import { Container, type TUI } from "../src/tui.ts";
 import { TuiMainScreen } from "../src/tui-main-screen.ts";

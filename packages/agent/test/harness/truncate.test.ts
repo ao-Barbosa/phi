@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { truncateHead, truncateTail } from "../../src/harness/utils/truncate.ts";
 
 const encoder = new TextEncoder();

@@ -1,6 +1,6 @@
 import type { Api, Model } from "@ao-barbosa/phi-ai";
 import { setKeybindings } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { KeybindingsManager } from "../../../src/core/keybindings.ts";
 import { ScopedModelsSelectorComponent } from "../../../src/modes/interactive/components/scoped-models-selector.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";

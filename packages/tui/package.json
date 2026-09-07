@@ -13,7 +13,7 @@
 		"build": "tsgo -p tsconfig.build.json",
 		"build:native:darwin": "native/darwin/build.sh",
 		"build:native:win32": "bun native/win32/build.mjs",
-		"test": "node --test --test-reporter=dot --test-reporter-destination=stdout test/*.test.ts",
+		"test": "bun test --isolate --preload ../../test-support/setup.ts --timeout 30000 test/",
 		"prepublishOnly": "bun run clean && bun run build"
 	},
 	"files": [

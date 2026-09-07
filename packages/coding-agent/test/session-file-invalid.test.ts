@@ -2,11 +2,15 @@ import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { ENV_AGENT_DIR } from "../src/config.ts";
 
 const cliPath = resolve(__dirname, "../src/cli.ts");
 const sourceResolverPath = resolve(__dirname, "../src/experimental/source-resolver.ts");
+// Bun resolves workspace tsconfig paths natively; only node needs the resolver hook.
+const nodeImportArgs: string[] = (process as { versions?: { bun?: string } }).versions?.bun
+	? []
+	: ["--import", sourceResolverPath];
 const tempDirs: string[] = [];
 
 afterEach(() => {
@@ -24,7 +28,7 @@ function createTempDir(): string {
 async function runCli(args: string[], cwd: string, agentDir: string): Promise<{ code: number | null; stderr: string }> {
 	let stderr = "";
 	const code = await new Promise<number | null>((resolvePromise, reject) => {
-		const child = spawn(process.execPath, ["--import", sourceResolverPath, cliPath, ...args], {
+		const child = spawn(process.execPath, [...nodeImportArgs, cliPath, ...args], {
 			cwd,
 			env: {
 				...process.env,

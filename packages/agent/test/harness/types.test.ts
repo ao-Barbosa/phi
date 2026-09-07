@@ -1,5 +1,5 @@
 import type { AssistantMessage, AssistantMessageFrame, DeferredHandle, Usage } from "@ao-barbosa/phi-ai";
-import { expectTypeOf, it } from "vitest";
+import { expectTypeOf, it } from "../../../../test-support/vi.ts";
 import * as storedValues from "../../src/harness/session/values.ts";
 import type {
 	AgentHarness,

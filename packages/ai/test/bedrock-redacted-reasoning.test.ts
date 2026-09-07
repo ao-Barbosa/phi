@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 /**
  * OpenAI models served through Bedrock Converse (e.g. `global.openai.gpt-5.6-terra`)
@@ -16,7 +16,7 @@ const bedrockMock = vi.hoisted(() => {
 	};
 });
 
-vi.mock("@aws-sdk/client-bedrock-runtime", () => {
+mock.module("@aws-sdk/client-bedrock-runtime", () => {
 	class BedrockRuntimeServiceException extends Error {}
 
 	class BedrockRuntimeClient {

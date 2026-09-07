@@ -1,7 +1,7 @@
 import type { AgentTool, ThinkingLevel } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall, type Model, type Usage } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import type { BuildSystemPromptOptions, ExtensionAPI } from "../../src/index.ts";
 import { createHarness, getAssistantTexts, type Harness } from "./harness.ts";
 

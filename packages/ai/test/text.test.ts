@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { type AssistantMessage, contentText, type ToolResultMessage } from "../src/index.ts";
 
 const content: AssistantMessage["content"] = [

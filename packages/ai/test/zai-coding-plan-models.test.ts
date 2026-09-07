@@ -1,4 +1,4 @@
-import { expect, it } from "vitest";
+import { expect, it } from "../../../test-support/vi.ts";
 import { getBuiltinModel } from "../src/providers/all.ts";
 
 it("exposes GLM-4.6V on the China Coding Plan catalog", () => {

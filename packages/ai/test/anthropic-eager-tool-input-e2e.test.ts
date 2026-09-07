@@ -1,5 +1,5 @@
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { type BuiltinProvider, complete, getModels, getProviders } from "../src/compat.ts";
 import { getEnvApiKey } from "../src/env-api-keys.ts";
 import type { Api, KnownProvider, Model, ProviderStreamOptions, Tool } from "../src/types.ts";

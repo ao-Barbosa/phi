@@ -2,8 +2,8 @@
 
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { isAbsolute, join, relative, resolve } from "node:path";
-import { spawnSync } from "node:child_process";
+import { basename, isAbsolute, join, relative, resolve } from "node:path";
+import { execFileSync, spawnSync } from "node:child_process";
 
 const packages = [
 	{ directory: "packages/chord", name: "@ao-barbosa/phi-chord" },
@@ -27,8 +27,8 @@ isolated directory outside the repository for local release testing.
 Options:
   --out <dir>          Output directory. Defaults to a new directory under ${tmpdir()}
   --force              Remove --out first if it already exists
-  --skip-check         Do not run npm run check before building
-  --skip-test          Do not run ./test.sh before building
+  --skip-check         Do not run bun run check before building
+  --skip-test          Do not run ./phi-test.sh before building
   --skip-install       Only create tarballs; do not create isolated installs
   --skip-bun-install   Do not create the isolated Bun install
   --help               Show this help
@@ -87,6 +87,11 @@ function parseArgs() {
 }
 
 function run(command, args, options = {}) {
+	// cmd.exe cannot execute shebang scripts directly; route them through bash on Windows.
+	if (process.platform === "win32" && command.endsWith(".sh")) {
+		args = [command, ...args];
+		command = "bash";
+	}
 	console.log(`$ ${[command, ...args].join(" ")}`);
 	const result = spawnSync(command, args, {
 		cwd: options.cwd,
@@ -104,6 +109,16 @@ function run(command, args, options = {}) {
 
 function readPackageJson(directory) {
 	return JSON.parse(readFileSync(join(directory, "package.json"), "utf8"));
+}
+
+// Bash scripts cannot consume Windows-form paths; translate once at the boundary.
+function toReleaseScriptPath(value) {
+	if (process.platform !== "win32") return value;
+	try {
+		return execFileSync("cygpath", ["-u", value], { encoding: "utf8" }).trim();
+	} catch {
+		return value;
+	}
 }
 
 function commandExists(command) {
@@ -157,21 +172,22 @@ function buildBunBinaryRelease(targetDirectory, archiveDirectory) {
 	const binaryBuildDirectory = join(archiveDirectory, "binary-build");
 	run("./scripts/build-binaries.sh", [
 		"--skip-install",
-		"--skip-deps",
+		// NOTE: no --skip-deps. A plain install only carries the current platform's
+		// native bindings; the cross-platform set is installed by build-binaries.sh.
 		"--skip-build",
 		"--platform",
 		platform,
 		"--out",
-		binaryBuildDirectory,
+		toReleaseScriptPath(binaryBuildDirectory),
 	]);
 	rmSync(targetDirectory, { force: true, recursive: true });
 	cpSync(join(binaryBuildDirectory, platform), targetDirectory, { recursive: true });
-	const archiveName = platform.startsWith("windows-") ? `pi-${platform}.zip` : `pi-${platform}.tar.gz`;
+	const archiveName = platform.startsWith("windows-") ? `phi-${platform}.zip` : `phi-${platform}.tar.gz`;
 	cpSync(join(binaryBuildDirectory, archiveName), join(archiveDirectory, archiveName));
 	return platform;
 }
 
-function createPiShim(installDirectory) {
+function createPhiShim(installDirectory) {
 	const binDirectory = join(installDirectory, "node_modules", ".bin");
 	if (process.platform === "win32") {
 		if (existsSync(join(binDirectory, "phi.cmd"))) {
@@ -192,14 +208,13 @@ function packPackage(pkg, tarballDirectory) {
 		throw new Error(`${pkg.directory}/package.json has name ${packageJson.name}, expected ${pkg.name}`);
 	}
 
-	const output = run("npm", ["pack", "--json", "--pack-destination", tarballDirectory], {
+	const output = run("bun", ["pm", "pack", "--ignore-scripts", "--destination", tarballDirectory, "--quiet"], {
 		capture: true,
 		cwd: pkg.directory,
 	});
-	// npm <11.6 returns an array; newer npm returns an object keyed by package name.
-	const parsed = JSON.parse(output);
-	const packed = Array.isArray(parsed) ? parsed[0] : Object.values(parsed)[0];
-	return join(tarballDirectory, packed.filename);
+	// --quiet prints the packed tarball path.
+	const packed = basename(output.trim());
+	return join(tarballDirectory, packed);
 }
 
 const options = parseArgs();
@@ -219,19 +234,19 @@ mkdirSync(tarballDirectory, { recursive: true });
 
 // Release artifacts always use a freshly generated, strictly validated catalog,
 // including when checks or tests are explicitly skipped.
-run("npm", ["run", "generate:models"], { cwd: repoRoot });
+run("bun", ["run", "generate:models"], { cwd: repoRoot });
 
 if (!options.skipCheck) {
-	run("npm", ["run", "check"], { cwd: repoRoot });
+	run("bun", ["run", "check"], { cwd: repoRoot });
 }
 
 for (const pkg of packages) {
-	run("npm", ["run", "clean"], { cwd: pkg.directory });
-	run("npm", ["run", pkg.directory === "packages/ai" ? "build:offline" : "build"], { cwd: pkg.directory });
+	run("bun", ["run", "clean"], { cwd: pkg.directory });
+	run("bun", ["run", pkg.directory === "packages/ai" ? "build:offline" : "build"], { cwd: pkg.directory });
 }
 
 if (!options.skipTest) {
-	run("./test.sh", [], { cwd: repoRoot });
+	run("./phi-test.sh", [], { cwd: repoRoot });
 }
 
 const tarballs = new Map();
@@ -252,7 +267,7 @@ if (!options.skipInstall) {
 	writeFileSync(join(nodeInstallDirectory, "package.json"), installPackageJson);
 
 	run("npm", ["install", "--omit=dev", "--ignore-scripts"], { cwd: nodeInstallDirectory });
-	createPiShim(nodeInstallDirectory);
+	createPhiShim(nodeInstallDirectory);
 
 	if (!options.skipBunInstall) {
 		if (!commandExists("bun")) {
@@ -264,7 +279,7 @@ if (!options.skipInstall) {
 		);
 		writeFileSync(join(bunInstallDirectory, "package.json"), `${JSON.stringify({ private: true, dependencies: bunDependencies, overrides: bunDependencies }, undefined, "\t")}\n`);
 		run("bun", ["install", "--production", "--ignore-scripts"], { cwd: bunInstallDirectory });
-		createPiShim(bunInstallDirectory);
+		createPhiShim(bunInstallDirectory);
 	}
 }
 

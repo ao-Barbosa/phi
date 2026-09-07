@@ -1,5 +1,5 @@
 import { Container } from "@ao-barbosa/phi-tui";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import type { AgentSessionRuntimeDiagnostic } from "../../../src/core/agent-session-services.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";
 import { initTheme } from "../../../src/modes/interactive/theme/theme.ts";

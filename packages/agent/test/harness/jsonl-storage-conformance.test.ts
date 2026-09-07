@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import { NodeExecutionEnv } from "../../src/harness/env/nodejs.ts";
 import { JSONL_FORMAT_VERSION, JsonlStorage } from "../../src/harness/session/jsonl/index.ts";

@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { dirname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 
 const packageDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = resolve(packageDirectory, "src");
@@ -24,7 +24,10 @@ describe("package boundary", () => {
 			for (const match of source.matchAll(IMPORT_SPECIFIER)) {
 				const specifier = match[1]!;
 				if (specifier.startsWith("@ao-barbosa/phi-")) violations.push(`${path}: ${specifier}`);
-				if (specifier.startsWith(".") && !resolve(dirname(file), specifier).startsWith(`${sourceDirectory}/`)) {
+				if (
+					specifier.startsWith(".") &&
+					!resolve(dirname(file), specifier).startsWith(`${sourceDirectory}${sep}`)
+				) {
 					violations.push(`${path}: ${specifier}`);
 				}
 			}

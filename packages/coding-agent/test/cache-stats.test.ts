@@ -1,5 +1,5 @@
 import type { AssistantMessage } from "@ao-barbosa/phi-ai";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import {
 	collectCacheMisses,
 	computeCacheWaste,

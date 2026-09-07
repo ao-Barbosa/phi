@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { openaiCodexOAuth } from "../src/auth/oauth/openai-codex.ts";
 
 const neverAbortedSignal = new AbortController().signal;

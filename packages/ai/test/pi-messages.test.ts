@@ -1,6 +1,6 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import type { AddressInfo } from "node:net";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { type PiMessagesOptions, stream, streamSimple } from "../src/api/pi-messages.ts";
 import type { Api, AssistantMessageEvent, Context, Model, StopReason } from "../src/types.ts";
 

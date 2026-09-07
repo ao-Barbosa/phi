@@ -7,7 +7,7 @@ import {
 	type Provider,
 	type RefreshModelsContext,
 } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { VERSION } from "../src/config.ts";
 import { withRemoteCatalog } from "../src/core/remote-catalog-provider.ts";
 

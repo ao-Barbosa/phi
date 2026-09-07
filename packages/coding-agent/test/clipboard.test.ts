@@ -1,6 +1,6 @@
 import { execFileSync, execSync, spawn } from "child_process";
 import { platform } from "os";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, mock, test, vi } from "../../../test-support/vi.ts";
 import { copyToClipboard, readClipboardText } from "../src/utils/clipboard.ts";
 
 const mocks = vi.hoisted(() => {
@@ -17,13 +17,13 @@ const mocks = vi.hoisted(() => {
 	};
 });
 
-vi.mock("../src/utils/clipboard-native.js", () => {
+mock.module("../src/utils/clipboard-native.js", () => {
 	return {
 		clipboard: mocks.clipboard,
 	};
 });
 
-vi.mock("child_process", () => {
+mock.module("child_process", () => {
 	return {
 		execFileSync: mocks.execFileSync,
 		execSync: mocks.execSync,
@@ -31,13 +31,13 @@ vi.mock("child_process", () => {
 	};
 });
 
-vi.mock("os", () => {
+mock.module("os", () => {
 	return {
 		platform: mocks.platform,
 	};
 });
 
-vi.mock("../src/utils/clipboard-image.js", () => {
+mock.module("../src/utils/clipboard-image.js", () => {
 	return {
 		isWaylandSession: mocks.isWaylandSession,
 	};

@@ -1,5 +1,5 @@
 import { setKeybindings, type TUI } from "@ao-barbosa/phi-tui";
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "../../../../../test-support/vi.ts";
 import { KeybindingsManager } from "../../../src/core/keybindings.ts";
 import { ModelSelectorComponent } from "../../../src/modes/interactive/components/model-selector.ts";
 import { initTheme } from "../../../src/modes/interactive/theme/theme.ts";

@@ -2,7 +2,7 @@ import { Buffer } from "node:buffer";
 import type { AgentTool } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import type { BashOperations } from "../../src/core/tools/bash.ts";
 import { createHarness, type Harness } from "./harness.ts";
 

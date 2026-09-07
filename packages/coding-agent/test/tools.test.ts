@@ -2,7 +2,8 @@ import { applyPatch } from "diff";
 import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { normalizeShellPath, toPosixPath } from "../../../test-support/paths.ts";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { executeBashWithOperations } from "../src/core/bash-executor.ts";
 import type { ExtensionContext } from "../src/core/extensions/types.ts";
 import {
@@ -432,7 +433,7 @@ describe("Coding Agent Tools", () => {
 			expect(readFileSync(testFile, "utf-8")).toBe(originalContent);
 		});
 
-		it("should include EACCES for read-only files", async () => {
+		it.skipIf(process.platform === "win32")("should include EACCES for read-only files", async () => {
 			const testFile = join(testDir, "edit-readonly.txt");
 			writeFileSync(testFile, "hello\n");
 			chmodSync(testFile, 0o444);
@@ -471,15 +472,18 @@ describe("Coding Agent Tools", () => {
 			expect(result).toEqual({ error: `Could not edit file: ${missingFile}. Error code: ENOENT.` });
 		});
 
-		it("should include EACCES in diff preview for unreadable files", async () => {
-			const unreadableFile = join(testDir, "unreadable-preview.txt");
-			writeFileSync(unreadableFile, "hello\n");
-			chmodSync(unreadableFile, 0o222);
+		it.skipIf(process.platform === "win32")(
+			"should include EACCES in diff preview for unreadable files",
+			async () => {
+				const unreadableFile = join(testDir, "unreadable-preview.txt");
+				writeFileSync(unreadableFile, "hello\n");
+				chmodSync(unreadableFile, 0o222);
 
-			const result = await computeEditsDiff(unreadableFile, [{ oldText: "hello", newText: "world" }], testDir);
+				const result = await computeEditsDiff(unreadableFile, [{ oldText: "hello", newText: "world" }], testDir);
 
-			expect(result).toEqual({ error: `Could not edit file: ${unreadableFile}. Error code: EACCES.` });
-		});
+				expect(result).toEqual({ error: `Could not edit file: ${unreadableFile}. Error code: EACCES.` });
+			},
+		);
 	});
 
 	describe("bash tool", () => {
@@ -823,7 +827,8 @@ describe("Coding Agent Tools", () => {
 			writeFileSync(testFile, "target\n");
 
 			const result = await grepTool.execute("test-call-grep-injection", {
-				pattern: `--pre=${payload}`,
+				// Forward slashes: the pattern is a regex, and backslashes would be escapes.
+				pattern: `--pre=${payload.replace(/\\/g, "/")}`,
 				path: testDir,
 			});
 
@@ -1007,7 +1012,8 @@ describe("tool cwd resolution", () => {
 			fakeCtx(testDir),
 		);
 		const output = getTextOutput(result);
-		expect(output).toContain(testDir);
+		// The shell reports MSYS-style paths; map back before comparing.
+		expect(normalizeShellPath(output.trim())).toBe(toPosixPath(testDir));
 	});
 });
 

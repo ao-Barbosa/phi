@@ -24,8 +24,8 @@
 		"clean": "rm -rf dist",
 		"build": "tsgo -p tsconfig.build.json && bun scripts/copy-migrations.mjs",
 		"bench:session:timing": "bun benchmark/session/session-repo.bench.ts && bun benchmark/session/storage.bench.ts",
-		"test": "vitest --run",
-		"coverage": "vitest --run --coverage",
+		"test": "bun test --isolate --preload ../../../test-support/setup.ts --timeout 30000",
+		"coverage": "bun test --preload ../../../test-support/setup.ts --timeout 30000 --coverage",
 		"prepublishOnly": "bun run clean && bun run build"
 	},
 	"author": "Earendil Works",

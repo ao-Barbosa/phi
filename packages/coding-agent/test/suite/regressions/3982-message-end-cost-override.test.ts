@@ -1,5 +1,5 @@
 import { fauxAssistantMessage } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createHarness, type Harness } from "../harness.ts";
 
 describe("regression #3982: message_end cost override", () => {

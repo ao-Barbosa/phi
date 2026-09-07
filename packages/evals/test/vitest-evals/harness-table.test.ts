@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { createHarness, type HarnessContext } from "vitest-evals/harness";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import {
 	deriveEvalGroupKey,
 	EVAL_HARNESS_ITERATION_ARTIFACT,

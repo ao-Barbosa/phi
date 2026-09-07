@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { setKeybindings } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from "../../../test-support/vi.ts";
 import { KeybindingsManager } from "../src/core/keybindings.ts";
 import type { SessionInfo } from "../src/core/session-manager.ts";
 import { SessionSelectorComponent } from "../src/modes/interactive/components/session-selector.ts";
@@ -67,8 +67,8 @@ function createSymlinkedSessionPaths(): {
 	mkdirSync(sharedDir, { recursive: true });
 	const aliasASessions = join(aliasADir, "sessions");
 	const aliasBSessions = join(aliasBDir, "sessions");
-	symlinkSync(sharedDir, aliasASessions);
-	symlinkSync(sharedDir, aliasBSessions);
+	symlinkSync(sharedDir, aliasASessions, process.platform === "win32" ? "junction" : "dir");
+	symlinkSync(sharedDir, aliasBSessions, process.platform === "win32" ? "junction" : "dir");
 
 	const parentRealPath = join(sharedDir, "parent.jsonl");
 	const childRealPath = join(sharedDir, "child.jsonl");

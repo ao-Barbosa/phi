@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { attachJsonlLineReader, serializeJsonLine } from "../src/modes/rpc/jsonl.ts";
 
 describe("RPC JSONL framing", () => {

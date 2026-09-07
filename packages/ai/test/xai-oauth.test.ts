@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { xaiOAuth } from "../src/auth/oauth/xai.ts";
 import type { OAuthCredential } from "../src/auth/types.ts";
 

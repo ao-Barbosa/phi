@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { parseOpenRouterImageModels } from "../scripts/generate-image-models.ts";
 
 const validImageModel = {

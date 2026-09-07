@@ -1,5 +1,5 @@
 import { arch, platform, release } from "node:os";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 const googleGenAiMock = vi.hoisted(() => ({
 	constructorCalls: [] as Array<Record<string, unknown>>,
@@ -7,7 +7,7 @@ const googleGenAiMock = vi.hoisted(() => ({
 	includeFunctionCall: false,
 }));
 
-vi.mock("@google/genai", () => {
+mock.module("@google/genai", () => {
 	class GoogleGenAI {
 		constructor(config: Record<string, unknown>) {
 			googleGenAiMock.constructorCalls.push(config);

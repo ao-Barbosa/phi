@@ -1,5 +1,5 @@
 import { type RgbColor, resetCapabilitiesCache, setCapabilities } from "@ao-barbosa/phi-tui";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 import {
 	detectTerminalBackgroundFromEnv,
 	detectTerminalBackgroundTheme,

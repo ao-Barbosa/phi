@@ -1,7 +1,7 @@
 import type { AgentMessage } from "@ao-barbosa/phi-agent-core";
 import type { AssistantMessage, ToolResultMessage, Usage } from "@ao-barbosa/phi-ai";
 import { Container, Text, type TUI } from "@ao-barbosa/phi-tui";
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "../../../../../test-support/vi.ts";
 import type { AgentSessionEvent } from "../../../src/core/agent-session.ts";
 import type { SessionEntry } from "../../../src/core/session-manager.ts";
 import type { ToolExecutionComponent } from "../../../src/modes/interactive/components/tool-execution.ts";

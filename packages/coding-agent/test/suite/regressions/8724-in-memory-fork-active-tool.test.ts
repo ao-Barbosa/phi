@@ -1,7 +1,7 @@
 import type { AgentTool, AgentToolResult } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import {
 	AgentSessionRuntime,
 	type AgentSessionServices,

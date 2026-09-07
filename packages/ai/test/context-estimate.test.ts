@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { buildBaseOptions } from "../src/api/simple-options.ts";
 import type { AssistantMessage, Context, Model, Usage } from "../src/types.ts";
 import { estimateContextTokens } from "../src/utils/estimate.ts";

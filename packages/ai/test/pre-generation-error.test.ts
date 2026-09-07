@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { streamSimple as streamAnthropic } from "../src/api/anthropic-messages.ts";
 import { streamSimple as streamAzure } from "../src/api/azure-openai-responses.ts";
 import { streamSimple as streamGoogle } from "../src/api/google-generative-ai.ts";

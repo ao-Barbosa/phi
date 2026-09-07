@@ -1,7 +1,7 @@
 import type { AgentLane, EventListener, HarnessEvent, LaneSnapshot, WatchHandle } from "@ao-barbosa/phi-agent-core";
 import { replicatedState } from "@ao-barbosa/phi-chord";
 import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import type { TranscriptState } from "../src/experimental/services/transcript.ts";
 import { createTranscriptService } from "../src/experimental/services/transcript-provider.ts";
 
@@ -100,9 +100,9 @@ describe("Transcript service", () => {
 		});
 		expect(states.at(-1)).toMatchObject({ snapshot: { tipId: "replacement-tip" }, event: null });
 		expect(runtime.service.state.value).toMatchObject({ snapshot: { tipId: "replacement-tip" }, event: null });
-		expect(resnapshot).toHaveBeenCalledOnce();
+		expect(resnapshot).toHaveBeenCalledTimes(1);
 
 		await runtime.dispose();
-		expect(unsubscribe).toHaveBeenCalledOnce();
+		expect(unsubscribe).toHaveBeenCalledTimes(1);
 	});
 });

@@ -1,6 +1,6 @@
 import { type AssistantMessage, type AssistantMessageEvent, EventStream, getModel } from "@ao-barbosa/phi-ai/compat";
 import { Type } from "typebox";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import {
 	Agent,
 	type AgentEvent,

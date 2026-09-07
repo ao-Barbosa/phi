@@ -1,5 +1,5 @@
 import { truncateToWidth, visibleWidth } from "@ao-barbosa/phi-tui";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 
 /**
  * Tests for truncateToWidth behavior with Unicode characters.

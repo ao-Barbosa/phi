@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { pollOAuthDeviceCodeFlow } from "../src/auth/oauth/device-code.ts";
 
 const neverAbortedSignal = new AbortController().signal;

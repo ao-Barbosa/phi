@@ -1,12 +1,13 @@
 import { mkdtempSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock } from "../../../test-support/vi.ts";
 
-vi.mock("../src/config.ts", async (importOriginal) => {
-	const actual = await importOriginal();
+import * as configOriginal from "../src/config.ts";
+
+mock.module("../src/config.ts", async () => {
 	return {
-		...(actual as Record<string, unknown>),
+		...configOriginal,
 		PACKAGE_NAME: "@example/pi-coding-agent",
 	};
 });

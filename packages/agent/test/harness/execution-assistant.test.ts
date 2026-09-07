@@ -10,7 +10,7 @@ import {
 	type UserMessage,
 } from "@ao-barbosa/phi-ai";
 import { NOOP_TELEMETRY_CONTEXT } from "@ao-barbosa/phi-telemetry";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT, withAbortSignal } from "../../src/harness/context.ts";
 import { type AssistantResponseMetadata, streamHarnessAssistant } from "../../src/harness/execution/assistant.ts";
 import { AbortRequested } from "../../src/harness/execution/effect-gate.ts";

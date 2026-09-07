@@ -33,7 +33,7 @@ import * as _bundledPhiTui from "@ao-barbosa/phi-tui";
 import * as _bundledTypebox from "typebox";
 import * as _bundledTypeboxCompile from "typebox/compile";
 import * as _bundledTypeboxValue from "typebox/value";
-import { CONFIG_DIR_NAME, getAgentDir, isBunBinary } from "../../config.ts";
+import { CONFIG_DIR_NAME, getAgentDir } from "../../config.ts";
 // NOTE: This import works because loader.ts exports are NOT re-exported from index.ts,
 // avoiding a circular dependency. Extensions can import from @ao-barbosa/phi-coding-agent.
 import * as _bundledPhiCodingAgent from "../../index.ts";
@@ -88,17 +88,15 @@ const VIRTUAL_MODULES: Record<string, unknown> = {
 let bunExtensionModulesRegistered = false;
 
 /**
- * Expose embedded modules to extensions in the compiled binary.
- * Source and dist runtimes resolve workspace packages normally (tsconfig
- * paths under bun, dist aliases under node), so no plugin is needed there.
+ * Expose workspace modules to extensions through virtual modules.
+ * The compiled binary needs this (no node_modules on disk); source runtimes
+ * (dev, test, dist) need it for extensions loaded from outside the repo
+ * (temp dirs, user config dirs), where tsconfig paths do not apply.
+ * `build.module` works at process runtime (unlike `onResolve`, which is
+ * build-time only), so one registration covers every bun runtime.
  */
 function registerBunExtensionModules(): void {
-	if (
-		bunExtensionModulesRegistered ||
-		!isBunBinary ||
-		typeof Bun === "undefined" ||
-		typeof Bun.plugin !== "function"
-	) {
+	if (bunExtensionModulesRegistered || typeof Bun === "undefined" || typeof Bun.plugin !== "function") {
 		return;
 	}
 	bunExtensionModulesRegistered = true;
@@ -456,6 +454,8 @@ function isCurrentCacheToken(cacheToken: ExtensionCacheToken | undefined): cache
 	);
 }
 
+let directExtensionLoadSequence = 0;
+
 async function loadExtensionModule(extensionPath: string, cacheToken?: ExtensionCacheToken) {
 	if (isCurrentCacheToken(cacheToken)) {
 		const cachedFactory = extensionCache.get(extensionPath);
@@ -463,12 +463,19 @@ async function loadExtensionModule(extensionPath: string, cacheToken?: Extension
 			return cachedFactory;
 		}
 	}
-
 	// Bun runs TypeScript extension sources directly; node runs built JavaScript.
 	// The compiled binary additionally needs its embedded modules registered first.
 	registerBunExtensionModules();
 
-	const loaded = (await import(extensionPath)) as { default?: unknown };
+	// Every import re-evaluates the module: bun's registry caches by specifier
+	// (and outlives clearExtensionCache), so a cache-busting query stands in
+	// for the node-era jiti re-evaluation. The extensionCache above provides
+	// the cached-load sharing.
+	// NOTE: the query must stay on the filesystem path: bun ignores
+	// queries on file:// URLs when keying its module registry.
+	const loaded = (await import(`${extensionPath}?direct=${++directExtensionLoadSequence}`)) as {
+		default?: unknown;
+	};
 	const module = loaded.default ?? loaded;
 
 	const factory = module as ExtensionFactory;

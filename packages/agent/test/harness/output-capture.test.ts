@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import type { ShellOutputUpdate, ShellOutputView } from "../../src/harness/types.ts";
 import { applyShellOutputUpdate, OutputCapture, sanitizeShellOutput } from "../../src/harness/utils/output-capture.ts";

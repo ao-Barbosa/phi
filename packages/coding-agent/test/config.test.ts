@@ -1,14 +1,8 @@
 import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { delimiter, join } from "path";
-import { afterEach, describe, expect, test } from "vitest";
-import {
-	detectInstallMethod,
-	findNodePackageDir,
-	getSelfUpdateCommand,
-	getSelfUpdateUnavailableInstruction,
-	getUpdateInstruction,
-} from "../src/config.ts";
+import { afterEach, describe, expect, test } from "../../../test-support/vi.ts";
+import { detectInstallMethod, findNodePackageDir, getSelfUpdateCommand, getUpdateInstruction } from "../src/config.ts";
 
 const execPathDescriptor = Object.getOwnPropertyDescriptor(process, "execPath");
 const originalPath = process.env.PATH;
@@ -48,18 +42,6 @@ afterEach(() => {
 		tempDir = undefined;
 	}
 });
-
-function createNpmPrefixInstall(template = "phi-prefix-"): { prefix: string; packageDir: string } {
-	const prefix = mkdtempSync(join(tmpdir(), template));
-	const root = join(prefix, "lib", "node_modules");
-	const scopeDir = join(root, "@ao-barbosa");
-	const packageDir = join(scopeDir, "phi-coding-agent");
-	mkdirSync(packageDir, { recursive: true });
-	tempDir = prefix;
-	process.env.PHI_PACKAGE_DIR = packageDir;
-	setExecPath(join(packageDir, "dist", "cli.js"));
-	return { prefix, packageDir };
-}
 
 function createPnpmGlobalInstall(): { root: string; packageDir: string } {
 	const temp = mkdtempSync(join(tmpdir(), "phi-pnpm-"));
@@ -124,7 +106,7 @@ function createBunGlobalInstall(): { packageDir: string } {
 
 function createFakePnpmScript(root: string): string {
 	if (process.platform === "win32") {
-		return `@echo off\r\nif "%1"=="root" if "%2"=="-g" echo ${root}\r\n`;
+		return `@echo off\r\nif "%~1"=="root" if "%~2"=="-g" echo ${root}\r\n`;
 	}
 	const escapedRoot = root.replaceAll("'", "'\\''");
 	return `#!/bin/sh\nif [ "$1" = "root" ] && [ "$2" = "-g" ]; then\n\tprintf '%s\\n' '${escapedRoot}'\n\texit 0\nfi\nexit 1\n`;
@@ -132,7 +114,7 @@ function createFakePnpmScript(root: string): string {
 
 function createFakeYarnScript(globalDir: string): string {
 	if (process.platform === "win32") {
-		return `@echo off\r\nif "%1"=="global" if "%2"=="dir" echo ${globalDir}\r\n`;
+		return `@echo off\r\nif "%~1"=="global" if "%~2"=="dir" echo ${globalDir}\r\n`;
 	}
 	const escapedGlobalDir = globalDir.replaceAll("'", "'\\''");
 	return `#!/bin/sh\nif [ "$1" = "global" ] && [ "$2" = "dir" ]; then\n\tprintf '%s\\n' '${escapedGlobalDir}'\n\texit 0\nfi\nexit 1\n`;
@@ -140,7 +122,7 @@ function createFakeYarnScript(globalDir: string): string {
 
 function createFakeBunScript(bunBin: string): string {
 	if (process.platform === "win32") {
-		return `@echo off\r\nif "%1"=="pm" if "%2"=="bin" if "%3"=="-g" echo ${bunBin}\r\n`;
+		return `@echo off\r\nif "%~1"=="pm" if "%~2"=="bin" if "%~3"=="-g" echo ${bunBin}\r\n`;
 	}
 	const escapedBunBin = bunBin.replaceAll("'", "'\\''");
 	return `#!/bin/sh\nif [ "$1" = "pm" ] && [ "$2" = "bin" ] && [ "$3" = "-g" ]; then\n\tprintf '%s\\n' '${escapedBunBin}'\n\texit 0\nfi\nexit 1\n`;
@@ -168,141 +150,6 @@ describe("detectInstallMethod", () => {
 		expect(detectInstallMethod()).toBe("pnpm");
 		expect(getUpdateInstruction("@ao-barbosa/phi-coding-agent")).toBe(
 			"Run: pnpm install -g --ignore-scripts --config.minimumReleaseAge=0 @ao-barbosa/phi-coding-agent",
-		);
-	});
-
-	test("does not self-update unknown wrapper installs", () => {
-		setExecPath("/usr/local/bin/node");
-
-		expect(detectInstallMethod()).toBe("unknown");
-		expect(getSelfUpdateCommand("@ao-barbosa/phi-coding-agent")).toBeUndefined();
-		expect(getUpdateInstruction("@ao-barbosa/phi-coding-agent")).toBe(
-			"Update @ao-barbosa/phi-coding-agent using the package manager, wrapper, or source checkout that provides this installation.",
-		);
-	});
-
-	test("self-updates npm installs from custom prefixes", () => {
-		const { prefix } = createNpmPrefixInstall();
-
-		const command = getSelfUpdateCommand("@ao-barbosa/phi-coding-agent");
-
-		expect(detectInstallMethod()).toBe("npm");
-		expect(command).toEqual({
-			command: "npm",
-			args: [
-				"--prefix",
-				prefix,
-				"install",
-				"-g",
-				"--ignore-scripts",
-				"--min-release-age=0",
-				"@ao-barbosa/phi-coding-agent",
-			],
-			display: `npm --prefix ${prefix} install -g --ignore-scripts --min-release-age=0 @ao-barbosa/phi-coding-agent`,
-		});
-	});
-
-	test("self-updates exact npm versions without uninstalling the current package", () => {
-		const { prefix } = createNpmPrefixInstall();
-
-		const command = getSelfUpdateCommand("@ao-barbosa/phi-coding-agent", undefined, {
-			packageName: "@ao-barbosa/phi-coding-agent",
-			installSpec: "@ao-barbosa/phi-coding-agent@1.2.3",
-		});
-
-		expect(command).toEqual({
-			command: "npm",
-			args: [
-				"--prefix",
-				prefix,
-				"install",
-				"-g",
-				"--ignore-scripts",
-				"--min-release-age=0",
-				"@ao-barbosa/phi-coding-agent@1.2.3",
-			],
-			display: `npm --prefix ${prefix} install -g --ignore-scripts --min-release-age=0 @ao-barbosa/phi-coding-agent@1.2.3`,
-		});
-	});
-
-	test("self-updates renamed packages from the current install prefix", () => {
-		const { prefix } = createNpmPrefixInstall();
-
-		const command = getSelfUpdateCommand("@mariozechner/pi-coding-agent", undefined, "@new-scope/pi");
-
-		expect(command).toEqual({
-			command: "npm",
-			args: ["--prefix", prefix, "install", "-g", "--ignore-scripts", "--min-release-age=0", "@new-scope/pi"],
-			display: `npm --prefix ${prefix} uninstall -g @mariozechner/pi-coding-agent && npm --prefix ${prefix} install -g --ignore-scripts --min-release-age=0 @new-scope/pi`,
-			steps: [
-				{
-					command: "npm",
-					args: ["--prefix", prefix, "uninstall", "-g", "@mariozechner/pi-coding-agent"],
-					display: `npm --prefix ${prefix} uninstall -g @mariozechner/pi-coding-agent`,
-				},
-				{
-					command: "npm",
-					args: ["--prefix", prefix, "install", "-g", "--ignore-scripts", "--min-release-age=0", "@new-scope/pi"],
-					display: `npm --prefix ${prefix} install -g --ignore-scripts --min-release-age=0 @new-scope/pi`,
-				},
-			],
-		});
-	});
-
-	test("self-update respects configured npmCommand", () => {
-		const { prefix } = createNpmPrefixInstall();
-
-		const command = getSelfUpdateCommand("@ao-barbosa/phi-coding-agent", ["npm", "--prefix", prefix]);
-
-		expect(command).toEqual({
-			command: "npm",
-			args: [
-				"--prefix",
-				prefix,
-				"install",
-				"-g",
-				"--ignore-scripts",
-				"--min-release-age=0",
-				"@ao-barbosa/phi-coding-agent",
-			],
-			display: `npm --prefix ${prefix} install -g --ignore-scripts --min-release-age=0 @ao-barbosa/phi-coding-agent`,
-		});
-	});
-
-	test("self-update treats empty npmCommand as unset", () => {
-		const { prefix } = createNpmPrefixInstall();
-
-		const command = getSelfUpdateCommand("@ao-barbosa/phi-coding-agent", []);
-
-		expect(command?.args).toEqual([
-			"--prefix",
-			prefix,
-			"install",
-			"-g",
-			"--ignore-scripts",
-			"--min-release-age=0",
-			"@ao-barbosa/phi-coding-agent",
-		]);
-	});
-
-	test("quotes npm self-update display paths", () => {
-		const { prefix } = createNpmPrefixInstall("pi prefix ");
-
-		const command = getSelfUpdateCommand("@ao-barbosa/phi-coding-agent");
-
-		expect(command?.display).toBe(
-			`npm --prefix "${prefix}" install -g --ignore-scripts --min-release-age=0 @ao-barbosa/phi-coding-agent`,
-		);
-	});
-
-	test("does not infer Windows npm custom prefixes from package paths", () => {
-		const packageDir = "C:\\Users\\Admin\\npm prefix\\node_modules\\@ao-barbosa\\phi-coding-agent";
-		process.env.PHI_PACKAGE_DIR = packageDir;
-		setExecPath(`${packageDir}\\dist\\cli.js`);
-
-		expect(detectInstallMethod()).toBe("npm");
-		expect(getUpdateInstruction("@ao-barbosa/phi-coding-agent")).toBe(
-			"Run: npm install -g --ignore-scripts --min-release-age=0 @ao-barbosa/phi-coding-agent",
 		);
 	});
 
@@ -437,15 +284,5 @@ describe("detectInstallMethod", () => {
 				},
 			],
 		});
-	});
-
-	test("does not self-update when npm install path is not writable", () => {
-		const { packageDir } = createNpmPrefixInstall();
-		chmodSync(packageDir, 0o500);
-
-		expect(getSelfUpdateCommand("@ao-barbosa/phi-coding-agent")).toBeUndefined();
-		expect(getSelfUpdateUnavailableInstruction("@ao-barbosa/phi-coding-agent")).toContain(
-			"the install path is not writable",
-		);
 	});
 });

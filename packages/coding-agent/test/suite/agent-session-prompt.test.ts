@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { AgentTool } from "@ao-barbosa/phi-agent-core";
 import { fauxAssistantMessage, fauxToolCall, type Model } from "@ao-barbosa/phi-ai";
 import { Type } from "typebox";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import type { ExtensionAPI, InputEvent } from "../../src/core/extensions/index.ts";
 import type { PromptTemplate } from "../../src/core/prompt-templates.ts";
 import { createSyntheticSourceInfo } from "../../src/core/source-info.ts";

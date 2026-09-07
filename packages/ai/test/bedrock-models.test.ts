@@ -16,7 +16,7 @@
  * ```
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { complete, getModels } from "../src/compat.ts";
 import type { Context } from "../src/types.ts";
 import { hasBedrockCredentials } from "./bedrock-utils.ts";

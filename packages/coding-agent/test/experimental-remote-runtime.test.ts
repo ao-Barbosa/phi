@@ -5,7 +5,7 @@ import { type Context, createFacetHost, defineFacet, defineService } from "@ao-b
 import { BACKGROUND_CONTEXT } from "@ao-barbosa/phi-chord/context";
 import { Client, ServerError as ClientServerError } from "@ao-barbosa/phi-client";
 import { createUnixTransportFactory } from "@ao-barbosa/phi-client/unix";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { ExampleFacetService } from "../examples/plugins/phi-example-plugin/src/contract.ts";
 import { runClient } from "../src/experimental/client.ts";
 import { activateBuiltinClientServices, openClientRuntime } from "../src/experimental/client-runtime.ts";
@@ -81,7 +81,8 @@ afterEach(async () => {
 	directories.clear();
 });
 
-describe("experimental durable server composition", () => {
+// The durable server requires POSIX user IDs and unix sockets; src refuses to start it on Windows.
+describe.skipIf(process.platform === "win32")("experimental durable server composition", () => {
 	test("uses PHI_SERVER_DIR and PHI_SERVER_ID", async () => {
 		const directory = await mkdtemp(join("/tmp", "phi-server-dir-"));
 		directories.add(directory);
@@ -477,7 +478,7 @@ describe("experimental durable server composition", () => {
 		}
 	});
 
-	test("fences superseded attachment hydration by attachment generation", async ({ onTestFinished }) => {
+	test("fences superseded attachment hydration by attachment generation", async () => {
 		const { runtime } = await makeServer();
 		const client = await Client.connect({
 			serverId: runtime.serverId,
@@ -498,15 +499,12 @@ describe("experimental durable server composition", () => {
 			releaseDelay = resolve;
 		});
 		const subscribeService = client.subscribeService.bind(client);
-		const subscribe = vi
-			.spyOn(client, "subscribeService")
-			.mockImplementation(async (target, serviceId, mode, listener, signal) => {
-				if ("sessionId" in target && target.sessionId === "demo-2" && serviceId === Models.id) {
-					await delayed;
-				}
-				return subscribeService(target, serviceId, mode, listener, signal);
-			});
-		onTestFinished(() => subscribe.mockRestore());
+		vi.spyOn(client, "subscribeService").mockImplementation(async (target, serviceId, mode, listener, signal) => {
+			if ("sessionId" in target && target.sessionId === "demo-2" && serviceId === Models.id) {
+				await delayed;
+			}
+			return subscribeService(target, serviceId, mode, listener, signal);
+		});
 
 		try {
 			await attachSession(client, "demo-2");
@@ -533,19 +531,14 @@ describe("experimental durable server composition", () => {
 		expect(errors).toEqual([]);
 	});
 
-	test("observes keyed service instances and fences replacement generations over framed transport", async ({
-		onTestFinished,
-	}) => {
-		const spawn = vi
-			.spyOn(processRuntime, "spawnInternalProcess")
-			.mockImplementation((role, args, options) =>
-				realSpawnInternalProcess(
-					role,
-					args,
-					role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
-				),
-			);
-		onTestFinished(() => spawn.mockRestore());
+	test("observes keyed service instances and fences replacement generations over framed transport", async () => {
+		vi.spyOn(processRuntime, "spawnInternalProcess").mockImplementation((role, args, options) =>
+			realSpawnInternalProcess(
+				role,
+				args,
+				role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
+			),
+		);
 		const { runtime } = await makeServer();
 		const client = await attachClient(runtime, "demo-1");
 		const errors: Error[] = [];
@@ -589,17 +582,14 @@ describe("experimental durable server composition", () => {
 		await expect(services.dispose(BACKGROUND_CONTEXT)).resolves.toBeUndefined();
 	});
 
-	test("streams prompt events through the worker-owned service provider", async ({ onTestFinished }) => {
-		const spawn = vi
-			.spyOn(processRuntime, "spawnInternalProcess")
-			.mockImplementation((role, args, options) =>
-				realSpawnInternalProcess(
-					role,
-					args,
-					role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
-				),
-			);
-		onTestFinished(() => spawn.mockRestore());
+	test("streams prompt events through the worker-owned service provider", async () => {
+		vi.spyOn(processRuntime, "spawnInternalProcess").mockImplementation((role, args, options) =>
+			realSpawnInternalProcess(
+				role,
+				args,
+				role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
+			),
+		);
 		const { directory } = await makeServer();
 		const eventTypes: string[] = [];
 
@@ -626,17 +616,14 @@ describe("experimental durable server composition", () => {
 		);
 	});
 
-	test("replicates terminal operation state after consecutive prompts", async ({ onTestFinished }) => {
-		const spawn = vi
-			.spyOn(processRuntime, "spawnInternalProcess")
-			.mockImplementation((role, args, options) =>
-				realSpawnInternalProcess(
-					role,
-					args,
-					role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
-				),
-			);
-		onTestFinished(() => spawn.mockRestore());
+	test("replicates terminal operation state after consecutive prompts", async () => {
+		vi.spyOn(processRuntime, "spawnInternalProcess").mockImplementation((role, args, options) =>
+			realSpawnInternalProcess(
+				role,
+				args,
+				role === "session-worker" ? { ...options, entryUrl: fauxWorkerEntryUrl } : options,
+			),
+		);
 		const { runtime } = await makeServer();
 		const client = await attachClient(runtime, "demo-1");
 		const services = createSessionServiceBinding(client, { services: [AgentController, SessionPlugins, Transcript] });

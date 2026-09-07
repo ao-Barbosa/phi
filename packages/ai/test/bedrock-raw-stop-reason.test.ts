@@ -1,10 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 const bedrockMock = vi.hoisted(() => ({
 	stopReason: "end_turn" as string,
 }));
 
-vi.mock("@aws-sdk/client-bedrock-runtime", () => {
+mock.module("@aws-sdk/client-bedrock-runtime", () => {
 	class BedrockRuntimeServiceException extends Error {}
 
 	class BedrockRuntimeClient {

@@ -1,5 +1,5 @@
 import { Container } from "@ao-barbosa/phi-tui";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { createChatViewport } from "../src/modes/interactive/chat-viewport.ts";
 
 describe("chat viewport", () => {

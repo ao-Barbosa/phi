@@ -5,7 +5,8 @@
  * This tests the fix for WSL2/WSLg where clipboard often provides image/bmp
  * instead of image/png.
  */
-import { describe, expect, test, vi } from "vitest";
+import * as childProcessActual from "node:child_process";
+import { describe, expect, mock, test, vi } from "../../../test-support/vi.ts";
 
 function createTinyBmp1x1Red24bpp(): Uint8Array {
 	// Minimal 1x1 24bpp BMP (BGR + row padding to 4 bytes)
@@ -42,8 +43,9 @@ function createTinyBmp1x1Red24bpp(): Uint8Array {
 }
 
 // Mock wl-paste to return BMP
-vi.mock("child_process", async () => {
-	const actual = await vi.importActual<typeof import("child_process")>("child_process");
+// (Static namespace import above carries the real module: bun has no importActual.)
+mock.module("child_process", () => {
+	const actual = childProcessActual;
 	return {
 		...actual,
 		spawnSync: vi.fn((command: string, args: string[]) => {
@@ -59,7 +61,7 @@ vi.mock("child_process", async () => {
 });
 
 // Mock the native clipboard (not used in Wayland path, but needs to be mocked)
-vi.mock("@mariozechner/clipboard", () => ({
+mock.module("@mariozechner/clipboard", () => ({
 	default: {
 		hasImage: vi.fn(() => false),
 		getImageBinary: vi.fn(() => Promise.resolve(null)),

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT, type Context } from "../../src/harness/context.ts";
 import { MemoryStorage } from "../../src/harness/session/memory.ts";
 import { CommitDiscarded, GatingStorage, InstrumentedStorage } from "../../src/harness/session/testing/index.ts";

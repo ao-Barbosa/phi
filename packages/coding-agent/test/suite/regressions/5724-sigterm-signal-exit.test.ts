@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "../../../../../test-support/vi.ts";
 import { InteractiveMode } from "../../../src/modes/interactive/interactive-mode.ts";
 
 // Regression for https://github.com/earendil-works/pi/issues/5724

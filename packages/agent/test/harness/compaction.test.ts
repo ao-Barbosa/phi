@@ -10,7 +10,7 @@ import {
 	type Models,
 	type Usage,
 } from "@ao-barbosa/phi-ai";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "../../../../test-support/vi.ts";
 import {
 	type CompactionPreparation,
 	type CompactionSettings,

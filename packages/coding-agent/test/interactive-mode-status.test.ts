@@ -1,7 +1,7 @@
 import { homedir } from "node:os";
 import * as path from "node:path";
 import { type AutocompleteProvider, CombinedAutocompleteProvider } from "@ao-barbosa/phi-tui";
-import { beforeAll, describe, expect, test, vi } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { type Component, Container, type Focusable, type TUI } from "../../tui/src/tui.ts";
 import { TuiMainScreen } from "../../tui/src/tui-main-screen.ts";
 import { VirtualTerminal } from "../../tui/test/virtual-terminal.ts";
@@ -779,7 +779,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  @scope/pi-scoped, answer.ts, cli-extension.ts, HazAT/pi-interactive-subagents, HazAT/pi-interactive-subagents:subagents, local-index, pi-markdown-preview, user-index"`);
+  @scope/pi-scoped, answer.ts, cli-extension.ts, HazAT/pi-interactive-subagents, HazAT/pi-interactive-subagents:subagents, local-index, pi-markdown-preview, user-index"
+`);
 	});
 
 	test("adds more parent folders until local extension labels are unique", () => {
@@ -825,7 +826,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  alpha/one, beta/one, gamma/one"`);
+  alpha/one, beta/one, gamma/one"
+`);
 	});
 
 	test("strips index.ts from local extension label, showing parent dir", () => {
@@ -853,7 +855,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  plan-mode"`);
+  plan-mode"
+`);
 	});
 
 	test("strips index.js from local extension label, showing parent dir", () => {
@@ -881,7 +884,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  plan-mode"`);
+  plan-mode"
+`);
 	});
 
 	test("mixed single-file and subdirectory index.ts extensions strip index.ts", () => {
@@ -918,7 +922,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  plan-mode, webfetch.ts"`);
+  plan-mode, webfetch.ts"
+`);
 	});
 
 	test("multiple index.ts with unique parent dirs need no disambiguation", () => {
@@ -955,7 +960,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  bar, foo"`);
+  bar, foo"
+`);
 	});
 
 	test("multiple index.ts with same parent dir name disambiguated with grandparent", () => {
@@ -992,7 +998,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  alpha/tools, beta/tools"`);
+  alpha/tools, beta/tools"
+`);
 	});
 
 	test("non-index file in subdirectory stays as filename", () => {
@@ -1020,7 +1027,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  main.ts"`);
+  main.ts"
+`);
 	});
 
 	test("package extensions still strip index.ts correctly (regression guard)", () => {
@@ -1048,7 +1056,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  pi-markdown-preview"`);
+  pi-markdown-preview"
+`);
 	});
 
 	test("labels npm sibling extensions relative to the declaring package", () => {
@@ -1085,7 +1094,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  primary-package, primary-package:../sibling-package"`);
+  primary-package, primary-package:../sibling-package"
+`);
 	});
 
 	test("labels Windows npm sibling extensions relative to the declaring package", () => {
@@ -1125,7 +1135,8 @@ describe("InteractiveMode.showLoadedResources", () => {
 
 		expect(normalizeRenderedOutput(fakeThis.loadedResourcesContainer)).toMatchInlineSnapshot(`
 "[Extensions]
-  primary-package, primary-package:../sibling-package"`);
+  primary-package, primary-package:../sibling-package"
+`);
 	});
 
 	test("captures mixed extension layouts in expanded output", () => {
@@ -1155,7 +1166,8 @@ describe("InteractiveMode.showLoadedResources", () => {
   user
     /tmp/agent/extensions/user-index
   path
-    /tmp/temp/cli-extension.ts"`);
+    /tmp/temp/cli-extension.ts"
+`);
 	});
 
 	test("shows context paths relative to cwd while preserving full external paths", () => {

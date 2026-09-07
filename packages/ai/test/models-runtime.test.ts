@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { InMemoryCredentialStore } from "../src/auth/credential-store.ts";
 import type { ApiKeyAuth, CredentialStore, OAuthAuth, OAuthCredential, ProviderAuth } from "../src/auth/types.ts";
 import { calculateCost, createModels, createProvider, hasApi, type Provider } from "../src/models.ts";
@@ -901,7 +901,7 @@ describe("Models runtime", () => {
 		}));
 
 		expect((await models.getAuth("p1"))?.auth.apiKey).toBe("new-token");
-		expect(refresh).toHaveBeenCalledOnce();
+		expect(refresh).toHaveBeenCalledTimes(1);
 	});
 
 	it("honors a caller's longer OAuth minimum validity", async () => {
@@ -921,7 +921,7 @@ describe("Models runtime", () => {
 		}));
 
 		expect((await models.getAuth("p1", { minOAuthValidityMs: 30 * 60_000 }))?.auth.apiKey).toBe("new-token");
-		expect(refresh).toHaveBeenCalledOnce();
+		expect(refresh).toHaveBeenCalledTimes(1);
 	});
 
 	it("rejects with code oauth when refresh fails, preserving the stored credential", async () => {

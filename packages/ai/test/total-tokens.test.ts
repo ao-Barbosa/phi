@@ -12,7 +12,7 @@
  * - Other OpenAI-compatible providers: Uses native total_tokens field
  */
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { complete, getModel } from "../src/compat.ts";
 import type { Api, Context, Model, StreamOptions, Usage } from "../src/types.ts";
 

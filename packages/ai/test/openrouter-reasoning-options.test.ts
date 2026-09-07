@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { getOpenRouterThinkingLevelMap } from "../scripts/openrouter-reasoning-options.ts";
 import { streamSimple } from "../src/api/openai-completions.ts";
 import type { Context, Model, ThinkingLevelMap } from "../src/types.ts";

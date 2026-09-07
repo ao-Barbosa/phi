@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Container, type Terminal, Text, type TUI, TuiMainScreen } from "@ao-barbosa/phi-tui";
-import { afterEach, beforeAll, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, describe, expect, it } from "../../../test-support/vi.ts";
 import { createEditToolDefinition } from "../src/core/tools/edit.ts";
 import { computeEditsDiff, type Edit } from "../src/core/tools/edit-diff.ts";
 import { ToolExecutionComponent } from "../src/modes/interactive/components/tool-execution.ts";

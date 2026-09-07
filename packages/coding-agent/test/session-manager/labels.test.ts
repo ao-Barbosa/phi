@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { type LabelEntry, SessionManager } from "../../src/core/session-manager.ts";
 
 describe("SessionManager labels", () => {

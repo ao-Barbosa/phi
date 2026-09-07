@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "../../../test-support/vi.ts";
 import { bashToolSystemPromptContribution, createBashToolDefinition } from "../src/core/tools/bash.ts";
 import { createEditToolDefinition, editToolSystemPromptContribution } from "../src/core/tools/edit.ts";
 import { createFindToolDefinition, findToolSystemPromptContribution } from "../src/core/tools/find.ts";

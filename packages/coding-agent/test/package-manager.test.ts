@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, rmSync, statSync, symlinkSync, writeFileSync } f
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 import { PassThrough } from "node:stream";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { DefaultPackageManager, type ProgressEvent, type ResolvedResource } from "../src/core/package-manager.ts";
 import { SettingsManager } from "../src/core/settings-manager.ts";
 
@@ -212,14 +212,34 @@ Content`,
 
 				mkdirSync(join(agentDir), { recursive: true });
 				mkdirSync(join(tempDir, ".phi"), { recursive: true });
-				symlinkSync(sharedExtensionsDir, join(agentDir, "extensions"), "dir");
-				symlinkSync(sharedSkillsDir, join(agentDir, "skills"), "dir");
-				symlinkSync(sharedPromptsDir, join(agentDir, "prompts"), "dir");
-				symlinkSync(sharedThemesDir, join(agentDir, "themes"), "dir");
-				symlinkSync(sharedExtensionsDir, join(tempDir, ".phi", "extensions"), "dir");
-				symlinkSync(sharedSkillsDir, join(tempDir, ".phi", "skills"), "dir");
-				symlinkSync(sharedPromptsDir, join(tempDir, ".phi", "prompts"), "dir");
-				symlinkSync(sharedThemesDir, join(tempDir, ".phi", "themes"), "dir");
+				symlinkSync(
+					sharedExtensionsDir,
+					join(agentDir, "extensions"),
+					process.platform === "win32" ? "junction" : "dir",
+				);
+				symlinkSync(sharedSkillsDir, join(agentDir, "skills"), process.platform === "win32" ? "junction" : "dir");
+				symlinkSync(sharedPromptsDir, join(agentDir, "prompts"), process.platform === "win32" ? "junction" : "dir");
+				symlinkSync(sharedThemesDir, join(agentDir, "themes"), process.platform === "win32" ? "junction" : "dir");
+				symlinkSync(
+					sharedExtensionsDir,
+					join(tempDir, ".phi", "extensions"),
+					process.platform === "win32" ? "junction" : "dir",
+				);
+				symlinkSync(
+					sharedSkillsDir,
+					join(tempDir, ".phi", "skills"),
+					process.platform === "win32" ? "junction" : "dir",
+				);
+				symlinkSync(
+					sharedPromptsDir,
+					join(tempDir, ".phi", "prompts"),
+					process.platform === "win32" ? "junction" : "dir",
+				);
+				symlinkSync(
+					sharedThemesDir,
+					join(tempDir, ".phi", "themes"),
+					process.platform === "win32" ? "junction" : "dir",
+				);
 
 				const result = await packageManager.resolve();
 

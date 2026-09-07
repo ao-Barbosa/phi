@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import {
 	checkForNewPhiVersion,
 	comparePackageVersions,
@@ -75,7 +75,7 @@ describe("version checks", () => {
 		vi.stubGlobal("fetch", fetchMock);
 
 		await expect(checkForNewPhiVersion("1.2.3")).resolves.toBeUndefined();
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 
 	it("formats nested network error details", () => {
@@ -126,6 +126,6 @@ describe("version checks", () => {
 		vi.stubGlobal("fetch", fetchMock);
 
 		await expect(getLatestPhiVersion("1.2.3")).resolves.toBe("1.2.4");
-		expect(fetchMock).toHaveBeenCalledOnce();
+		expect(fetchMock).toHaveBeenCalledTimes(1);
 	});
 });

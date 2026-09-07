@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../../test-support/vi.ts";
 import { AdaptivePublisher } from "../../src/harness/utils/adaptive-publisher.ts";
 
 afterEach(() => {

@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { type ClipboardModule, loadClipboardNative } from "../src/utils/clipboard-native.ts";
 
 type ClipboardRequire = (id: string) => unknown;

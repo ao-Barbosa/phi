@@ -1,5 +1,5 @@
 import type { AssistantMessage } from "@ao-barbosa/phi-ai";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import { BACKGROUND_CONTEXT } from "../../src/harness/context.ts";
 import type { CustomMessage } from "../../src/harness/messages.ts";
 import * as sessionWrites from "../../src/harness/session/commit.ts";

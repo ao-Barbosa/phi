@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 
 /**
  * Regression test for https://github.com/earendil-works/pi-mono/issues/2791
@@ -49,15 +49,28 @@ describe("issue #2791 fs.watch error event crashes process", () => {
 		writeFileSync(
 			scriptPath,
 			`
-import { setTheme, stopThemeWatcher } from "${themeModulePath}";
+import { createRequire } from "node:module";
+
+// Capture the watcher at creation: bun's process._getActiveHandles() does not
+// report fs.watch handles, but patching the shared node:fs export is visible to
+// later ESM imports on both runtimes.
+const fs = createRequire(import.meta.url)("node:fs");
+let createdWatcher = null;
+const originalWatch = fs.watch;
+fs.watch = function (...args) {
+	const watcher = originalWatch.apply(this, args);
+	createdWatcher = watcher;
+	return watcher;
+};
+const { setTheme, stopThemeWatcher } = await import("${themeModulePath}");
 
 process.env.PHI_CODING_AGENT_DIR = "${agentDir}";
 
 setTheme("custom-test", true);
 
-// Find the FSWatcher among active handles
-const handles = (process as any)._getActiveHandles();
-const fsWatcher = handles.find((h: any) => h.constructor?.name === "FSWatcher");
+// Find the FSWatcher among active handles (node) or use the captured one (bun).
+const handles = typeof (process as any)._getActiveHandles === "function" ? (process as any)._getActiveHandles() : [];
+const fsWatcher = createdWatcher ?? handles.find((h: any) => h.constructor?.name === "FSWatcher");
 
 if (!fsWatcher) {
 	process.stderr.write("no FSWatcher found among active handles\\n");

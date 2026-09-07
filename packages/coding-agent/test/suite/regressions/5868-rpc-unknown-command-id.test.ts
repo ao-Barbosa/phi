@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, mock, test, vi } from "../../../../../test-support/vi.ts";
 import type { AgentSessionRuntime } from "../../../src/core/agent-session-runtime.ts";
 import { runRpcMode } from "../../../src/modes/rpc/rpc-mode.ts";
 import { createHarness, type Harness } from "../harness.ts";
@@ -10,7 +10,7 @@ const rpcIo = vi.hoisted(() => ({
 	lineHandler: undefined as ((line: string) => void) | undefined,
 }));
 
-vi.mock("../../../src/core/output-guard.js", () => ({
+mock.module("../../../src/core/output-guard.js", () => ({
 	flushRawStdout: vi.fn(async () => {}),
 	takeOverStdout: vi.fn(),
 	waitForRawStdoutBackpressure: vi.fn(async () => {}),
@@ -19,9 +19,9 @@ vi.mock("../../../src/core/output-guard.js", () => ({
 	},
 }));
 
-vi.mock("../../../src/modes/interactive/theme/theme.js", () => ({ theme: {} }));
+mock.module("../../../src/modes/interactive/theme/theme.js", () => ({ theme: {} }));
 
-vi.mock("../../../src/modes/rpc/jsonl.js", () => ({
+mock.module("../../../src/modes/rpc/jsonl.js", () => ({
 	attachJsonlLineReader: vi.fn((_stream: NodeJS.ReadableStream, onLine: (line: string) => void) => {
 		rpcIo.lineHandler = onLine;
 		return () => {

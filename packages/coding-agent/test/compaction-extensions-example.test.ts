@@ -2,10 +2,10 @@
  * Verify the documentation example from extensions.md compiles and works.
  */
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import type { ExtensionAPI, SessionBeforeCompactEvent, SessionCompactEvent } from "../src/core/extensions/index.ts";
 
-vi.mock("@ao-barbosa/phi-coding-agent", () => ({
+mock.module("@ao-barbosa/phi-coding-agent", () => ({
 	convertToLlm: (messages: unknown) => messages,
 	serializeConversation: () => "conversation",
 }));

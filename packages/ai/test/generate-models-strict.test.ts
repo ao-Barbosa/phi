@@ -2,8 +2,8 @@ import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import { afterEach, describe, expect, it } from "vitest";
+import { fileURLToPath } from "node:url";
+import { afterEach, describe, expect, it } from "../../../test-support/vi.ts";
 
 const packageRoot = fileURLToPath(new URL("..", import.meta.url));
 const temporaryRoots: string[] = [];
@@ -65,15 +65,11 @@ describe("strict model generation", () => {
 		const sourceBefore = generatedPaths.map((path) => readFileSync(join(packageRoot, path), "utf8"));
 		const isolatedBefore = generatedPaths.map((path) => readFileSync(join(isolatedPackageRoot, path), "utf8"));
 
-		const result = spawnSync(
-			process.execPath,
-			["--import", pathToFileURL(preloadPath).href, "scripts/generate-models.ts", "--strict"],
-			{
-				cwd: isolatedPackageRoot,
-				encoding: "utf8",
-				timeout: 10_000,
-			},
-		);
+		const result = spawnSync(process.execPath, ["--preload", preloadPath, "scripts/generate-models.ts", "--strict"], {
+			cwd: isolatedPackageRoot,
+			encoding: "utf8",
+			timeout: 10_000,
+		});
 
 		expect(result.status).toBe(1);
 		expect(`${result.stdout}\n${result.stderr}`).toContain(

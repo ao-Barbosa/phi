@@ -1,5 +1,5 @@
 import type { AssistantMessage, AssistantMessageEvent, Model } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "../../../test-support/vi.ts";
 import { type ProxyAssistantMessageEvent, streamProxy } from "../src/proxy.ts";
 
 const model: Model<"openai-responses"> = {

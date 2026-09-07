@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { stream as streamOpenAICompletions } from "../src/api/openai-completions.ts";
 import type { Context, Model } from "../src/types.ts";
 
@@ -7,7 +7,7 @@ const mockState = vi.hoisted(() => ({
 	requestErrors: [] as Error[],
 }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		chat = {
 			completions: {

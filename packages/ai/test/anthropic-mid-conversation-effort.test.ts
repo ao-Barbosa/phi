@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import { stream } from "../src/api/anthropic-messages.ts";
 import { getModel } from "../src/compat.ts";
 import type { AssistantMessage, Context, Model } from "../src/types.ts";

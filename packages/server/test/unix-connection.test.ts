@@ -1,7 +1,7 @@
 import { EventEmitter } from "node:events";
 import type { Socket } from "node:net";
 import { encodeServerMessage, type ServerHelloError, ServerMessageDecoder } from "@ao-barbosa/phi-protocol";
-import { expect, test, vi } from "vitest";
+import { expect, test, vi } from "../../../test-support/vi.ts";
 import { UnixByteConnection } from "../src/transports/unix/listener.ts";
 
 class ControlledSocket extends EventEmitter {

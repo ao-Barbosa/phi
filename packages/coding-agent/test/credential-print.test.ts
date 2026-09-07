@@ -1,5 +1,5 @@
 import { InMemoryModelsStore } from "@ao-barbosa/phi-ai";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { parseArgs } from "../src/cli/args.ts";
 import { AuthCommandError, isAuthCommandHelp, parseAuthCommand } from "../src/cli/auth-command.ts";
 import { resolveCredentialForPrint } from "../src/cli/credential-print.ts";
@@ -62,7 +62,7 @@ describe("credential print commands", () => {
 		const args = parseArgs(["--provider", "openai-codex"]);
 
 		await expect(resolveCredentialForPrint(args, runtime, "bearer_token")).resolves.toBe("fresh-test-token");
-		expect(refresh).toHaveBeenCalledOnce();
+		expect(refresh).toHaveBeenCalledTimes(1);
 		expect(await storage.read("openai-codex")).toMatchObject({ access: "fresh-test-token" });
 	});
 
@@ -70,7 +70,7 @@ describe("credential print commands", () => {
 		const originalExitCode = process.exitCode;
 		const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		try {
-			process.exitCode = undefined;
+			process.exitCode = 0;
 			await main(["auth", "check", "--provider", "openai-codex", "--credentails"]);
 			const stderr = errorSpy.mock.calls.map(([message]) => String(message)).join("\n");
 			expect(stderr).toContain('Unknown option --credentails for "auth check".');
@@ -79,7 +79,7 @@ describe("credential print commands", () => {
 			);
 			expect(process.exitCode).toBe(1);
 		} finally {
-			process.exitCode = originalExitCode;
+			process.exitCode = originalExitCode ?? 0;
 			errorSpy.mockRestore();
 		}
 	});

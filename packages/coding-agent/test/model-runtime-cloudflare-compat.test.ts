@@ -1,12 +1,12 @@
 import { complete, resetApiProviders } from "@ao-barbosa/phi-ai/compat";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import { ModelRegistry } from "../src/core/model-registry.ts";
 import { ModelRuntime } from "../src/core/model-runtime.ts";
 
 const openAIState = vi.hoisted(() => ({ clientOptions: undefined as unknown }));
 
-vi.mock("openai", () => {
+mock.module("openai", () => {
 	class FakeOpenAI {
 		constructor(options: unknown) {
 			openAIState.clientOptions = options;

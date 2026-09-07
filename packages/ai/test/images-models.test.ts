@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../test-support/vi.ts";
 import type { AuthContext } from "../src/auth/types.ts";
 import { createImagesModels, createImagesProvider, type ImagesProvider } from "../src/images-models.ts";
 import { builtinImagesModels } from "../src/providers/all.ts";

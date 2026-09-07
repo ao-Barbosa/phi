@@ -1,5 +1,5 @@
 import { stripVTControlCharacters } from "node:util";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "../../../../test-support/vi.ts";
 import {
 	formatHarnessComparisonReport,
 	type HarnessObservation,

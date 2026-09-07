@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, mock, vi } from "../../../test-support/vi.ts";
 
 type SendResult = { kind: "reject"; error: unknown } | { kind: "resolve"; response: unknown };
 
@@ -8,7 +8,7 @@ const bedrockMock = vi.hoisted(() => ({
 	ServiceException: undefined as unknown as new (message?: string) => Error,
 }));
 
-vi.mock("@aws-sdk/client-bedrock-runtime", () => {
+mock.module("@aws-sdk/client-bedrock-runtime", () => {
 	class BedrockRuntimeServiceException extends Error {}
 	bedrockMock.ServiceException = BedrockRuntimeServiceException;
 

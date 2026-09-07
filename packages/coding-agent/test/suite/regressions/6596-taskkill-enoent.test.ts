@@ -1,13 +1,14 @@
 import type { ChildProcess } from "node:child_process";
 import { EventEmitter } from "node:events";
 import { join } from "node:path";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, mock, vi } from "../../../../../test-support/vi.ts";
 
 const { spawnMock } = vi.hoisted(() => ({ spawnMock: vi.fn() }));
 
-vi.mock("child_process", async (importOriginal) => {
-	const actual = await importOriginal<typeof import("child_process")>();
-	return { ...actual, spawn: spawnMock };
+import * as childProcessOriginal from "node:child_process";
+
+mock.module("child_process", async () => {
+	return { ...childProcessOriginal, spawn: spawnMock };
 });
 
 import { killProcessTree } from "../../../src/utils/shell.ts";

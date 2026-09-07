@@ -1,5 +1,5 @@
 import { fauxAssistantMessage } from "@ao-barbosa/phi-ai";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "../../../../../test-support/vi.ts";
 import { createHarness, getAssistantTexts, type Harness } from "../harness.ts";
 
 describe("issue #3317 network connection lost retry", () => {

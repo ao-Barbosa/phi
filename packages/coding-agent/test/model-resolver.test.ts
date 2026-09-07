@@ -5,7 +5,7 @@ import { Agent } from "@ao-barbosa/phi-agent-core";
 import type { Model } from "@ao-barbosa/phi-ai";
 import { getModel, streamSimple } from "@ao-barbosa/phi-ai/compat";
 import { getBuiltinModels, getBuiltinProviders } from "@ao-barbosa/phi-ai/providers/all";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, describe, expect, test, vi } from "../../../test-support/vi.ts";
 import { AgentSession } from "../src/core/agent-session.ts";
 import { AuthStorage } from "../src/core/auth-storage.ts";
 import {
@@ -263,7 +263,7 @@ describe("resolveModelScopeWithDiagnostics", () => {
 			const scopedModels = await resolveModelScope(["missing"], registry);
 
 			expect(scopedModels).toEqual([]);
-			expect(warn).toHaveBeenCalledOnce();
+			expect(warn).toHaveBeenCalledTimes(1);
 			expect(warn.mock.calls[0][0]).toContain('Warning: No models match pattern "missing"');
 		} finally {
 			warn.mockRestore();

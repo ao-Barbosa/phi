@@ -1,5 +1,5 @@
 import { encodeCbor, encodeClientMessage, encodeFrame, PROTOCOL_VERSION } from "@ao-barbosa/phi-protocol";
-import { afterEach, expect, test } from "vitest";
+import { afterEach, expect, test } from "../../../test-support/vi.ts";
 import type { ByteConnection, ByteConnectionHandler } from "../src/connection.ts";
 import { Server } from "../src/server.ts";
 import { ProtocolTestClient, TestServerHost, type WireChannel } from "../src/testing/index.ts";
